@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single"
+        >
+        <item android:title="@string/saldo_actual"></item>
+        <item
+            android:id="@+id/personalBalance"
+            android:title="\t\t\t\t0$"></item>
+
+        <item android:title="Casino">
+            <menu>
+                <item
+                    android:id="@+id/nav_init"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="Inicio" />
+                <item
+                    android:id="@+id/nav_ruleta"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="@string/menu_rule" />
+                <item
+                    android:id="@+id/nav_tragaperras"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="@string/menu_tragaperras" />
+                <item
+                    android:id="@+id/nav_blackjact"
+                    android:icon="@drawable/ic_menu_slideshow"
+                    android:title="@string/menu_blackjack" />
+                <item
+                    android:id="@+id/nav_carreras"
+                    android:icon="@drawable/ic_menu_slideshow"
+                    android:title="@string/menu_carreras" />
+            </menu>
+        </item>
+        <item android:title="User Info">
+            <menu>
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="Perfil" />
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="Ajustes" />
+            </menu>
+        </item>
+    </group>
+</menu>

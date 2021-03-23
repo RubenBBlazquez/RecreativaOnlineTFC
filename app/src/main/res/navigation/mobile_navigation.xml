@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_init">
+    <fragment
+        android:id="@+id/nav_init"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.home.InitCasinoFragment"
+        android:label="@string/menu_init"
+        tools:layout="@layout/fragment_init_casino" />
+    <fragment
+        android:id="@+id/nav_ruleta"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Ruleta.RuletaFragment"
+        android:label="@string/menu_rule"
+        tools:layout="@layout/fragment_ruleta" />
+
+    <fragment
+        android:id="@+id/nav_tragaperras"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.TragaPerrasFragment"
+        android:label="@string/menu_tragaperras"
+        tools:layout="@layout/fragment_traga_perras" />
+
+    <fragment
+        android:id="@+id/nav_blackjact"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.BlackJack.BlackjackFragment"
+        android:label="@string/menu_blackjack"
+        tools:layout="@layout/fragment_blackjack" />
+    <fragment
+        android:id="@+id/nav_carreras"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.ApuestasCarreras.ApuestasCarrerasFragment"
+        android:label="@string/menu_carreras"
+        tools:layout="@layout/fragment_apuestas_carreras" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

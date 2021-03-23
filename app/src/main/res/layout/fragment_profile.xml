@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.Profile.ProfileFragment"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_weight="0"
+                android:background="#F44336">
+
+                <ImageView
+                    android:id="@+id/imageProfile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/ruleta"></ImageView>
+
+                <TextView
+                    android:id="@+id/emailPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@+id/imageProfile"
+                    android:fontFamily="@font/bungee"
+                    android:text="rubenbarroso12@gmail.com"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/nombreSuperiorPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/emailPerfil"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="9dp"
+                    android:layout_toRightOf="@+id/imageProfile"
+                    android:fontFamily="@font/bungee"
+                    android:padding="5dp"
+                    android:text="Ruben Barroso Blázquez"
+                    android:textSize="10sp">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-65dp"
+                android:padding="10dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="125dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#F44336"
+                    app:cardElevation="20dp"
+                    android:theme="@style/Theme.MaterialComponents.DayNight">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imagenSaldoPerfil"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_saldo">
+
+                        </ImageView>
+
+                        <TextView
+                            android:id="@+id/saldoPerfil"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imagenSaldoPerfil"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/bungee"
+                            android:padding="5dp"
+                            android:text="0 €"
+                            android:textSize="15sp">
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/saldoPerfil"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/bungee"
+                            android:text="@string/saldo_actual_perfil"
+                            android:textSize="15sp"></TextView>
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="125dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#F44336"
+                    app:cardElevation="20dp"
+                    android:theme="@style/Theme.MaterialComponents.DayNight">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imagenPayment"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_payment">
+
+                        </ImageView>
+
+                        <Button
+                            android:id="@+id/AñadirSaldo"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/imagenPayment"
+                            android:layout_marginTop="5dp"
+                            android:text="Añadir Saldo"
+                            android:fontFamily="@font/bungee"
+                            android:background="#B71C1C"
+                            android:textColor="@android:color/background_light"/>
+
+                        <Button
+                            android:id="@+id/verAnuncioPerfil"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_below="@+id/AñadirSaldo"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Ver Anuncio"
+                            android:fontFamily="@font/bungee"
+                            android:background="#B71C1C"
+                            android:textColor="@android:color/background_light"/>
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:fontFamily="@font/bungee"
+                android:padding="10dp"
+                android:text="@string/textoDatosPersonales"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/nombreEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:ems="10"
+                    android:hint="Nombre"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/apellidoEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:ems="10"
+                    android:hint="Apellidos"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/telefonoEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:ems="10"
+                    android:hint="Teléfono"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/dirEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:ems="10"
+                    android:hint="Dirección"
+                    android:inputType="textPersonName" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/sacarFotoDni"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:text="Sacar Foto Dni"
+                        android:fontFamily="@font/bungee"
+                        android:background="#B71C1C"
+                        android:textColor="@android:color/background_light"/>
+
+                    <ImageView
+                        android:id="@+id/imagenDniSacada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/btn_star_big_on"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/sacarFotoPerfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Sacar Foto Perfil"
+                        android:fontFamily="@font/bungee"
+                        android:background="@color/colorPrimary"
+                        android:textColor="@android:color/background_light"/>
+
+                    <ImageView
+                        android:id="@+id/imagenPerfilSacada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/btn_star_big_on"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/actualizarDatosPersonales"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="20dp"
+                android:text="Actualizar Datos Personales"
+                android:fontFamily="@font/bungee"
+                android:background="#B71C1C"
+                android:textColor="@android:color/background_light"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+</LinearLayout>

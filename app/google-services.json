@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "414432772547",
+    "firebase_url": "https://trabajofindegradocasinoonline.firebaseio.com",
+    "project_id": "trabajofindegradocasinoonline",
+    "storage_bucket": "trabajofindegradocasinoonline.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414432772547:android:c80b5c43de1fb024ce7d76",
+        "android_client_info": {
+          "package_name": "com.rubenbarrosoblazquez.CasinoOnlineTFG"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414432772547-1mjoq59d0063b7dgs3a6i7edr4ts0284.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXUCQcdXWaGuprdRwVfWhReLXqYKnAMiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414432772547-1mjoq59d0063b7dgs3a6i7edr4ts0284.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

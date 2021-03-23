@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondocasino"
+    tools:context=".Activities.LoginRegisterActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <EditText
+                android:id="@+id/nombre_register"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/edit_text_shape"
+                android:elevation="3dp"
+                android:ems="10"
+                android:hint="@string/hintName"
+                android:inputType="textPersonName"
+                android:padding="15dp" />
+
+            <TextView
+                android:id="@+id/error_name_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/error"
+                android:padding="10dp"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="15dp"
+                android:background="#DF000000"
+                android:visibility="gone"
+                tools:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/apellidos_register"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/edit_text_shape"
+                android:elevation="3dp"
+                android:ems="10"
+                android:hint="@string/hintLastName"
+                android:inputType="textPersonName"
+                android:padding="15dp" />
+
+            <TextView
+                android:id="@+id/error_apellidos_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/error"
+                android:padding="10dp"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="15dp"
+                android:background="#DF000000"
+                android:visibility="gone"
+                tools:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/email_login"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/edit_text_shape"
+                android:elevation="3dp"
+                android:ems="10"
+                android:hint="@string/hintEmail"
+                android:inputType="textPersonName"
+                android:padding="15dp" />
+
+            <TextView
+                android:id="@+id/error_email_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:padding="10dp"
+                android:fontFamily="@font/error"
+                android:textColor="@android:color/holo_red_light"
+                tools:textStyle="bold"
+                android:background="#DF000000"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/password_login"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/edit_text_shape"
+                android:elevation="3dp"
+                android:ems="10"
+                android:hint="@string/hintPassword"
+                android:inputType="textPassword"
+                android:padding="15dp" />
+
+            <TextView
+                android:id="@+id/error_password_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:padding="10dp"
+                android:fontFamily="@font/error"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="15dp"
+                android:background="#DF000000"
+                tools:textStyle="bold"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/repeatPassword_register"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/edit_text_shape"
+                android:elevation="3dp"
+                android:ems="10"
+                android:hint="@string/hintRepeatPassword"
+                android:inputType="textPassword"
+                android:padding="15dp" />
+
+            <TextView
+                android:id="@+id/error_repeatPassword_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:padding="10dp"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="15dp"
+                android:background="#DF000000"
+                android:fontFamily="@font/error"
+                tools:textStyle="bold"
+                android:visibility="gone"/>
+
+            <Spinner
+                android:id="@+id/pais_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_custom"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="8dp"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <Button
+                android:id="@+id/register_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_shape"
+                android:elevation="3dp"
+                android:fontFamily="@font/letra_casino"
+                android:shadowColor="@android:color/black"
+                android:text="@string/registro"
+                android:textColor="@android:color/white"
+                android:textSize="10dp" />
+
+            <Button
+                android:id="@+id/volver_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_shape"
+                android:elevation="3dp"
+                android:fontFamily="@font/letra_casino"
+                android:shadowColor="@android:color/black"
+                android:text="@string/volver_registro"
+                android:textColor="@android:color/white"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

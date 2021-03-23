@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondocasino"
+    tools:context=".Activities.LoginRegisterActivity"
+    android:id="@+id/container_login_fragment"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/email_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edit_text_shape"
+        android:elevation="3dp"
+        android:ems="10"
+        android:hint="@string/hintEmail"
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/error_email_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#DF000000"
+        android:fontFamily="@font/error"
+        android:padding="10dp"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="15dp"
+        android:visibility="gone"
+        tools:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/password_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edit_text_shape"
+        android:elevation="3dp"
+        android:ems="10"
+        android:hint="@string/hintPassword"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/email_login"
+        app:layout_constraintStart_toStartOf="@+id/email_login"
+        app:layout_constraintTop_toBottomOf="@+id/email_login" />
+    <TextView
+        android:id="@+id/error_password_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#DF000000"
+        android:fontFamily="@font/error"
+        android:padding="10dp"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="15dp"
+        android:visibility="gone"
+        tools:textStyle="bold" />
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_shape"
+        android:elevation="3dp"
+        android:fontFamily="@font/letra_casino"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:textSize="10dp" />
+    <Button
+        android:id="@+id/register_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_shape"
+        android:elevation="3dp"
+        android:fontFamily="@font/letra_casino"
+        android:shadowColor="@android:color/black"
+        android:text="@string/registro"
+        android:textColor="@android:color/white"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/logingoogle"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/button_shape"
+        android:drawableRight="@drawable/google"
+        android:elevation="3dp"
+        android:fontFamily="@font/letra_casino"
+        android:padding="10dp"
+        android:text="@string/loginWithGoogle"
+        android:textColor="@android:color/white"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/loginfacebook"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/button_shape"
+        android:drawableRight="@drawable/ic_facebook"
+        android:elevation="3dp"
+        android:fontFamily="@font/letra_casino"
+        android:padding="10dp"
+        android:text="@string/loginWithFacebook"
+        android:textColor="@android:color/white"
+        android:textSize="10dp" />
+
+</LinearLayout>
