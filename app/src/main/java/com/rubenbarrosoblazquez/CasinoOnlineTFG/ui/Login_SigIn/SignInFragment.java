@@ -50,7 +50,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
     private TextView error_email;
     private TextView error_password;
     private TextView error_repeatPassword;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Spinner pais;
 
     public SignInFragment() {
@@ -136,12 +135,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("registerSuccess", "createUserWithEmail:success");
                             mListener.saveUserInfoInFirestore(getCurrentUser(),mAuth);
+                            mListener.sendEmailVerification(mAuth.getCurrentUser());
                             mListener.backToLoginFragment();
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("registerFail", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(getContext(), "Register faild",
+                            Toast.makeText(getContext(), "Register fail",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String provider;
     private String pais;
     private float saldo;
+    private int tipoUser;
 
     public User(String name, String email, String apellidos, String provider) {
         this.name = name;
@@ -25,6 +26,7 @@ public class User implements Serializable {
         this.provider=provider;
         this.pais="";
         this.saldo=0.0f;
+        this.tipoUser=0;
     }
 
     public String getName() {
@@ -105,6 +107,14 @@ public class User implements Serializable {
 
     public void setSaldo(float saldo) {
         this.saldo = saldo;
+    }
+
+    public int getTipoUser() {
+        return tipoUser;
+    }
+
+    public void setTipoUser(int tipoUser) {
+        this.tipoUser = tipoUser;
     }
 
     @Override

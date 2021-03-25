@@ -93,6 +93,14 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         personalBalance=menu.findItem(R.id.personalBalance);
         personalBalance.setTitle(user.getSaldo()+" €");
 
+        MenuItem admin=menu.findItem(R.id.admin);
+
+        if(user.getTipoUser()==0){
+            admin.setVisible(false);
+        }else{
+            admin.setVisible(true);
+        }
+
     }
 
 

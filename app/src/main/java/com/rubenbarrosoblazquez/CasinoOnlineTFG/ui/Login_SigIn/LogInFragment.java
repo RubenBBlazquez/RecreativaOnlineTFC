@@ -193,9 +193,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
 
     @Override
     public void onSuccess(DocumentSnapshot d) {
-
+        Log.d("user", String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
         if(this.mAuth.getCurrentUser().isEmailVerified()){
-
             User u;
             u=new User(String.valueOf(d.get("Name")),String.valueOf(d.get("Email")),String.valueOf(d.get("Last name's")),String.valueOf(d.get("Provider")));
             u.setVerified(String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
@@ -203,6 +202,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
             u.setPhone((String)d.get("Phone"));
             u.setDni((String)d.get("Dni"));
             u.setSaldo(Float.valueOf(d.getString("Saldo")));
+            u.setTipoUser(Integer.parseInt(d.getString("TipoUser")));
             addDataToSharedPreferences(u);
             db.collection("users").document(u.getEmail()).update("Verified","true");
             mListener.logInOk(u);
@@ -219,10 +219,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
     private void dialogUserNoValidated(){
         AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
     }
-
-
-
-
+    
     private void loginWithGoogle(){
        // GoogleSignInOptions googleconf= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken();
         // Configure Google Sign In
@@ -381,7 +378,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
                 salir=true;
             }
         }
-        Toast.makeText(getContext(), getString(R.string.email_Verified), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), getString(R.string.email_Verified), Toast.LENGTH_SHORT).show();
         loginWays(this.mAuth.getCurrentUser().getEmail());
     }
 }

@@ -117,8 +117,8 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
         usuario.put("Dni",u.getDni());
         usuario.put("Verified",String.valueOf(mAuth.getCurrentUser().isEmailVerified()));
         usuario.put("Provider",u.getProvider());
-        usuario.put("Saldo","0");
-
+        usuario.put("Saldo",u.getSaldo()+"");
+        usuario.put("TipoUser",u.getTipoUser()+"");
 
         db.collection("users").document(u.getEmail()).set(usuario);
 

@@ -46,5 +46,14 @@
                     android:title="Ajustes" />
             </menu>
         </item>
+        <item android:title="Admin Panel"
+            android:id="@+id/admin">
+            <menu>
+                <item
+                    android:id="@+id/nav_admin"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="Administrator" />
+            </menu>
+        </item>
     </group>
 </menu>

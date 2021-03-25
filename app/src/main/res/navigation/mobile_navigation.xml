@@ -36,4 +36,9 @@
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -324,43 +324,41 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         }
 
         private void addRecentNumberToGrid(String number){
-            if(number.contains(" ")){
-                String n_with_color[]=number.split(" ");
-                RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(210, ViewGroup.LayoutParams.WRAP_CONTENT);
-                Button boton = new Button(getActivity());
-                boton.setLayoutParams(layoutParams);
-                boton.setText(n_with_color[0]);
-                boton.setWidth(80);
-                int color = 0;
-                int colorLetter = 0;
-                if (n_with_color[1].equalsIgnoreCase("red")) {
-                    color = Color.RED;
-                    colorLetter = Color.BLACK;
+            if(number!=null){
+                if(number.contains(" ")){
+                    String n_with_color[]=number.split(" ");
+                    RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(210, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    Button boton = new Button(getActivity());
+                    boton.setLayoutParams(layoutParams);
+                    boton.setText(n_with_color[0]);
+                    boton.setWidth(80);
+                    int color = 0;
+                    int colorLetter = 0;
+                    if (n_with_color[1].equalsIgnoreCase("red")) {
+                        color = Color.RED;
+                        colorLetter = Color.BLACK;
 
-                } else if (n_with_color[1].equalsIgnoreCase("black")) {
-                    color = Color.BLACK;
-                    colorLetter = Color.WHITE;
-                } else {
-                    color = Color.GREEN;
-                    colorLetter = Color.BLACK;
-                }
+                    } else if (n_with_color[1].equalsIgnoreCase("black")) {
+                        color = Color.BLACK;
+                        colorLetter = Color.WHITE;
+                    } else {
+                        color = Color.GREEN;
+                        colorLetter = Color.BLACK;
+                    }
 
-                boton.setBackgroundColor(color);
-                boton.setTextColor(colorLetter);
+                    boton.setBackgroundColor(color);
+                    boton.setTextColor(colorLetter);
 
-                if (recentNumbers.getChildCount() < 5) {
-                    recentNumbers.addView(boton);
-                } else {
-                    recentNumbers.removeView(recentNumbers.getChildAt(0));
-                    recentNumbers.addView(boton);
+                    if (recentNumbers.getChildCount() < 5) {
+                        recentNumbers.addView(boton);
+                    } else {
+                        recentNumbers.removeView(recentNumbers.getChildAt(0));
+                        recentNumbers.addView(boton);
+                    }
                 }
             }
-
-
-
-        }
+            }
     }
-
 
     public class Timer extends CountDownTimer{
 
