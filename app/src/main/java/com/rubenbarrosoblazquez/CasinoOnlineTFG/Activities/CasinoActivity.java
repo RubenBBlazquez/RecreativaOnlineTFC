@@ -48,11 +48,14 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private TextView balanceDialog;
     private MenuItem actualBalanceProfile;
     private RewardedVideoAd mRewardedAd;
+    private FirebaseCloudFirestore model;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casino);
+        model=new FirebaseCloudFirestore(getApplicationContext());
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -222,7 +225,6 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
             public void onRewarded(RewardItem rewardItem) {
                 //cuando el anuncio acaba, guardo en cloud firestore el saldo que tiene actualmente el usaurio, sacado al iniciar la aplicacion, y le actualizo con lo que tiene actualmente al ver el video
                 Toast.makeText(CasinoActivity.this, "Has conseguido al ver el video "+(Float.valueOf(rewardItem.getAmount())/20), Toast.LENGTH_SHORT).show();
-                FirebaseCloudFirestore model=new FirebaseCloudFirestore(getApplicationContext());
                 user.setSaldo(user.getSaldo()+Float.valueOf(rewardItem.getAmount())/20);
                 model.updateSaldo(user.getEmail(), user.getSaldo());
 
@@ -276,6 +278,11 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         }
         personalBalance.setTitle(this.user.getSaldo()+" €");
         actualBalanceProfile.setTitle(this.user.getSaldo()+" €");
+    }
+
+    @Override
+    public FirebaseCloudFirestore getFirebaseInstance() {
+        return model;
     }
 
     @Override

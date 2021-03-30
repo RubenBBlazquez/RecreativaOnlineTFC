@@ -98,6 +98,13 @@
                         android:textSize="25dp"
                         android:textStyle="bold" />
 
+                    <ImageView
+                        android:id="@+id/apuestasExtendido"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/flecha_curva" />
+
                 </LinearLayout>
 
                 <TextView

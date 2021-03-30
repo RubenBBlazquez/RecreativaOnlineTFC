@@ -4,20 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/fondo_cartas"
     android:orientation="vertical">
 
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/grid_background"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="10dp">
 
         <androidx.gridlayout.widget.GridLayout
@@ -29,7 +30,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="15dp" />
+        android:layout_height="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,10 +59,11 @@
                     tools:layout_gravity="center">
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/zeroButton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/holo_green_light"
+                        android:background="@drawable/color_bid_number_green"
+                        android:tag="0"
                         android:text="0"
                         app:layout_columnSpan="3"
                         app:layout_gravity="fill_horizontal" />
@@ -74,32 +76,71 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/grid_background"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/apostarRuleta"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_shape"
-            android:padding="10dp"
-            android:text="Apostar"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/textoDialogoSaldo"
+                android:layout_width="423dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Saldo Actual : "
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/cerrarDialogoApuesta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_shape"
-            android:padding="10dp"
-            android:text="Cerrar Diálogo"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/saldoActualDialogoApuesta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0€"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/apostarRuleta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_shape"
+                android:padding="10dp"
+                android:text="Apostar"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/cerrarDialogoApuesta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_shape"
+                android:padding="10dp"
+                android:text="Cerrar Diálogo"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
     </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/banner_apuesta_ruleta"

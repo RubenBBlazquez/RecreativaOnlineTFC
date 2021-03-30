@@ -219,7 +219,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
     private void dialogUserNoValidated(){
         AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
     }
-    
+
     private void loginWithGoogle(){
        // GoogleSignInOptions googleconf= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken();
         // Configure Google Sign In

@@ -137,11 +137,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
                             mListener.saveUserInfoInFirestore(getCurrentUser(),mAuth);
                             mListener.sendEmailVerification(mAuth.getCurrentUser());
                             mListener.backToLoginFragment();
-
+                            Toast.makeText(getContext(), "Correo de verificación enviado, Revisa el correo, y verifica la cuenta",
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("registerFail", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(getContext(), "Register fail",
+                            Toast.makeText(getContext(), "Ya hay un usuario con ese correo",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

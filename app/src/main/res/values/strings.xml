@@ -45,6 +45,8 @@
     <string name="numeros_recientes">Últimos Números Sacados</string>
     <string name="no_se_puede_apostar">LAS APUESTAS ESTÁN PARADAS, NO PUEDES APOSTAR MIENTRAS LA RULETA ESTÁ GIRANDO</string>
     <string name="apuestaactual">APUESTA ACTUAL</string>
+    <string name="seleccionaMoneda">Antes de apostar selecciona una moneda</string>
+    <string name="noSaldoParaApostar">No puedes apostar si no tienes saldo, consigue saldo y prueba de nuevo</string>
     <string name="ver_anuncio">Obtener saldo con anuncios</string>
     <string name="opciones_perfil_menu">Opciones Perfil</string>
     <string name="saldo_perfil_menu_item">Saldo Actual : </string>
