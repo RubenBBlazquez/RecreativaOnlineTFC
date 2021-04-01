@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="false"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.Administrator.SendNotificationToUsers">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F44336"
+            android:fontFamily="@font/bungee"
+            android:padding="10dp"
+            android:text="@string/tituloFragmentEnviarNoti"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bungee"
+            android:padding="10dp"
+            android:text="@string/tituloNotificacion"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/tituloNotificacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/tituloNotificacion"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bungee"
+            android:padding="10dp"
+            android:text="@string/contenidoNotificacion"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/contenidoNotificacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/contenidoNotificacion"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <Button
+            android:id="@+id/enviarNotificacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/bungee"
+            android:text="@string/enviarNotificacion"
+            android:textColor="@android:color/white" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="0dp"
+            android:ems="10"
+            android:hint="Parámetro de búsqueda ejem saldo=200"
+            android:inputType="textPersonName" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerUsersAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/usuario_item" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +32,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private EditText apellidos;
     private EditText telefono;
     private EditText direccion;
-    private ImageView dni;
-    private ImageView nuevaPerfil;
+    private EditText dni;
     private ImageView perfil;
     private TextView email;
     private TextView nombreYApellidos;
@@ -65,11 +65,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         this.telefono=v.findViewById(R.id.telefonoEditProfile);
         this.telefono.setText(this.u.getPhone());
 
-        this.direccion=v.findViewById(R.id.telefonoEditProfile);
+        this.dni=v.findViewById(R.id.dniEditProfile);
+        this.dni.setText(this.u.getDni());
+
+        this.direccion=v.findViewById(R.id.direccionEditProfile);
         this.direccion.setText(this.u.getDirection());
 
-        this.dni=v.findViewById(R.id.imagenDniSacada);
-        this.nuevaPerfil=v.findViewById(R.id.imagenPerfilSacada);
 
         this.perfil=v.findViewById(R.id.imageProfile);
 
@@ -81,6 +82,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         Button seeAd = v.findViewById(R.id.verAnuncioPerfil);
         seeAd.setOnClickListener(this);
+
+        Button actualizarDatos = v.findViewById(R.id.actualizarDatosPersonales);
+        actualizarDatos.setOnClickListener(this);
 
         this.mListenerAds.rewardedAd();
         this.mListenerAds.loadRewardedVideoAd();
@@ -107,6 +111,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 this.mListener.updateBalanceTexts();
                 this.saldo.setText(this.u.getSaldo()+0.5+" €");
                 break;
+                case R.id.actualizarDatosPersonales:
+                    try{
+                        User u=mListener.getUserInformation();
+                        u.setDni(this.dni.getText().toString());
+                        u.setPhone(this.telefono.getText().toString());
+                        u.setName(this.nombre.getText().toString());
+                        u.setApellidos(this.apellidos.getText().toString());
+                        u.setDirection(this.direccion.getText().toString());
+                        if(this.mListener.UpdateUserInformation(u)){
+                            Navigation.findNavController(v).navigate(R.id.action_nav_profile_self);
+                        }
+                    }catch (Exception e){
+                        Toast.makeText(getContext(), "Error indeterminado, comprueba los datos que has introducido", Toast.LENGTH_SHORT).show();
+                    }
+
+                    break;
         }
     }
 }

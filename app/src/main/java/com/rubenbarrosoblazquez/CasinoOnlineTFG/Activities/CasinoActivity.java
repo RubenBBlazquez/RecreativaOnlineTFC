@@ -1,9 +1,16 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +23,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -37,7 +46,9 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseMessagingModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener, OnGetUserInformation, OnAdsListener, View.OnClickListener {
@@ -49,18 +60,38 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private MenuItem actualBalanceProfile;
     private RewardedVideoAd mRewardedAd;
     private FirebaseCloudFirestore model;
+    private FirebaseMessagingModel messagingModel;
+    private BroadcastReceiver messageReceiver;
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("informacion"));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casino);
-        model=new FirebaseCloudFirestore(getApplicationContext());
+
+        Bundle b2=getIntent().getExtras();
+        if(b2!=null){
+            Toast.makeText(this, ""+b2.getString("message"), Toast.LENGTH_SHORT).show();
+        }
+
+        model = new FirebaseCloudFirestore(getApplicationContext());
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
-                Log.d("rewards","fist init success");
+                Log.d("rewards", "fist init success");
             }
         });
 
@@ -74,7 +105,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_init, R.id.nav_ruleta, R.id.nav_tragaperras, R.id.nav_blackjact, R.id.nav_carreras,R.id.nav_profile)
+                R.id.nav_init, R.id.nav_ruleta, R.id.nav_tragaperras, R.id.nav_blackjact, R.id.nav_carreras, R.id.nav_profile)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -92,40 +123,51 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         rewardedAd();
         loadRewardedVideoAd();
 
-        Menu menu=navigationView.getMenu();
-        personalBalance=menu.findItem(R.id.personalBalance);
-        personalBalance.setTitle(user.getSaldo()+" €");
+        Menu menu = navigationView.getMenu();
+        personalBalance = menu.findItem(R.id.personalBalance);
+        personalBalance.setTitle(user.getSaldo() + " €");
 
-        MenuItem admin=menu.findItem(R.id.admin);
+        MenuItem admin = menu.findItem(R.id.admin);
 
-        if(user.getTipoUser()==0){
+        if (user.getTipoUser() == 0) {
             admin.setVisible(false);
-        }else{
+        } else {
             admin.setVisible(true);
         }
+
+        messagingModel=new FirebaseMessagingModel(this);
+        messagingModel.recuperarToken(user.getEmail());
+        messagingModel.checkGooglePlayServices();
+
+        messageReceiver=new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                crearNotification(context,intent.getExtras());
+            }
+        };
 
     }
 
 
-    private void initElementsHeaderView(NavigationView navigationView, User user){
-        View header_view=navigationView.getHeaderView(0);
+    private void initElementsHeaderView(NavigationView navigationView, User user) {
+        View header_view = navigationView.getHeaderView(0);
 
 
-        TextView nombre=header_view.findViewById(R.id.userNameHeader);
+        TextView nombre = header_view.findViewById(R.id.userNameHeader);
         nombre.setText(user.getName());
 
-        TextView email=header_view.findViewById(R.id.userEmailHeader);
+        TextView email = header_view.findViewById(R.id.userEmailHeader);
         email.setText(user.getEmail());
 
-        Button logout=header_view.findViewById(R.id.logout);
+        Button logout = header_view.findViewById(R.id.logout);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor preferences= getSharedPreferences(getString(R.string.prefs_login), Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor preferences = getSharedPreferences(getString(R.string.prefs_login), Context.MODE_PRIVATE).edit();
                 preferences.clear();
                 preferences.apply();
-                Intent i=new Intent(getApplicationContext(), LoginRegisterActivity.class);
+                Intent i = new Intent(getApplicationContext(), LoginRegisterActivity.class);
                 startActivity(i);
             }
         });
@@ -148,8 +190,8 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         MenuItem item = menu.findItem(R.id.profile_menu);
         item.setOnMenuItemClickListener(this);
 
-        actualBalanceProfile=menu.findItem(R.id.saldoActualPerfil);
-        actualBalanceProfile.setTitle(this.user.getSaldo()+" €");
+        actualBalanceProfile = menu.findItem(R.id.saldoActualPerfil);
+        actualBalanceProfile.setTitle(this.user.getSaldo() + " €");
 
         return true;
     }
@@ -161,16 +203,16 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         // Get the layout inflater
         LayoutInflater inflater = getLayoutInflater();
 
-        View v=inflater.inflate(R.layout.dialog_menu_profile,null );
+        View v = inflater.inflate(R.layout.dialog_menu_profile, null);
 
-        balanceDialog=v.findViewById(R.id.saldoActualPerfilDialogo);
-        balanceDialog.setText(this.user.getSaldo()+" €");
+        balanceDialog = v.findViewById(R.id.saldoActualPerfilDialogo);
+        balanceDialog.setText(this.user.getSaldo() + " €");
         balanceDialog.setOnClickListener(this);
 
-        TextView rewardedAdd=v.findViewById(R.id.ver_add_menu_item);
+        TextView rewardedAdd = v.findViewById(R.id.ver_add_menu_item);
         rewardedAdd.setOnClickListener(this);
 
-        TextView profile=v.findViewById(R.id.ProfileOptionsMenu);
+        TextView profile = v.findViewById(R.id.ProfileOptionsMenu);
         profile.setOnClickListener(this);
 
         builder.setView(v);
@@ -182,7 +224,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ver_add_menu_item:
                 Toast.makeText(this, "has pulsado ver anuncio", Toast.LENGTH_SHORT).show();
                 showAd();
@@ -195,8 +237,8 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     }
 
     @Override
-    public void rewardedAd(){
-        mRewardedAd=MobileAds.getRewardedVideoAdInstance(this);
+    public void rewardedAd() {
+        mRewardedAd = MobileAds.getRewardedVideoAdInstance(this);
         this.mRewardedAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
 
             @Override
@@ -206,26 +248,26 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
 
             @Override
             public void onRewardedVideoAdOpened() {
-                Log.d("rewards","video abierto");
+                Log.d("rewards", "video abierto");
             }
 
             @Override
             public void onRewardedVideoStarted() {
-                Log.d("rewards","video empezado");
+                Log.d("rewards", "video empezado");
             }
 
             @Override
             public void onRewardedVideoAdClosed() {
                 loadRewardedVideoAd();
                 updateBalanceTexts();
-                Log.d("rewards","video cerrado");
+                Log.d("rewards", "video cerrado");
             }
 
             @Override
             public void onRewarded(RewardItem rewardItem) {
                 //cuando el anuncio acaba, guardo en cloud firestore el saldo que tiene actualmente el usaurio, sacado al iniciar la aplicacion, y le actualizo con lo que tiene actualmente al ver el video
-                Toast.makeText(CasinoActivity.this, "Has conseguido al ver el video "+(Float.valueOf(rewardItem.getAmount())/20), Toast.LENGTH_SHORT).show();
-                user.setSaldo(user.getSaldo()+Float.valueOf(rewardItem.getAmount())/20);
+                Toast.makeText(CasinoActivity.this, "Has conseguido al ver el video " + (Float.valueOf(rewardItem.getAmount()) / 20), Toast.LENGTH_SHORT).show();
+                user.setSaldo(user.getSaldo() + Float.valueOf(rewardItem.getAmount()) / 20);
                 model.updateSaldo(user.getEmail(), user.getSaldo());
 
                 //actualizo los textos de la aplicación donde aparece el saldo del usuario
@@ -240,18 +282,19 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
 
             @Override
             public void onRewardedVideoAdFailedToLoad(int i) {
-                Log.d("rewards","error al cargar el anuncio");
+                Log.d("rewards", "error al cargar el anuncio");
             }
 
             @Override
             public void onRewardedVideoCompleted() {
-                Log.d("rewards","Complete");
+                Log.d("rewards", "Complete");
             }
 
         });
         this.loadRewardedVideoAd();
 
     }
+
     @Override
     public void loadRewardedVideoAd() {
         mRewardedAd.loadAd("ca-app-pub-3940256099942544/5224354917",
@@ -259,8 +302,8 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     }
 
     @Override
-    public void showAd(){
-        if(this.mRewardedAd.isLoaded()){
+    public void showAd() {
+        if (this.mRewardedAd.isLoaded()) {
             mRewardedAd.show();
         }
     }
@@ -272,18 +315,25 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     }
 
     @Override
+    public boolean UpdateUserInformation(User u) {
+        return getFirestoreInstance().updateUser(u);
+    }
+
+
+    @Override
     public void updateBalanceTexts() {
-        if(balanceDialog!=null){
-            balanceDialog.setText(this.user.getSaldo()+" €");
+        if (balanceDialog != null) {
+            balanceDialog.setText(this.user.getSaldo() + " €");
         }
-        personalBalance.setTitle(this.user.getSaldo()+" €");
-        actualBalanceProfile.setTitle(this.user.getSaldo()+" €");
+        personalBalance.setTitle(this.user.getSaldo() + " €");
+        actualBalanceProfile.setTitle(this.user.getSaldo() + " €");
     }
 
     @Override
-    public FirebaseCloudFirestore getFirebaseInstance() {
+    public FirebaseCloudFirestore getFirestoreInstance() {
         return model;
     }
+
 
     @Override
     public void loadBannerAdView(AdView adView) {
@@ -296,5 +346,39 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     protected void onResume() {
         super.onResume();
         Toast.makeText(this, "anuncio acabado", Toast.LENGTH_SHORT).show();
+    }
+
+    public void crearNotification(Context context, Bundle b){
+        NotificationCompat.Builder constructorNotif=new NotificationCompat.Builder(context,"micanal");
+        constructorNotif.setSmallIcon(android.R.drawable.btn_star_big_on);
+
+        //obtener una referencia del notificador
+        NotificationManager notificationManager=(NotificationManager)context.getSystemService(context.getApplicationContext().NOTIFICATION_SERVICE);
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            NotificationChannel n=new NotificationChannel("micanal","Canal TFC",NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(n);
+        }
+
+
+        Intent resultadoIntent = new Intent(context, LoginRegisterActivity.class);
+        TaskStackBuilder pila = TaskStackBuilder.create(context);
+        pila.addParentStack(LoginRegisterActivity.class);
+
+        // Añade el Intent que comienza la Actividad al inicio de la pila
+        pila.addNextIntent(resultadoIntent);
+
+        PendingIntent resultadoPendingIntent =
+                pila.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+        constructorNotif.setContentIntent(resultadoPendingIntent);
+
+        NotificationCompat.InboxStyle expandible=new NotificationCompat.InboxStyle();
+        expandible.setBigContentTitle(b.getString("titulo"));
+        expandible.setSummaryText(b.getString("contenido"));
+        constructorNotif.setStyle(expandible);
+
+        notificationManager.notify(1,constructorNotif.build());
+
+
     }
 }

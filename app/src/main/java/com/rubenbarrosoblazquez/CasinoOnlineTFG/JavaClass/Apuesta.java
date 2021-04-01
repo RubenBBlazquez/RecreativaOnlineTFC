@@ -1,21 +1,21 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass;
 
 public class Apuesta {
-    private String numero;
+    private int numero;
     private double cantidadApostada;
     private int color;
 
-    public Apuesta(String numero, double cantidadApostada,int color) {
+    public Apuesta(int numero, double cantidadApostada,int color) {
         this.numero = numero;
         this.cantidadApostada = cantidadApostada;
         this.color=color;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
@@ -29,5 +29,14 @@ public class Apuesta {
 
     public int getColor() {
         return color;
+    }
+
+    @Override
+    public String toString() {
+        return "Apuesta{" +
+                "numero='" + numero + '\'' +
+                ", cantidadApostada=" + cantidadApostada +
+                ", color=" + color +
+                '}';
     }
 }

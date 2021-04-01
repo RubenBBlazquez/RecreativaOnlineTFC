@@ -5,18 +5,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/fondo_cartas"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@android:color/black">
 
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F44336"
+        android:fontFamily="@font/bungee"
+        android:text="Apuestas"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="5dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/grid_background"
+        android:background="#1d1d1d"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
@@ -30,12 +41,12 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="5dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="378dp"
-        android:background="@drawable/grid_background"
+        android:layout_height="267dp"
+        android:background="#1d1d1d"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -74,10 +85,14 @@
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/grid_background"
+        android:background="#1d1d1d"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -85,27 +100,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/textoDialogoSaldo"
                 android:layout_width="423dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/bungee"
                 android:text="Saldo Actual : "
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/white"
-                android:textSize="24sp" />
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"/>
 
             <TextView
                 android:id="@+id/saldoActualDialogoApuesta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/bungee"
                 android:text="0€"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -119,28 +137,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/button_shape"
-                android:padding="10dp"
+                android:background="#F44336"
+                android:fontFamily="@font/bungee"
                 android:text="Apostar"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/cerrarDialogoApuesta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_shape"
-                android:padding="10dp"
-                android:text="Cerrar Diálogo"
-                android:textColor="@android:color/white" />
+                android:background="#F44336"
+                android:fontFamily="@font/bungee"
+                android:text="Cerrar "
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
         </LinearLayout>
 
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/banner_apuesta_ruleta"

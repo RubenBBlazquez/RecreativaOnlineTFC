@@ -50,9 +50,9 @@
             android:id="@+id/admin">
             <menu>
                 <item
-                    android:id="@+id/nav_admin"
+                    android:id="@+id/nav_admin_sendNotification"
                     android:icon="@drawable/ic_menu_camera"
-                    android:title="Administrator" />
+                    android:title="@string/enviarNotificacion" />
             </menu>
         </item>
     </group>

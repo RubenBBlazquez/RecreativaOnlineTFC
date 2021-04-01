@@ -57,11 +57,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mAuth=FirebaseAuth.getInstance();
+        this.mAuth = FirebaseAuth.getInstance();
 
         if (getArguments() != null) {
 
@@ -72,25 +71,20 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_sign_in, container, false);
-        Button volver =v.findViewById(R.id.volver_register);
-        this.pais=(Spinner)v.findViewById(R.id.pais_spinner);
-        this.email=v.findViewById(R.id.email_login);
-        this.password=v.findViewById(R.id.password_login);
-        this.repeatPassword=v.findViewById(R.id.repeatPassword_register);
-        this.name=v.findViewById(R.id.nombre_register);
-        this.apellidos=v.findViewById(R.id.apellidos_register);
-        this.error_apellidos=v.findViewById(R.id.error_apellidos_register);
-        this.error_email=v.findViewById(R.id.error_email_register);
-        this.error_repeatPassword=v.findViewById(R.id.error_repeatPassword_register);
-        this.error_name=v.findViewById(R.id.error_name_register);
-        this.error_password=v.findViewById(R.id.error_password_register);
+        View v = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        Button volver = v.findViewById(R.id.volver_register);
+        this.email = v.findViewById(R.id.email_login);
+        this.password = v.findViewById(R.id.password_login);
+        this.repeatPassword = v.findViewById(R.id.repeatPassword_register);
+        this.name = v.findViewById(R.id.nombre_register);
+        this.apellidos = v.findViewById(R.id.apellidos_register);
+        this.error_apellidos = v.findViewById(R.id.error_apellidos_register);
+        this.error_email = v.findViewById(R.id.error_email_register);
+        this.error_repeatPassword = v.findViewById(R.id.error_repeatPassword_register);
+        this.error_name = v.findViewById(R.id.error_name_register);
+        this.error_password = v.findViewById(R.id.error_password_register);
 
-        this.pais.setOnItemSelectedListener(this);
-
-        this.pais.setAdapter(new CountriesAdapter(getContext(),R.layout.layout_pais, Arrays.asList(getString(R.string.titlte_spinner),"Spain","France","Portugal","United Kingdom")));
-
-        Button register=v.findViewById(R.id.register_register);
+        Button register = v.findViewById(R.id.register_register);
         register.setOnClickListener(this);
 
         volver.setOnClickListener(this);
@@ -111,12 +105,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.volver_register:
                 mListener.backToLoginFragment();
                 break;
             case R.id.register_register:
-                if(this.validateFields()){
+                if (this.validateFields()) {
                     this.register();
                 }
                 break;
@@ -125,7 +119,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
         }
     }
 
-    private void register(){
+    private void register() {
 
         mAuth.createUserWithEmailAndPassword(this.email.getText().toString(), this.password.getText().toString())
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -134,7 +128,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("registerSuccess", "createUserWithEmail:success");
-                            mListener.saveUserInfoInFirestore(getCurrentUser(),mAuth);
+                            mListener.saveUserInfoInFirestore(getCurrentUser(), mAuth);
                             mListener.sendEmailVerification(mAuth.getCurrentUser());
                             mListener.backToLoginFragment();
                             Toast.makeText(getContext(), "Correo de verificación enviado, Revisa el correo, y verifica la cuenta",
@@ -150,52 +144,51 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
     }
 
 
-
-    private User getCurrentUser(){
-        return new User(this.name.getText().toString(),this.email.getText().toString(),this.apellidos.getText().toString(),"BASIC");
+    private User getCurrentUser() {
+        return new User(this.name.getText().toString(), this.email.getText().toString(), this.apellidos.getText().toString(), "BASIC");
     }
 
 
-    private boolean validateFields(){
-        boolean correctFields=true;
+    private boolean validateFields() {
+        boolean correctFields = true;
 
-        if(this.apellidos.getText().toString().equals("")){
-            correctFields=false;
+        if (this.apellidos.getText().toString().equals("")) {
+            correctFields = false;
             error_apellidos.setText(R.string.error_apellidos_register);
             error_apellidos.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             error_apellidos.setVisibility(View.GONE);
         }
 
-        if(this.name.getText().toString().equals("")){
-            correctFields=false;
+        if (this.name.getText().toString().equals("")) {
+            correctFields = false;
             error_name.setText(R.string.error_name_register);
             error_name.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             error_name.setVisibility(View.GONE);
         }
 
-        if(this.password.getText().toString().length()<6){
-            correctFields=false;
+        if (this.password.getText().toString().length() < 6) {
+            correctFields = false;
             error_password.setText(R.string.error_password_register);
             error_password.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             error_password.setVisibility(View.GONE);
         }
 
-        if(!this.repeatPassword.getText().toString().equals(this.password.getText().toString())){
-            correctFields=false;
+        if (!this.repeatPassword.getText().toString().equals(this.password.getText().toString())) {
+            correctFields = false;
             error_repeatPassword.setText(R.string.error_repeatPassword_register);
             error_repeatPassword.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             error_repeatPassword.setVisibility(View.GONE);
         }
 
-        if(this.email.getText().toString().equals("")){
-            correctFields=false;
+        if (this.email.getText().toString().equals("")) {
+            correctFields = false;
             error_email.setText(R.string.error_email_register);
             error_email.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             error_email.setVisibility(View.GONE);
         }
 
@@ -206,48 +199,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener, Ad
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof LoginRegisterActivity){
-            Activity a=(Activity) context;
-            mListener=(OnRegisterLogInUserListener)a;
+        if (context instanceof LoginRegisterActivity) {
+            Activity a = (Activity) context;
+            mListener = (OnRegisterLogInUserListener) a;
         }
     }
 
-    public class CountriesAdapter extends ArrayAdapter<String>{
-        List<String> Countries;
-        int resource;
-        public CountriesAdapter(@NonNull Context context, int resource, @NonNull List<String> Countries) {
-            super(context, resource, Countries);
-            this.Countries =Countries;
-            this.resource=resource;
-        }
-
-        public int getCount() {
-            return Countries.size();
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            return this.crearVistaPersonalizada(position,convertView,parent);
-        }
-
-        @Override
-        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            //¿Cómo gerView genera una vista a partir del diseño?
-            return this.crearVistaPersonalizada(position,convertView,parent);
-        }
-
-        public View crearVistaPersonalizada(int position, @Nullable View convertView, @NonNull ViewGroup parent){
-            LayoutInflater li=getLayoutInflater();
-            View v=li.inflate(resource,parent,false);
-
-            TextView t=v.findViewById(R.id.CountryName);
-            t.setText(String.valueOf(this.Countries.get(position)));
-
-            return v;
-        }
-
-
-    }
 
 }

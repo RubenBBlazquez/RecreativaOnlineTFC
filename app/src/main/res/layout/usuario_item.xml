@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
+    android:elevation="10dp">
+    <LinearLayout
+        android:id="@+id/layoutUserItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="3dp"
+       >
+
+        <TextView
+            android:id="@+id/emailUsuarioItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/bungee"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Email Usuario"
+            android:padding="7dp"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/saldoUserItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:fontFamily="@font/bungee"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Saldo"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/saldoGastadoUserItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/bungee"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="7dp"
+            android:text="Saldo Gastado"
+            android:textColor="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -7,8 +7,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+
+import java.util.DoubleSummaryStatistics;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,8 +31,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdView;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
@@ -38,17 +45,20 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Apuesta;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Monedas;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClickListener, View.OnClickListener {
-    private static final String[] sectors = { "32 red", "15 black",
+    private static final String[] sectors = {"32 red", "15 black",
             "19 red", "4 black", "21 red", "2 black", "25 red", "17 black", "34 red",
-            "6 black", "27 red","13 black", "36 red", "11 black", "30 red", "8 black",
+            "6 black", "27 red", "13 black", "36 red", "11 black", "30 red", "8 black",
             "23 red", "10 black", "5 red", "24 black", "16 red", "33 black",
             "1 red", "20 black", "14 red", "31 black", "9 red", "22 black",
             "18 red", "29 black", "7 red", "28 black", "12 red", "35 black",
@@ -56,15 +66,15 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     };
     private static final String[] sectorsBids = {"1 red", "2 black",
             "3 red", "4 black", "5 red", "6 black", "7 red", "8 black", "9 red"
-            ,"10 black" ,"11 red","12 black", "13 red", "14 black", "15 red", "16 black",
+            , "10 black", "11 red", "12 black", "13 red", "14 black", "15 red", "16 black",
             "17 red", "18 black", "19 red", "20 black", "21 red", "22 black",
-            "23 red", "24 black", "25 red","26 black", "27 red", "28 black",
-            "29 red", "30 black","31 red", "32 black", "33 red", "34 black",
-            "35 red", "36 black","1/3","1/3","1/3"
+            "23 red", "24 black", "25 red", "26 black", "27 red", "28 black",
+            "29 red", "30 black", "31 red", "32 black", "33 red", "34 black",
+            "35 red", "36 black", "1/3", "1/3", "1/3"
     };
 
-    private static final Monedas[] monedasApuesta={
-            new Monedas("0.20€",false),new Monedas("0.50€",false),new Monedas("1€",false),new Monedas("2€",false),new Monedas("5€",false)
+    private static final Monedas[] monedasApuesta = {
+            new Monedas("0.20€", false), new Monedas("0.50€", false), new Monedas("1€", false), new Monedas("2€", false), new Monedas("5€", false)
     };
 
     private ImageView wheel;
@@ -74,6 +84,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     private TextView chrono;
     private androidx.gridlayout.widget.GridLayout recentNumbers;
     private AlertDialog dialog;
+    private AlertDialog dialogNumeroSacado;
+    private AlertDialog dialogApuestasExtendidas;
     private OnAdsListener mAdsListener;
     private androidx.gridlayout.widget.GridLayout monedasApuestasgrid;
     private androidx.gridlayout.widget.GridLayout numerosApuestas;
@@ -87,21 +99,25 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
         View root = inflater.inflate(R.layout.fragment_ruleta, container, false);
 
-        this.motionWheel=new WheelMotionAsync();
+        this.motionWheel = new WheelMotionAsync();
 
-        this.wheel=root.findViewById(R.id.Wheel);
+        this.wheel = root.findViewById(R.id.Wheel);
 
-        this.arrow=root.findViewById(R.id.ArrowWheel);
+        this.arrow = root.findViewById(R.id.ArrowWheel);
 
-        this.chrono=root.findViewById(R.id.chronometerWheel);
+        this.chrono = root.findViewById(R.id.chronometerWheel);
 
-        this.recentNumbers=root.findViewById(R.id.recentNumbers);
+        this.recentNumbers = root.findViewById(R.id.recentNumbers);
 
-        this.numero_sacado="";
+        this.numero_sacado = "";
 
-        this.apuestaActual=new ArrayList<>();
+        this.apuestaActual = new ArrayList<>();
 
-        this.cantidadApostada=root.findViewById(R.id.apuestaactualRuleta);
+        this.cantidadApostada = root.findViewById(R.id.apuestaactualRuleta);
+
+        ImageView apuestasExtendido = root.findViewById(R.id.apuestasExtendido);
+        apuestasExtendido.setOnClickListener(this);
+
         setHasOptionsMenu(true);
 
         return root;
@@ -116,56 +132,93 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     @Override
     public void onStop() {
         super.onStop();
-        motionWheel.salir=true;
+        motionWheel.salir = true;
         motionWheel.cancel(true);
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.ruleta_menu,menu);
-        MenuItem item=menu.findItem(R.id.apuestaRuleta);
+        inflater.inflate(R.menu.ruleta_menu, menu);
+        MenuItem item = menu.findItem(R.id.apuestaRuleta);
         item.setOnMenuItemClickListener(this);
 
     }
 
-    private void dialogoApostar(){
+    private void dialogoApostar() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View v=getLayoutInflater().inflate(R.layout.dialog_apuesta_ruleta,null);
-        numerosApuestas=v.findViewById(R.id.numerosApuestas);
+        View v = getLayoutInflater().inflate(R.layout.dialog_apuesta_ruleta, null);
+        numerosApuestas = v.findViewById(R.id.numerosApuestas);
 
-        saldo=v.findViewById(R.id.saldoActualDialogoApuesta);
+        saldo = v.findViewById(R.id.saldoActualDialogoApuesta);
         saldo.setText(String.valueOf(userListener.getUserInformation().getSaldo()));
 
-        monedasApuestasgrid=v.findViewById(R.id.monedasApuestas);
+        monedasApuestasgrid = v.findViewById(R.id.monedasApuestas);
 
-        Button apostar=v.findViewById(R.id.apostarRuleta);
+        Button apostar = v.findViewById(R.id.apostarRuleta);
         apostar.setOnClickListener(this);
 
-        Button cerrarDialogo=v.findViewById(R.id.cerrarDialogoApuesta);
+        Button cerrarDialogo = v.findViewById(R.id.cerrarDialogoApuesta);
         cerrarDialogo.setOnClickListener(this);
 
-        AdView adView=v.findViewById(R.id.banner_apuesta_ruleta);
+        AdView adView = v.findViewById(R.id.banner_apuesta_ruleta);
         this.mAdsListener.loadBannerAdView(adView);
 
-        this.pintarNumerosApuestas(numerosApuestas,v);
+        this.pintarNumerosApuestas(numerosApuestas, v);
         this.pintarGridMonedasApuestas(monedasApuestasgrid);
 
 
         builder.setView(v);
         builder.create();
-        dialog=builder.show();
+        dialog = builder.show();
 
     }
 
-    private void pintarNumerosApuestas(androidx.gridlayout.widget.GridLayout numerosApuestas,View v){
-        Button zeroGreen=v.findViewById(R.id.zeroButton);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void dialogoApuestasExtendida() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View v = getLayoutInflater().inflate(R.layout.dialog_apuestas_extendido, null);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerApuestasExtendido);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        Map<Integer, List<Apuesta>> apuestas = this.apuestaActual.stream().collect(groupingBy(e -> e.getNumero()));
+        List<Apuesta> apuestasAgrupadas = new ArrayList<>();
+        apuestas.forEach((k, valor) -> {
+            DoubleSummaryStatistics suma = valor.stream().collect(Collectors.summarizingDouble(p -> (p.getCantidadApostada())));
+            apuestasAgrupadas.add(new Apuesta(k, suma.getSum(), valor.stream().findFirst().get().getColor()));
+        });
+
+        apuestasAgrupadas.stream().sorted((o1, o2) -> Integer.compare(o1.getNumero(),o2.getNumero()));
+
+        recyclerView.setAdapter(new MyBidsRecyclerViewAdapter(apuestasAgrupadas));
+
+        Button cerrar = v.findViewById(R.id.cerrarDialogoApuestaExtendida);
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cantidadApostada.setText(getTotalApuesta() + "");
+                dialogApuestasExtendidas.dismiss();
+            }
+        });
+
+        // this.apuestaActual.forEach(e-> Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show());
+
+        builder.setView(v);
+        builder.create();
+        dialogApuestasExtendidas = builder.show();
+
+    }
+
+    private void pintarNumerosApuestas(androidx.gridlayout.widget.GridLayout numerosApuestas, View v) {
+        Button zeroGreen = v.findViewById(R.id.zeroButton);
         zeroGreen.setTag("0");
         zeroGreen.setOnClickListener(this);
 
-        GridLayout.LayoutParams param =new GridLayout.LayoutParams();
+        GridLayout.LayoutParams param = new GridLayout.LayoutParams();
         for (int i = 0; i < sectorsBids.length; i++) {
-            param =new GridLayout.LayoutParams();
+            param = new GridLayout.LayoutParams();
             Button boton = new Button(getContext());
             param.height = GridLayout.LayoutParams.WRAP_CONTENT;
             param.width = GridLayout.LayoutParams.WRAP_CONTENT;
@@ -173,36 +226,36 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             param.topMargin = 5;
             param.setGravity(Gravity.CENTER);
 
-            if(sectorsBids[i].contains(" ")) {
+            if (sectorsBids[i].contains(" ")) {
                 String sector[] = sectorsBids[i].split(" ");
                 boton.setText(sector[0]);
                 boton.setTag(sector[0]);
                 boton.setWidth(80);
                 Drawable color;
                 int colorLetter = 0;
-                int span=0;
+                int span = 0;
 
                 if (sector[1].equalsIgnoreCase("red")) {
                     color = ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red, null);
                     colorLetter = Color.BLACK;
-                    span=1;
+                    span = 1;
 
                 } else if (sector[1].equalsIgnoreCase("black")) {
                     color = ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_black, null);
                     colorLetter = Color.WHITE;
-                    span=1;
+                    span = 1;
 
                 } else {
                     color = ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_green, null);
                     colorLetter = Color.BLACK;
-                    span=3;
+                    span = 3;
                 }
 
                 boton.setBackground(color);
                 boton.setTextColor(colorLetter);
-                param.columnSpec = GridLayout.spec(0,span);
+                param.columnSpec = GridLayout.spec(0, span);
                 boton.setLayoutParams(param);
-            }else{
+            } else {
                 boton.setText(sectorsBids[i]);
                 boton.setTag(sectorsBids[i]);
                 boton.setWidth(80);
@@ -216,7 +269,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         }
     }
 
-    private void pintarGridMonedasApuestas(androidx.gridlayout.widget.GridLayout monedasApuestasgrid){
+    private void pintarGridMonedasApuestas(androidx.gridlayout.widget.GridLayout monedasApuestasgrid) {
         monedasApuestasgrid.removeAllViews();
         for (int i = 0; i < monedasApuesta.length; i++) {
             final Button boton = new Button(getContext());
@@ -233,12 +286,12 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.apuestaRuleta:
-                if(!chrono.getText().toString().equalsIgnoreCase("00:00")){
+                if (!chrono.getText().toString().equalsIgnoreCase("00:00")) {
                     this.dialogoApostar();
                     break;
-                }else{
+                } else {
                     Toast.makeText(getContext(), getString(R.string.no_se_puede_apostar), Toast.LENGTH_SHORT).show();
                 }
 
@@ -246,84 +299,97 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.cerrarDialogoApuesta:
+                this.apuestaActual.clear();
                 dialog.dismiss();
                 break;
             case R.id.apostarRuleta:
-                this.userListener.getFirebaseInstance().updateSaldo(this.userListener.getUserInformation().getEmail(),Float.valueOf(this.saldo.getText().toString()));
+                this.userListener.getFirestoreInstance().updateSaldo(this.userListener.getUserInformation().getEmail(), Float.valueOf(this.saldo.getText().toString()));
                 this.userListener.getUserInformation().setSaldo(Float.valueOf(this.saldo.getText().toString()));
+
                 this.cantidadApostada.setText(String.valueOf(this.getTotalApuesta()));
+
+                this.userListener.getUserInformation().setSaldo_gastado((float) (this.userListener.getUserInformation().getSaldo_gastado()+getTotalApuesta()));
+                this.userListener.getFirestoreInstance().updateSaldoGastado(this.userListener.getUserInformation().getEmail(), this.userListener.getUserInformation().getSaldo_gastado());
+
+                this.userListener.updateBalanceTexts();
+
                 dialog.dismiss();
                 break;
+            case R.id.apuestasExtendido:
+                this.dialogoApuestasExtendida();
+                break;
+
         }
 
 
-        if(view.getTag()!=null){
+        if (view.getTag() != null) {
             //        "0.20","0.50","1","2","5"
-            int index=0;
-            int indexApuesta=0;
-            boolean pulsado=false;
-            boolean pulsadoApuesta=false;
+            int index = 0;
+            int indexApuesta = 0;
+            boolean pulsado = false;
+            boolean pulsadoApuesta = false;
 
-            switch (String.valueOf(view.getTag())){
+            switch (String.valueOf(view.getTag())) {
                 case "0.20€":
-                    index=0;
-                    pulsado=true;
+                    index = 0;
+                    pulsado = true;
                     break;
                 case "0.50€":
-                    index=1;
-                    pulsado=true;
+                    index = 1;
+                    pulsado = true;
                     break;
                 case "1€":
-                    index=2;
-                    pulsado=true;
+                    index = 2;
+                    pulsado = true;
                     break;
                 case "2€":
-                    index=3;
-                    pulsado=true;
+                    index = 3;
+                    pulsado = true;
                     break;
                 case "5€":
-                    index=4;
-                    pulsado=true;
+                    index = 4;
+                    pulsado = true;
                     break;
                 default:
-                    if(userListener.getUserInformation().getSaldo()>0){
-                        if(checkAlgunaMonedaPulsada()){
-                            for (int i = 0; i < this.numerosApuestas.getChildCount() ; i++) {
-                                Button b= (Button) this.numerosApuestas.getChildAt(i);
-                                if(b.getText().equals(String.valueOf(view.getTag()))){
-                                    if(b.getBackground().getConstantState().equals(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_black, null).getConstantState())||
-                                            b.getBackground().getConstantState()==(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_black_pulsado, null).getConstantState())){
+                    if (checkAlgunaMonedaPulsada()) {
+                        if (Double.valueOf(this.saldo.getText().toString()) > getMonedaActualPulsada()) {
+                            for (int i = 0; i < this.numerosApuestas.getChildCount(); i++) {
+                                Button b = (Button) this.numerosApuestas.getChildAt(i);
+                                if (b.getText().equals(String.valueOf(view.getTag()))) {
+                                    if (b.getBackground().getConstantState().equals(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_black, null).getConstantState()) ||
+                                            b.getBackground().getConstantState() == (ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_black_pulsado, null).getConstantState())) {
 
                                         this.numerosApuestas.getChildAt(i).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_black_pulsado, null));
-                                        this.apuestaActual.add(new Apuesta(b.getText().toString(),getMonedaActualPulsada(),Color.BLACK));
-                                        this.saldo.setText(Double.valueOf(this.saldo.getText().toString())-getMonedaActualPulsada()+"");
+                                        this.apuestaActual.add(new Apuesta(Integer.parseInt(b.getText().toString()), getMonedaActualPulsada(), Color.BLACK));
+                                        this.saldo.setText(Double.valueOf(this.saldo.getText().toString()) - getMonedaActualPulsada() + "");
 
-                                    }else if(b.getBackground().getConstantState()==(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red, null).getConstantState()) ||
-                                            b.getBackground().getConstantState()==(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red_pulsado, null).getConstantState())){
+                                    } else if (b.getBackground().getConstantState() == (ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red, null).getConstantState()) ||
+                                            b.getBackground().getConstantState() == (ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red_pulsado, null).getConstantState())) {
 
                                         this.numerosApuestas.getChildAt(i).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red_pulsado, null));
-                                        this.apuestaActual.add(new Apuesta(b.getText().toString(),getMonedaActualPulsada(),Color.RED));
-                                        this.saldo.setText(Double.valueOf(this.saldo.getText().toString())-getMonedaActualPulsada()+"");
+                                        this.apuestaActual.add(new Apuesta(Integer.parseInt(b.getText().toString()), getMonedaActualPulsada(), Color.RED));
+                                        this.saldo.setText(Double.valueOf(this.saldo.getText().toString()) - getMonedaActualPulsada() + "");
                                     }
                                     break;
                                 }
                             }
-                        }else{
-                            Toast.makeText(getContext(), getString(R.string.seleccionaMoneda), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
                         }
-                    }else{
-                        Toast.makeText(getContext(), getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.seleccionaMoneda), Toast.LENGTH_SHORT).show();
                     }
 
             }
 
-            if(pulsado){
-                monedasApuesta[index].pulsado=true;
-                Button boton= (Button)monedasApuestasgrid.getChildAt(index);
+            if (pulsado) {
+                monedasApuesta[index].pulsado = true;
+                Button boton = (Button) monedasApuestasgrid.getChildAt(index);
                 boton.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.monedas_shape_pulsada, null));
                 despulsarMonedas(index);
             }
@@ -332,17 +398,17 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         }
     }
 
-    private void despulsarMonedas(int index){
-        for (int i = 0; i <monedasApuesta.length ; i++) {
-            if(i!=index){
-                monedasApuesta[i].pulsado=false;
+    private void despulsarMonedas(int index) {
+        for (int i = 0; i < monedasApuesta.length; i++) {
+            if (i != index) {
+                monedasApuesta[i].pulsado = false;
                 monedasApuestasgrid.getChildAt(i).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.monedas_shape, null));
             }
         }
     }
 
-    private boolean checkAlgunaMonedaPulsada(){
-        for (int i = 0; i <monedasApuesta.length ; i++) {
+    private boolean checkAlgunaMonedaPulsada() {
+        for (int i = 0; i < monedasApuesta.length; i++) {
             if (monedasApuesta[i].pulsado) {
                 return true;
             }
@@ -351,8 +417,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         return false;
     }
 
-    private double getMonedaActualPulsada(){
-        for (int i = 0; i <monedasApuesta.length ; i++) {
+    private double getMonedaActualPulsada() {
+        for (int i = 0; i < monedasApuesta.length; i++) {
             if (monedasApuesta[i].pulsado) {
                 return Double.valueOf(monedasApuesta[i].getValor().split("€")[0]);
             }
@@ -361,25 +427,42 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         return 0.0;
     }
 
-    private double getTotalApuesta(){
-        double total=0.0;
-        for (Apuesta a:this.apuestaActual) {
-            total+=a.getCantidadApostada();
+    private double getTotalApuesta() {
+        double total = 0.0;
+        for (Apuesta a : this.apuestaActual) {
+            total += a.getCantidadApostada();
         }
 
         return total;
     }
 
 
-    public class WheelMotionAsync extends AsyncTask<String,String,String>{
-        public boolean salir=false;
+    private Double getDineroGanado(String numero_sacado) {
+        double dineroGanado = 0.0;
+        int numero = Integer.parseInt(numero_sacado.split(" ")[0]);
+        for (Apuesta a : apuestaActual) {
+            if (numero == a.getNumero()) {
+                dineroGanado += a.getCantidadApostada() * 2;
+            }
+        }
+
+        userListener.getUserInformation().setSaldo((float) (userListener.getUserInformation().getSaldo() + dineroGanado));
+        userListener.getFirestoreInstance().updateSaldo(userListener.getUserInformation().getEmail(), userListener.getUserInformation().getSaldo());
+        userListener.updateBalanceTexts();
+
+        return dineroGanado;
+    }
+
+
+    public class WheelMotionAsync extends AsyncTask<String, String, String> {
+        public boolean salir = false;
         private int degree = 0, degreeOld = 0;
         private AlertDialog.Builder dialogNumber;
 
         @Override
         protected String doInBackground(String... strings) {
 
-            while(!salir){
+            while (!salir) {
                 try {
                     publishProgress();
                     Thread.sleep(60000);
@@ -396,14 +479,14 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            Timer chrono= (Timer) new Timer(60000,1000);
+            Timer chrono = (Timer) new Timer(60000, 1000);
             chrono.start();
         }
 
-        public void spinWheelWithResult(){
+        public void spinWheelWithResult() {
             degreeOld = degree % 360;
             // we calculate random angle for rotation of our wheel
-            Random r=new Random();
+            Random r = new Random();
             degree = r.nextInt(360) + 720;
             // rotation effect on the center of the wheel
             RotateAnimation rotateAnim = new RotateAnimation(degreeOld, degree,
@@ -416,20 +499,25 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 @Override
                 public void onAnimationStart(Animation animation) {
                     // we empty the result text view when the animation start
-                    if(dialog!=null){
+                    if (dialog != null) {
                         dialog.dismiss();
                     }
-                    dialogNumber=new AlertDialog.Builder(getActivity());
+                    dialogNumber = new AlertDialog.Builder(getActivity());
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     // we display the correct sector pointed by the triangle at the end of the rotate animation
-                    dialogNumber.setTitle(getString(R.string.numero_sacado));
-                    numero_sacado=getSector(360 - (degree % 360));
+                    LayoutInflater inflater = requireActivity().getLayoutInflater();
+                    View v = inflater.inflate(R.layout.dialog_numero_sacado_ruleta, null);
+                    numero_sacado = getSector(360 - (degree % 360));
+                    ((TextView) v.findViewById(R.id.textView9)).setText(getString(R.string.numero_sacado) + numero_sacado);
+                    ((TextView) v.findViewById(R.id.DineroGanadoDialogoApuesta)).setText(getString(R.string.ganarDinero) + " " + getDineroGanado(numero_sacado));
                     addRecentNumberToGrid(numero_sacado);
-                    dialogNumber.setMessage(numero_sacado);
-                    dialogNumber.show();
+                    dialogNumber.setView(v);
+                    dialogNumeroSacado = dialogNumber.show();
+                    apuestaActual.clear();
+                    cantidadApostada.setText("0");
 
                 }
 
@@ -442,6 +530,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             // we start the animation
             wheel.startAnimation(rotateAnim);
         }
+
         private static final float HALF_SECTOR = 360f / 37f / 2f;
 
         private String getSector(int degrees) {
@@ -460,16 +549,16 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 }
 
                 i++;
-            } while (text == null  &&  i < sectors.length);
+            } while (text == null && i < sectors.length);
 
             return text;
         }
 
-        private void addRecentNumberToGrid(String number){
-            if(number!=null){
-                if(number.contains(" ")){
-                    String n_with_color[]=number.split(" ");
-                    RelativeLayout.LayoutParams layoutParams=new RelativeLayout.LayoutParams(210, ViewGroup.LayoutParams.WRAP_CONTENT);
+        private void addRecentNumberToGrid(String number) {
+            if (number != null) {
+                if (number.contains(" ")) {
+                    String n_with_color[] = number.split(" ");
+                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(210, ViewGroup.LayoutParams.WRAP_CONTENT);
                     Button boton = new Button(getActivity());
                     boton.setLayoutParams(layoutParams);
                     boton.setText(n_with_color[0]);
@@ -499,10 +588,10 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                     }
                 }
             }
-            }
+        }
     }
 
-    public class Timer extends CountDownTimer{
+    public class Timer extends CountDownTimer {
 
         public Timer(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
@@ -516,7 +605,12 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             long sec = (millisUntilFinished / 1000) % 60;
 
             chrono.setText(f.format(min) + ":" + f.format(sec));
+
+            if (dialogNumeroSacado != null) {
+                dialogNumeroSacado.dismiss();
+            }
         }
+
         // When the task is over it will print 00:00:00 there
         public void onFinish() {
             chrono.setText("00:00");
@@ -526,10 +620,10 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof CasinoActivity){
-            Activity activity=(Activity)context;
-            this.mAdsListener=(OnAdsListener)activity;
-            this.userListener=(OnGetUserInformation)activity;
+        if (context instanceof CasinoActivity) {
+            Activity activity = (Activity) context;
+            this.mAdsListener = (OnAdsListener) activity;
+            this.userListener = (OnGetUserInformation) activity;
         }
     }
 }

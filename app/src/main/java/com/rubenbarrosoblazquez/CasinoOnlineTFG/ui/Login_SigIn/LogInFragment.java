@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
 import java.util.concurrent.Executor;
 
-public class LogInFragment extends Fragment implements View.OnClickListener,OnCompleteListener<AuthResult>,OnSuccessListener<DocumentSnapshot>,Runnable {
+public class LogInFragment extends Fragment implements View.OnClickListener, OnCompleteListener<AuthResult>, OnSuccessListener<DocumentSnapshot>, Runnable {
 
     private OnRegisterLogInUserListener mListener;
     private EditText email;
@@ -62,7 +63,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
     private LoginButton loginButton;
     private CallbackManager mCallbackManager;
     public static boolean registrado;
-    private static final int GOOGLE_SIGN_IN=100;
+    private static final int GOOGLE_SIGN_IN = 100;
 
 
     public LogInFragment() {
@@ -79,14 +80,14 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
 
     }
 
-    public void activeSession(){
-        SharedPreferences preferences= getActivity().getSharedPreferences(getString(R.string.prefs_login), Context.MODE_PRIVATE);
+    public void activeSession() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.prefs_login), Context.MODE_PRIVATE);
         preferences.edit().clear();
-        String email=preferences.getString("email",null);
-        String provider=preferences.getString("provider",null);
-        Log.d("preferences",email+" "+provider);
+        String email = preferences.getString("email", null);
+        String provider = preferences.getString("provider", null);
+        Log.d("preferences", email + " " + provider);
 
-        if(email!=null && provider!=null){
+        if (email != null && provider != null) {
             loginWays(email);
         }
     }
@@ -97,16 +98,16 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //FacebookSdk.sdkInitialize(getApplicationContext());
-        View v =inflater.inflate(R.layout.fragment_log_in, container, false);
-        Button registrar=v.findViewById(R.id.register_register);
-        Button login=v.findViewById(R.id.login);
-        Button loginGoogle=v.findViewById(R.id.logingoogle);
-        Button loginFacebook=v.findViewById(R.id.loginfacebook);
-        this.email=(EditText)v.findViewById(R.id.email_login);
-        this.password=(EditText)v.findViewById(R.id.password_login);
-        this.errorEmail=v.findViewById(R.id.error_email_login);
-        this.errorPassword=v.findViewById(R.id.error_password_login);
-        this.container=v.findViewById(R.id.container_login_fragment);
+        View v = inflater.inflate(R.layout.fragment_log_in, container, false);
+        Button registrar = v.findViewById(R.id.register_register);
+        Button login = v.findViewById(R.id.login);
+        ImageButton loginGoogle = v.findViewById(R.id.logingoogle);
+        ImageButton loginFacebook = v.findViewById(R.id.loginfacebook);
+        this.email = (EditText) v.findViewById(R.id.email_login);
+        this.password = (EditText) v.findViewById(R.id.password_login);
+        this.errorEmail = v.findViewById(R.id.error_email_login);
+        this.errorPassword = v.findViewById(R.id.error_password_login);
+        this.container = v.findViewById(R.id.container_login_fragment);
         //this.loginButton=(LoginButton)v.findViewById(R.id.loginfacebookLoginButtonGone);
 
         registrar.setOnClickListener(this);
@@ -119,12 +120,12 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.register_register:
                 mListener.changeFragmentToRegistered();
                 break;
             case R.id.login:
-                if(this.ValidateLoginAndPassword()){
+                if (this.ValidateLoginAndPassword()) {
                     this.logInBasic();
                 }
                 break;
@@ -139,29 +140,29 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
     }
 
 
-    private boolean ValidateLoginAndPassword(){
-        boolean validate=true;
+    private boolean ValidateLoginAndPassword() {
+        boolean validate = true;
 
-        if(this.email.getText().toString().equals("")){
-            validate=false;
+        if (this.email.getText().toString().equals("")) {
+            validate = false;
             this.errorEmail.setText(R.string.error_email_register);
             this.errorEmail.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             this.errorEmail.setVisibility(View.GONE);
         }
 
-        if(this.password.getText().toString().equals("")){
-            validate=false;
+        if (this.password.getText().toString().equals("")) {
+            validate = false;
             this.errorPassword.setText(R.string.error_password_login);
             this.errorPassword.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             this.errorPassword.setVisibility(View.GONE);
         }
 
         return validate;
     }
 
-    private void logInBasic(){
+    private void logInBasic() {
         mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(getActivity(), this);
     }
@@ -184,7 +185,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
     }
 
 
-    private void loginWays(String email){
+    private void loginWays(String email) {
 
         db.collection("users").document(email).get().addOnSuccessListener(this);
 
@@ -194,34 +195,32 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
     @Override
     public void onSuccess(DocumentSnapshot d) {
         Log.d("user", String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
-        if(this.mAuth.getCurrentUser().isEmailVerified()){
+        if (this.mAuth.getCurrentUser().isEmailVerified()) {
             User u;
-            u=new User(String.valueOf(d.get("Name")),String.valueOf(d.get("Email")),String.valueOf(d.get("Last name's")),String.valueOf(d.get("Provider")));
+            u = new User(String.valueOf(d.get("Name")), String.valueOf(d.get("Email")), String.valueOf(d.get("Last name's")), String.valueOf(d.get("Provider")));
             u.setVerified(String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
-            u.setDirection((String)d.get("Direction"));
-            u.setPhone((String)d.get("Phone"));
-            u.setDni((String)d.get("Dni"));
+            u.setDirection((String) d.get("Direction"));
+            u.setPhone((String) d.get("Phone"));
+            u.setDni((String) d.get("Dni"));
             u.setSaldo(Float.valueOf(d.getString("Saldo")));
             u.setTipoUser(Integer.parseInt(d.getString("TipoUser")));
+            u.setTelefonoVerified(Boolean.valueOf(d.getString("TelefonoVerificado")));
+            u.setDniVerified(Boolean.valueOf(d.getString("DniVerificado")));
             addDataToSharedPreferences(u);
-            db.collection("users").document(u.getEmail()).update("Verified","true");
+            db.collection("users").document(u.getEmail()).update("Verified", "true");
             mListener.logInOk(u);
 
-        }else{
+        } else {
             Toast.makeText(getContext(), getString(R.string.email_send), Toast.LENGTH_SHORT).show();
-            Thread checkVerification=new Thread(this);
+            Thread checkVerification = new Thread(this);
             checkVerification.start();
             this.mListener.sendEmailVerification(this.mAuth.getCurrentUser());
 
         }
     }
 
-    private void dialogUserNoValidated(){
-        AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
-    }
-
-    private void loginWithGoogle(){
-       // GoogleSignInOptions googleconf= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken();
+    private void loginWithGoogle() {
+        // GoogleSignInOptions googleconf= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken();
         // Configure Google Sign In
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -229,24 +228,24 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
                 .requestEmail()
                 .build();
 
-        GoogleSignInClient mGoogleSignInClient= GoogleSignIn.getClient(getActivity(),gso);
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
         mGoogleSignInClient.signOut();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
 
-    private void googleInfoAccount(Intent data){
+    private void googleInfoAccount(Intent data) {
         try {
             // Google Sign In was successful, authenticate with Firebase
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            Log.d("Hola","e");
+            Log.d("Hola", "e");
 
             final GoogleSignInAccount account = task.getResult(ApiException.class);
 
-            if(account!=null){
+            if (account != null) {
 
                 Log.d("google", "firebaseAuthWithGoogle:" + account.getId());
-                AuthCredential credet= GoogleAuthProvider.getCredential(account.getIdToken(),null);
+                AuthCredential credet = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
                 mAuth.signInWithCredential(credet).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -263,30 +262,30 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
         }
     }
 
-    private void UserExists(final GoogleSignInAccount account){
+    private void UserExists(final GoogleSignInAccount account) {
         try {
             this.db.collection("users").document(account.getEmail()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if(!documentSnapshot.exists()){
-                        User u=new User(account.getDisplayName(), account.getEmail(), account.getFamilyName(), "GOOGLE");
-                        mListener.saveUserInfoInFirestore(u,mAuth);
+                    if (!documentSnapshot.exists()) {
+                        User u = new User(account.getDisplayName(), account.getEmail(), account.getFamilyName(), "GOOGLE");
+                        mListener.saveUserInfoInFirestore(u, mAuth);
                         loginWays(account.getEmail());
-                    }else{
+                    } else {
                         loginWays(account.getEmail());
                     }
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(getContext(), "error indeterminado", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    private void loginWithFacebook(){
+    private void loginWithFacebook() {
         mCallbackManager = CallbackManager.Factory.create();
         loginButton.performClick();
-        loginButton.setReadPermissions("email","public_profile");
+        loginButton.setReadPermissions("email", "public_profile");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -318,10 +317,10 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("facebook", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String email=user.getEmail();
-                            String nombre=user.getDisplayName();
-                            User u=new User(nombre, email, nombre, "FACEBOOK");
-                            mListener.saveUserInfoInFirestore(u,mAuth);
+                            String email = user.getEmail();
+                            String nombre = user.getDisplayName();
+                            User u = new User(nombre, email, nombre, "FACEBOOK");
+                            mListener.saveUserInfoInFirestore(u, mAuth);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("facebook", "signInWithCredential:failure", task.getException());
@@ -333,13 +332,11 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
     }
 
 
-
-
     public void addDataToSharedPreferences(User u) {
-        Log.d("preferences",u.toString());
-        SharedPreferences.Editor preferences= getActivity().getSharedPreferences(getString(R.string.prefs_login), Context.MODE_PRIVATE).edit();
-        preferences.putString("email",u.getEmail());
-        preferences.putString("provider",u.getProvider());
+        Log.d("preferences", u.toString());
+        SharedPreferences.Editor preferences = getActivity().getSharedPreferences(getString(R.string.prefs_login), Context.MODE_PRIVATE).edit();
+        preferences.putString("email", u.getEmail());
+        preferences.putString("provider", u.getProvider());
         preferences.apply();
     }
 
@@ -347,35 +344,36 @@ public class LogInFragment extends Fragment implements View.OnClickListener,OnCo
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Hola","u");
+        Log.d("Hola", "u");
 
-        if(requestCode==GOOGLE_SIGN_IN){
+        if (requestCode == GOOGLE_SIGN_IN) {
             this.googleInfoAccount(data);
         }
     }
 
-   @Override
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        if(context instanceof LoginRegisterActivity){
-            Activity a=(Activity)context;
-            this.mListener=(OnRegisterLogInUserListener)a;
+        if (context instanceof LoginRegisterActivity) {
+            Activity a = (Activity) context;
+            this.mListener = (OnRegisterLogInUserListener) a;
         }
     }
 
     @Override
     public void run() {
-        boolean salir=false;
-        while(!salir){
+        boolean salir = false;
+        while (!salir) {
             this.mAuth.getCurrentUser().reload();
             try {
                 Thread.sleep(2000);
+                Log.d("hiloVerificacion","g");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(this.mAuth.getCurrentUser().isEmailVerified()){
-                salir=true;
+            if (this.mAuth.getCurrentUser().isEmailVerified()) {
+                salir = true;
             }
         }
         //Toast.makeText(getContext(), getString(R.string.email_Verified), Toast.LENGTH_SHORT).show();

@@ -13,7 +13,11 @@ public class User implements Serializable {
     private String provider;
     private String pais;
     private float saldo;
+    private float saldo_gastado;
     private int tipoUser;
+    private boolean dniVerified;
+    private boolean telefonoVerified;
+    private String token;
 
     public User(String name, String email, String apellidos, String provider) {
         this.name = name;
@@ -27,6 +31,42 @@ public class User implements Serializable {
         this.pais="";
         this.saldo=0.0f;
         this.tipoUser=0;
+        this.dniVerified=false;
+        this.telefonoVerified=false;
+        this.saldo_gastado=0.0f;
+        this.token="";
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public float getSaldo_gastado() {
+        return saldo_gastado;
+    }
+
+    public void setSaldo_gastado(float saldo_gastado) {
+        this.saldo_gastado = saldo_gastado;
+    }
+
+    public boolean isDniVerified() {
+        return dniVerified;
+    }
+
+    public void setDniVerified(boolean dniVerified) {
+        this.dniVerified = dniVerified;
+    }
+
+    public boolean isTelefonoVerified() {
+        return telefonoVerified;
+    }
+
+    public void setTelefonoVerified(boolean telefonoVerified) {
+        this.telefonoVerified = telefonoVerified;
     }
 
     public String getName() {

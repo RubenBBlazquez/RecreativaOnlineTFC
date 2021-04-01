@@ -35,10 +35,14 @@
         android:id="@+id/nav_profile"
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_nav_profile_self"
+            app:destination="@id/nav_profile" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_admin"
-        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileFragment"
+        android:id="@+id/nav_admin_sendNotification"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.SendNotificationToUsers"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_send_notification_to_users" />
 </navigation>

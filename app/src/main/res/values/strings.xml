@@ -11,7 +11,7 @@
     <string name="hintDniPassword">Escribe tu dni/nif</string>
     <string name="hintName">Escribe tu Nombre</string>
     <string name="hintLastName">Escribe tus apellidos</string>
-    <string name="volver_registro">Volver al panel de Inicio de Sesion</string>
+    <string name="volver_registro">Inicio de Sesion</string>
     <string name="error_repeatPassword_register">Las contraseñas no coinciden</string>
     <string name="error_dni_register">El dni no es correcto comprueba el formato</string>
     <string name="error_apellidos_register">Rellena el campo Apellidos</string>
@@ -41,12 +41,13 @@
     <string name="menu_profile">Perfil</string>
     <string name="saldo_actual">Saldo Actual De La Cuenta :</string>
     <string name="saldo_actual_perfil">Saldo</string>
-    <string name="numero_sacado">Ha Salido El Número .........</string>
+    <string name="numero_sacado">Ha Salido El Número ....</string>
+    <string name="ganarDinero">Has Ganado ...</string>
     <string name="numeros_recientes">Últimos Números Sacados</string>
     <string name="no_se_puede_apostar">LAS APUESTAS ESTÁN PARADAS, NO PUEDES APOSTAR MIENTRAS LA RULETA ESTÁ GIRANDO</string>
     <string name="apuestaactual">APUESTA ACTUAL</string>
     <string name="seleccionaMoneda">Antes de apostar selecciona una moneda</string>
-    <string name="noSaldoParaApostar">No puedes apostar si no tienes saldo, consigue saldo y prueba de nuevo</string>
+    <string name="noSaldoParaApostar">No puedes apostar si no tienes el saldo suficiente, consigue saldo y prueba de nuevo</string>
     <string name="ver_anuncio">Obtener saldo con anuncios</string>
     <string name="opciones_perfil_menu">Opciones Perfil</string>
     <string name="saldo_perfil_menu_item">Saldo Actual : </string>
@@ -54,5 +55,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ver_anuncio_menu_item">Obtener Saldo Gratis</string>
     <string name="textoDatosPersonales">Datos Personales</string>
+    <string name="tituloFragmentEnviarNoti">Enviar Notificación a Usuarios</string>
+    <string name="tituloNotificacion">Titulo de la notificación</string>
+    <string name="contenidoNotificacion">Contenido de la notificación</string>
+    <string name="enviarNotificacion">Enviar Notificación a Usuarios</string>
 
 </resources>

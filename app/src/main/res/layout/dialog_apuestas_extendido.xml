@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1d1d1d"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F44336"
+        android:fontFamily="@font/bungee"
+        android:padding="10dp"
+        android:text="Apuestas Ronda Actual"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerApuestasExtendido"
+        android:layout_width="match_parent"
+        android:layout_height="221dp"
+        android:padding="10dp"
+        tools:listitem="@layout/apuesta_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/cerrarDialogoApuestaExtendida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_shape"
+        android:fontFamily="@font/bungee"
+        android:padding="10dp"
+        android:text="Cerrar"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+
+</LinearLayout>

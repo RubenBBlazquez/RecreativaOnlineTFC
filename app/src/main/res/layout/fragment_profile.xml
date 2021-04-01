@@ -149,6 +149,7 @@
                             android:layout_below="@+id/imagenPayment"
                             android:layout_marginTop="5dp"
                             android:text="Añadir Saldo"
+                            android:gravity="center"
                             android:fontFamily="@font/bungee"
                             android:background="#B71C1C"
                             android:textColor="@android:color/background_light"/>
@@ -160,6 +161,7 @@
                             android:layout_below="@+id/AñadirSaldo"
                             android:padding="5dp"
                             android:layout_marginTop="5dp"
+                            android:gravity="center"
                             android:text="Ver Anuncio"
                             android:fontFamily="@font/bungee"
                             android:background="#B71C1C"
@@ -175,7 +177,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:fontFamily="@font/bungee"
-                android:padding="10dp"
+                android:padding="5dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/textoDatosPersonales"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
@@ -184,7 +187,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <EditText
@@ -192,98 +195,58 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
                     android:ems="10"
                     android:hint="Nombre"
-                    android:inputType="textPersonName" />
+                    android:inputType="text" />
 
                 <EditText
                     android:id="@+id/apellidoEditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
                     android:ems="10"
                     android:hint="Apellidos"
-                    android:inputType="textPersonName" />
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/direccionEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:ems="10"
+                    android:hint="Dirección"
+                    android:inputType="text" />
 
                 <EditText
                     android:id="@+id/telefonoEditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
                     android:ems="10"
                     android:hint="Teléfono"
-                    android:inputType="textPersonName" />
+                    android:inputType="number" />
 
                 <EditText
-                    android:id="@+id/dirEditProfile"
+                    android:id="@+id/dniEditProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
                     android:ems="10"
-                    android:hint="Dirección"
-                    android:inputType="textPersonName" />
+                    android:hint="Dni"
+                    android:inputType="text" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/sacarFotoDni"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_weight="1"
-                        android:text="Sacar Foto Dni"
-                        android:fontFamily="@font/bungee"
-                        android:background="#B71C1C"
-                        android:textColor="@android:color/background_light"/>
 
-                    <ImageView
-                        android:id="@+id/imagenDniSacada"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@android:drawable/btn_star_big_on"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/sacarFotoPerfil"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:layout_marginTop="20dp"
-                        android:text="Sacar Foto Perfil"
-                        android:fontFamily="@font/bungee"
-                        android:background="@color/colorPrimary"
-                        android:textColor="@android:color/background_light"/>
-
-                    <ImageView
-                        android:id="@+id/imagenPerfilSacada"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@android:drawable/btn_star_big_on"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -294,11 +257,57 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginBottom="20dp"
                 android:text="Actualizar Datos Personales"
                 android:fontFamily="@font/bungee"
-                android:background="#B71C1C"
+                android:background="@color/colorPrimary"
                 android:textColor="@android:color/background_light"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:layout_margin="20dp"
+                android:background="@color/colorPrimaryDark"
+                android:orientation="horizontal" />
+
+                <Button
+                    android:id="@+id/sacarFotoDni"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:text="Validar Dni"
+                    android:fontFamily="@font/bungee"
+                    android:background="#B71C1C"
+                    android:textColor="@android:color/background_light"/>
+
+
+
+                <Button
+                    android:id="@+id/validarTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:text="Validar Teléfono"
+                    android:fontFamily="@font/bungee"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/background_light"/>
+
+
+                <Button
+                    android:id="@+id/sacarFotoPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:text="Sacar Foto Perfil"
+                    android:fontFamily="@font/bungee"
+                    android:background="#B71C1C"
+                    android:textColor="@android:color/background_light"/>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
