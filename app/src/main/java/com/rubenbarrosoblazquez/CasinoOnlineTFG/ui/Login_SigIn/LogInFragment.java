@@ -202,7 +202,8 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
             u.setDirection((String) d.get("Direction"));
             u.setPhone((String) d.get("Phone"));
             u.setDni((String) d.get("Dni"));
-            u.setSaldo(Float.valueOf(d.getString("Saldo")));
+            u.setSaldo(Float.valueOf(String.valueOf( d.get("Saldo"))));
+            u.setSaldo_gastado(Float.valueOf(String.valueOf( d.get("SaldoGastado"))));
             u.setTipoUser(Integer.parseInt(d.getString("TipoUser")));
             u.setTelefonoVerified(Boolean.valueOf(d.getString("TelefonoVerificado")));
             u.setDniVerified(Boolean.valueOf(d.getString("DniVerificado")));

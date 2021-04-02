@@ -36,7 +36,7 @@ import java.util.HashMap;
 public class LoginRegisterActivity extends AppCompatActivity implements OnRegisterLogInUserListener {
     private FrameLayout container;
     private User InfoUserLogged;
-    private motionLetter task;
+    //private motionLetter task;
 
 
     @Override
@@ -44,29 +44,28 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
         this.container = findViewById(R.id.container_session);
-
+        getSupportActionBar().hide();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.container_session, new LogInFragment())
                 .commit();
-
-
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        task = new motionLetter();
-        task.execute(" CASINO ONLINE");
+       // task = new motionLetter();
+        //task.execute(" CASINO ONLINE");
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        task.salir = true;
+        //task.salir = true;
         Log.d("asynctask", "async parado");
+
     }
 
     @Override
@@ -123,18 +122,17 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
         usuario.put("Dni", u.getDni());
         usuario.put("Verified", String.valueOf(mAuth.getCurrentUser().isEmailVerified()));
         usuario.put("Provider", u.getProvider());
-        usuario.put("Saldo", u.getSaldo() + "");
-        usuario.put("SaldoGastadp", u.getSaldo_gastado() + "");
         usuario.put("TipoUser", u.getTipoUser() + "");
         usuario.put("DniVerificado",u.isDniVerified()+"");
         usuario.put("TelefonoVerificado",u.isTelefonoVerified()+"");
 
         db.collection("users").document(u.getEmail()).set(usuario);
-
+        db.collection("users").document(u.getEmail()).update("Saldo",u.getSaldo());
+        db.collection("users").document(u.getEmail()).update("SaldoGastado",u.getSaldo_gastado());
     }
 
 
-    public class motionLetter extends AsyncTask<String, String, String> {
+    /*public class motionLetter extends AsyncTask<String, String, String> {
         public boolean salir = false;
 
         @Override
@@ -157,19 +155,13 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            View v = getLayoutInflater().inflate(R.layout.custom_action_bar_login, null);
-            TextView t = v.findViewById(R.id.nombre_activity);
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) t.getLayoutParams();
-            layoutParams.gravity = Gravity.RIGHT;
-            layoutParams.leftMargin = 80;
+
+            TextView t = findViewById(R.id.textoCasino);
             t.setText(values[0]);
             int colores[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
             t.setTextColor(colores[(int) (Math.random() * 4)]);
-            t.setLayoutParams(layoutParams);
-            getSupportActionBar().setCustomView(v);
         }
-    }
+    }*/
 
 
 }

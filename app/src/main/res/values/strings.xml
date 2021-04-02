@@ -17,8 +17,8 @@
     <string name="error_apellidos_register">Rellena el campo Apellidos</string>
     <string name="error_name_register">Rellena el campo nombre</string>
     <string name="error_password_register">La contraseña debe tener un mínimo de 6 carácteres</string>
-    <string name="error_email_register">Rellena el campo del email , no puede estár vacío</string>
-    <string name="error_password_login">Rellena el campo de la contraseña , no puede estár vacío</string>
+    <string name="error_email_register">Rellena el campo del email , no puede estar vacío</string>
+    <string name="error_password_login">Rellena el campo de la contraseña , no puede estar vacío</string>
     <string name="email_verfication_tittle">Verificación Email \n Pulsa el Enlace Enviado A Tu Correo</string>
     <string name="verificar_email_button">Reenviar Correo Verificación</string>
     <string name="title_activity_cosas">cosasActivity</string>
@@ -37,7 +37,7 @@
     <string name="menu_init">Inicio</string>
     <string name="menu_tragaperras">TragaPerras</string>
     <string name="menu_blackjack">BlackJack</string>
-    <string name="menu_carreras">Apuestas Carreras</string>
+    <string name="menu_servicios">Servicios</string>
     <string name="menu_profile">Perfil</string>
     <string name="saldo_actual">Saldo Actual De La Cuenta :</string>
     <string name="saldo_actual_perfil">Saldo</string>

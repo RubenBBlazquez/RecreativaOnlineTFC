@@ -32,10 +32,10 @@ public class FirebaseCloudFirestore {
     }
 
     public void updateSaldo(String user,Float saldo) {
-        this.mFirebaseFirestore.collection("users").document(user).update("Saldo",String.valueOf(saldo));
+        this.mFirebaseFirestore.collection("users").document(user).update("Saldo",saldo);
     }
     public void updateSaldoGastado(String user,Float saldoGastado) {
-        this.mFirebaseFirestore.collection("users").document(user).update("SaldoGastado",String.valueOf(saldoGastado));
+        this.mFirebaseFirestore.collection("users").document(user).update("SaldoGastado",saldoGastado);
     }
 
     public boolean updateUser(User u) {
@@ -70,7 +70,7 @@ public class FirebaseCloudFirestore {
         }
     }
 
-    public void getAllUsers( ArrayList<User> usuariosSeleccionados,ArrayList<User> usuarios, MyUsersAdminRecyclerViewAdapter adapter){
+    public void getAllUsers( ArrayList<User> usuarios, MyUsersAdminRecyclerViewAdapter adapter){
         mFirebaseFirestore.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -80,18 +80,93 @@ public class FirebaseCloudFirestore {
                     for (DocumentSnapshot d: users) {
                         if(d.getString("token")!=null){
                             User u = new User(d.getString("Name"),d.getString("Email"),d.getString("Last name's"),d.getString("provider"));
-                            u.setSaldo(Float.valueOf(d.getString("Saldo")));
-                            u.setSaldo_gastado(Float.valueOf(d.getString("SaldoGastado")));
+                            u.setSaldo(Float.valueOf(String.valueOf( d.get("Saldo"))));
+                            u.setSaldo_gastado(Float.valueOf(String.valueOf( d.get("SaldoGastado"))));
                             u.setToken(d.getString("token"));
                             usuarios.add(u);
-                            usuariosSeleccionados.add(u);
+                            adapter.notifyDataSetChanged();
                         }
                     }
 
-                    adapter.notifyDataSetChanged();
-
                 }else{
                    Log.d("tokens","-error");
+                }
+            }
+        });
+    }
+
+    public void getUsersBySaldoGreaterEqual(ArrayList<User> usuarios, MyUsersAdminRecyclerViewAdapter adapter,float saldo){
+        mFirebaseFirestore.collection("users").whereGreaterThanOrEqualTo("Saldo",saldo).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<DocumentSnapshot> users=task.getResult().getDocuments();
+                    String tokens="";
+                    for (DocumentSnapshot d: users) {
+                        if(d.getString("token")!=null){
+                            User u = new User(d.getString("Name"),d.getString("Email"),d.getString("Last name's"),d.getString("provider"));
+                            u.setSaldo(Float.valueOf(String.valueOf( d.get("Saldo"))));
+                            u.setSaldo_gastado(Float.valueOf(String.valueOf( d.get("SaldoGastado"))));
+                            u.setToken(d.getString("token"));
+                            usuarios.add(u);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                }else{
+                    Log.d("tokens","-error");
+                }
+            }
+        });
+    }
+
+    public void getUsersBySaldoLessEqual(ArrayList<User> usuarios, MyUsersAdminRecyclerViewAdapter adapter,float saldo){
+        mFirebaseFirestore.collection("users").whereLessThanOrEqualTo("Saldo",saldo).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<DocumentSnapshot> users=task.getResult().getDocuments();
+
+                    for (DocumentSnapshot d: users) {
+                        if(d.getString("token")!=null){
+                            User u = new User(d.getString("Name"),d.getString("Email"),d.getString("Last name's"),d.getString("provider"));
+                            u.setSaldo(Float.valueOf(String.valueOf( d.get("Saldo"))));
+                            u.setSaldo_gastado(Float.valueOf(String.valueOf( d.get("SaldoGastado"))));
+                            u.setToken(d.getString("token"));
+                            usuarios.add(u);
+                            adapter.notifyDataSetChanged();
+                            Log.d("tokens",u.getEmail());
+
+                        }
+                    }
+
+                }else{
+                    Log.d("tokens","-error");
+                }
+            }
+        });
+    }
+
+    public void getUsersByEqual(ArrayList<User> usuarios, MyUsersAdminRecyclerViewAdapter adapter,float saldo){
+        mFirebaseFirestore.collection("users").whereEqualTo("Saldo",saldo).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<DocumentSnapshot> users=task.getResult().getDocuments();
+                    String tokens="";
+                    for (DocumentSnapshot d: users) {
+                        if(d.getString("token")!=null){
+                            User u = new User(d.getString("Name"),d.getString("Email"),d.getString("Last name's"),d.getString("provider"));
+                            u.setSaldo(Float.valueOf(String.valueOf( d.get("Saldo"))));
+                            u.setSaldo_gastado(Float.valueOf(String.valueOf( d.get("SaldoGastado"))));
+                            u.setToken(d.getString("token"));
+                            usuarios.add(u);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                }else{
+                    Log.d("tokens","-error");
                 }
             }
         });

@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_profile, container, false);
         //v.getContext().setTheme(R.style.AppThemeProfile);
-        this.saldo=v.findViewById(R.id.saldoPerfil);
+        this.saldo=v.findViewById(R.id.textoCasino);
         this.saldo.setText(this.u.getSaldo()+" €");
 
         this.nombre=v.findViewById(R.id.nombreEditProfile);
@@ -119,6 +119,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         u.setName(this.nombre.getText().toString());
                         u.setApellidos(this.apellidos.getText().toString());
                         u.setDirection(this.direccion.getText().toString());
+
                         if(this.mListener.UpdateUserInformation(u)){
                             Navigation.findNavController(v).navigate(R.id.action_nav_profile_self);
                         }

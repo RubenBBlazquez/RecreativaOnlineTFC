@@ -14,35 +14,35 @@
             <menu>
                 <item
                     android:id="@+id/nav_init"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/ic_home"
                     android:title="Inicio" />
                 <item
                     android:id="@+id/nav_ruleta"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/ic_ruleta_de_casino_icon"
                     android:title="@string/menu_rule" />
                 <item
                     android:id="@+id/nav_tragaperras"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@drawable/ic_slot_machine"
                     android:title="@string/menu_tragaperras" />
                 <item
                     android:id="@+id/nav_blackjact"
                     android:icon="@drawable/ic_menu_slideshow"
                     android:title="@string/menu_blackjack" />
                 <item
-                    android:id="@+id/nav_carreras"
-                    android:icon="@drawable/ic_menu_slideshow"
-                    android:title="@string/menu_carreras" />
+                    android:id="@+id/nav_servicios"
+                    android:icon="@drawable/ic_servicios"
+                    android:title="@string/menu_servicios" />
             </menu>
         </item>
         <item android:title="User Info">
             <menu>
                 <item
                     android:id="@+id/nav_profile"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/ic_perfil"
                     android:title="Perfil" />
                 <item
                     android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@drawable/ic_ajustes"
                     android:title="Ajustes" />
             </menu>
         </item>
@@ -51,7 +51,7 @@
             <menu>
                 <item
                     android:id="@+id/nav_admin_sendNotification"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@drawable/ic_notificaciones"
                     android:title="@string/enviarNotificacion" />
             </menu>
         </item>

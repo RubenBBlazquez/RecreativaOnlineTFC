@@ -35,7 +35,8 @@
             android:padding="10dp"
             android:text="@string/tituloNotificacion"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/tituloNotificacion"
@@ -58,7 +59,8 @@
             android:padding="10dp"
             android:text="@string/contenidoNotificacion"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/contenidoNotificacion"
@@ -77,21 +79,71 @@
             android:id="@+id/enviarNotificacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:background="@color/colorPrimary"
             android:fontFamily="@font/bungee"
             android:text="@string/enviarNotificacion"
             android:textColor="@android:color/white" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/filtrarUsuaiosAdminNoti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="5dp"
             android:layout_marginBottom="0dp"
             android:ems="10"
             android:hint="Parámetro de búsqueda ejem saldo=200"
             android:inputType="textPersonName" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutUserItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:layout_margin="5dp"
+            >
+
+            <TextView
+                android:id="@+id/emailUsuarioItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/bungee"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Email Usuario"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/saldoUserItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/bungee"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Saldo"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/saldoGastadoUserItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/bungee"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Saldo Gastado"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerUsersAdmin"
             android:layout_width="match_parent"

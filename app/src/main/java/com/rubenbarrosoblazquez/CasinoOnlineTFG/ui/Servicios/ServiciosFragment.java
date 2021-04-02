@@ -1,4 +1,4 @@
-package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.ApuestasCarreras;
+package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,16 +15,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
 
-public class ApuestasCarrerasFragment extends Fragment {
+public class ServiciosFragment extends Fragment {
 
-    private ApuestasCarrerasViewModel ApuestasCarrerasViewModel;
+    private ServiciosViewModel ApuestasCarrerasViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ApuestasCarrerasViewModel =
-                new ViewModelProvider(this).get(ApuestasCarrerasViewModel.class);
+                new ViewModelProvider(this).get(ServiciosViewModel.class);
 
-        View root = inflater.inflate(R.layout.fragment_apuestas_carreras, container, false);
+        View root = inflater.inflate(R.layout.fragment_servicios, container, false);
 
         final TextView textView = root.findViewById(R.id.text_carreras);
 

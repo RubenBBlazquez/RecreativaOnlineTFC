@@ -48,7 +48,7 @@ public class MyUsersAdminRecyclerViewAdapter extends RecyclerView.Adapter<MyUser
             public void onClick(View view) {
                 holder.check=!holder.check;
                 if(holder.check){
-                    holder.container.setBackgroundColor(Color.BLACK);
+                    holder.container.setBackgroundColor(Color.parseColor("#F44336"));
                 }else{
                     holder.container.setBackgroundColor(Color.WHITE);
                 }

@@ -50,7 +50,6 @@ public class FirebaseMessagingModel {
 
                     }
                 });
-
     }
 
     public boolean checkGooglePlayServices() {

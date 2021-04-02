@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondocasino"
     tools:context=".Activities.LoginRegisterActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -17,145 +16,268 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <Space
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp" />
+                android:layout_height="wrap_content"
+                android:background="@color/colorSecondary"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp"
+                >
 
-            <EditText
-                android:id="@+id/nombre_register"
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    android:theme="@style/Theme.MaterialComponents.DayNight">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#B71C1C">
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            app:srcCompat="@drawable/logo_app"
+                            android:padding="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:layout_weight="1"
+                            >
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
+                                app:cardBackgroundColor="@color/colorSecondary"
+                                app:cardElevation="20dp"
+                                app:cardCornerRadius="5dp"
+                                android:theme="@style/Theme.MaterialComponents.DayNight">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    >
+
+                                    <TextView
+                                        android:id="@+id/textoCasino"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="10dp"
+                                        android:fontFamily="@font/bungee"
+                                        android:gravity="center"
+                                        android:text="CASINO ONLINE"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="20dp"
+                                        android:textStyle="italic"
+                                        ></TextView>
+
+                                </RelativeLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/registro"
+                    android:fontFamily="@font/bungee"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:textStyle="italic|bold"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView3"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="-10dp"
+                app:srcCompat="@drawable/ic_wave_bloque" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_shape"
-                android:elevation="3dp"
-                android:ems="10"
                 android:hint="@string/hintName"
-                android:inputType="textPersonName"
-                android:padding="15dp" />
+                app:counterTextColor="@android:color/black"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nombre_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/error_name_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:fontFamily="@font/error"
                 android:padding="10dp"
                 android:textColor="@android:color/holo_red_light"
                 android:textSize="15dp"
-                android:background="#DF000000"
+                android:background="@drawable/error_shape"
                 android:visibility="gone"
                 tools:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/apellidos_register"
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_shape"
-                android:elevation="3dp"
-                android:ems="10"
                 android:hint="@string/hintLastName"
-                android:inputType="textPersonName"
-                android:padding="15dp" />
+                app:counterTextColor="@android:color/black"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/apellidos_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/error_apellidos_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:fontFamily="@font/error"
                 android:padding="10dp"
                 android:textColor="@android:color/holo_red_light"
                 android:textSize="15dp"
-                android:background="#DF000000"
+                android:background="@drawable/error_shape"
                 android:visibility="gone"
                 tools:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/email_login"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_shape"
-                android:elevation="3dp"
-                android:ems="10"
+                android:layout_marginTop="10dp"
                 android:hint="@string/hintEmail"
-                android:inputType="textPersonName"
-                android:padding="15dp" />
+                app:counterTextColor="@android:color/black"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:id="@+id/error_email_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:padding="10dp"
                 android:fontFamily="@font/error"
                 android:textColor="@android:color/holo_red_light"
                 tools:textStyle="bold"
-                android:background="#DF000000"
+                android:background="@drawable/error_shape"
                 android:visibility="gone"/>
 
-            <EditText
-                android:id="@+id/password_login"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_shape"
-                android:elevation="3dp"
-                android:ems="10"
                 android:hint="@string/hintPassword"
-                android:inputType="textPassword"
-                android:padding="15dp" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:passwordToggleEnabled="true"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/error_password_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:padding="10dp"
                 android:fontFamily="@font/error"
                 android:textColor="@android:color/holo_red_light"
                 android:textSize="15dp"
-                android:background="#DF000000"
+                android:background="@drawable/error_shape"
                 tools:textStyle="bold"
                 android:visibility="gone"/>
 
-            <EditText
-                android:id="@+id/repeatPassword_register"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_shape"
-                android:elevation="3dp"
-                android:ems="10"
                 android:hint="@string/hintRepeatPassword"
-                android:inputType="textPassword"
-                android:padding="15dp" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:passwordToggleEnabled="true"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/repeatPassword_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/error_repeatPassword_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:padding="10dp"
                 android:textColor="@android:color/holo_red_light"
                 android:textSize="15dp"
-                android:background="#DF000000"
+                android:background="@drawable/error_shape"
                 android:fontFamily="@font/error"
                 tools:textStyle="bold"
                 android:visibility="gone"/>
@@ -176,7 +298,7 @@
                 android:shadowColor="@android:color/black"
                 android:text="@string/registro"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/volver_register"
@@ -191,7 +313,8 @@
                 android:shadowColor="@android:color/black"
                 android:text="@string/volver_registro"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="14sp"
+                android:layout_marginBottom="20dp"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

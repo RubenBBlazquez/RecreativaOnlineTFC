@@ -12,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,14 +42,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SendNotificationToUsers extends Fragment {
+public class SendNotificationToUsers extends Fragment implements TextWatcher {
 
     private EditText tituloNoti;
     private EditText contenidoNoti;
+    private EditText buscarUsuarios;
     private RecyclerView recyclerUsuarios;
     private MyUsersAdminRecyclerViewAdapter adapter;
     private ArrayList<User> usuarios;
-    private ArrayList<User> usuariosSeleccionados;
+    private  FirebaseCloudFirestore bd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,11 +65,12 @@ public class SendNotificationToUsers extends Fragment {
         View v = inflater.inflate(R.layout.fragment_send_notification_to_users, container, false);
 
         Button b = v.findViewById(R.id.enviarNotificacion);
-        this.usuariosSeleccionados=new ArrayList<>();
         usuarios=new ArrayList<>();
 
         tituloNoti = v.findViewById(R.id.tituloNotificacion);
         contenidoNoti = v.findViewById(R.id.contenidoNotificacion);
+        buscarUsuarios=v.findViewById(R.id.filtrarUsuaiosAdminNoti);
+        buscarUsuarios.addTextChangedListener(this);
         recyclerUsuarios=v.findViewById(R.id.recyclerUsersAdmin);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -73,9 +78,9 @@ public class SendNotificationToUsers extends Fragment {
         adapter=new MyUsersAdminRecyclerViewAdapter(usuarios);
         recyclerUsuarios.setAdapter(adapter);
 
-        FirebaseCloudFirestore bd = new FirebaseCloudFirestore(getContext());
+        bd = new FirebaseCloudFirestore(getContext());
+        bd.getAllUsers(usuarios,adapter);
 
-        bd.getAllUsers(this.usuariosSeleccionados,usuarios,adapter);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,9 +109,10 @@ public class SendNotificationToUsers extends Fragment {
 
     public ArrayList<String> getTokensUsuariosSeleccionados(){
         ArrayList<String> tokens=new ArrayList<>();
-        for (User u: this.usuariosSeleccionados) {
+        for (User u: this.usuarios) {
             tokens.add(u.getToken());
         }
+        Toast.makeText(getContext(), ""+tokens.size(), Toast.LENGTH_SHORT).show();
         return tokens;
     }
 
@@ -114,8 +120,6 @@ public class SendNotificationToUsers extends Fragment {
         // compose notification json payload
 
         JsonObject payload = new JsonObject();
-
-        // String[] destinos={"eKjdpagdTOW-a_2aNtuXCm:APA91bHQMYyrKzkxh63RgDkFc6KTtaG0YgXwNAqgugQWJdKPJTBhh3Zq2EoXGYIBQ5o4J_GI_nSvwW__oHl8ZGEP_CWcKiJTn1UA6uZZKiVDwou-VlVOT2GRTQ0QmcwtmGUy-48NqWUE","dxe1OgeMQe2JAx6amBQc70:APA91bFHhFDt3utKMTb5Ve5DWgmcZTMZ_ocTpOQ_u5ljM20QEMFYNKsIBN0hnIWUtN6VPWynknUxJKsQ8myOXkmbRMDRUGj1XM3ZL7SVbRHUAIsnldMejO_OCurW0qJR-gaiB9W89GDZ"};
 
         payload.add("registration_ids", new Gson().toJsonTree(getTokensUsuariosSeleccionados()));
 
@@ -128,4 +132,53 @@ public class SendNotificationToUsers extends Fragment {
         return payload;
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        try{
+            if(charSequence.toString().contains("saldo")){
+                usuarios.clear();
+
+                String[] cadena=charSequence.toString().split("=");
+                Log.d("admin",""+cadena[0]+" - "+cadena[1]+" - "+cadena[0].contains(">"));
+
+                if(cadena[0].contains(">")){
+                    Log.d("admin","greater");
+                    this.bd.getUsersBySaldoGreaterEqual(usuarios,adapter,Float.valueOf(cadena[1]));
+
+                }else if(cadena[0].contains("<")){
+                    Log.d("admin","less");
+                    this.bd.getUsersBySaldoLessEqual(usuarios,adapter,Float.valueOf(cadena[1]));
+
+                } else if (!cadena[0].contains("<") && !cadena[0].contains(">")) {
+                    Log.d("admin","equal");
+                    this.bd.getUsersByEqual(usuarios,adapter,Float.valueOf(cadena[1]));
+
+                }
+
+                adapter.notifyDataSetChanged();
+
+            }else if(charSequence.toString().contains("gasto")){
+                usuarios.clear();
+
+            }else if(charSequence.toString().contains("email")){
+                usuarios.clear();
+
+            }else if(charSequence.toString().equals("")){
+                usuarios.clear();
+                bd.getAllUsers(usuarios,adapter);
+            }
+        }catch (Exception e){
+            Log.d("admin",""+e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+    }
 }

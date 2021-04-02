@@ -48,7 +48,6 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseMessagingModel;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener, OnGetUserInformation, OnAdsListener, View.OnClickListener {
@@ -80,7 +79,6 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casino);
-
         Bundle b2=getIntent().getExtras();
         if(b2!=null){
             Toast.makeText(this, ""+b2.getString("message"), Toast.LENGTH_SHORT).show();
@@ -105,7 +103,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_init, R.id.nav_ruleta, R.id.nav_tragaperras, R.id.nav_blackjact, R.id.nav_carreras, R.id.nav_profile)
+                R.id.nav_init, R.id.nav_ruleta, R.id.nav_tragaperras, R.id.nav_blackjact, R.id.nav_servicios, R.id.nav_profile)
                 .setDrawerLayout(drawer)
                 .build();
 

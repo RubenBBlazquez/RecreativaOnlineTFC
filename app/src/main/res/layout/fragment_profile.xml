@@ -96,7 +96,7 @@
                         </ImageView>
 
                         <TextView
-                            android:id="@+id/saldoPerfil"
+                            android:id="@+id/textoCasino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imagenSaldoPerfil"
@@ -110,7 +110,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/saldoPerfil"
+                            android:layout_below="@+id/textoCasino"
                             android:layout_centerHorizontal="true"
                             android:fontFamily="@font/bungee"
                             android:text="@string/saldo_actual_perfil"

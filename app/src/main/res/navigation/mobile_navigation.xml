@@ -8,7 +8,20 @@
         android:id="@+id/nav_init"
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.home.InitCasinoFragment"
         android:label="@string/menu_init"
-        tools:layout="@layout/fragment_init_casino" />
+        tools:layout="@layout/fragment_init_casino" >
+        <action
+            android:id="@+id/action_nav_init_to_nav_ruleta"
+            app:destination="@id/nav_ruleta" />
+        <action
+            android:id="@+id/action_nav_init_to_nav_servicios"
+            app:destination="@id/nav_servicios" />
+        <action
+            android:id="@+id/action_nav_init_to_nav_tragaperras"
+            app:destination="@id/nav_tragaperras" />
+        <action
+            android:id="@+id/action_nav_init_to_nav_info_servicios"
+            app:destination="@id/nav_info_servicios" />
+    </fragment>
     <fragment
         android:id="@+id/nav_ruleta"
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Ruleta.RuletaFragment"
@@ -27,10 +40,22 @@
         android:label="@string/menu_blackjack"
         tools:layout="@layout/fragment_blackjack" />
     <fragment
-        android:id="@+id/nav_carreras"
-        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.ApuestasCarreras.ApuestasCarrerasFragment"
-        android:label="@string/menu_carreras"
-        tools:layout="@layout/fragment_apuestas_carreras" />
+        android:id="@+id/nav_servicios"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiciosFragment"
+        android:label="@string/menu_servicios"
+        tools:layout="@layout/fragment_servicios" >
+        <action
+            android:id="@+id/action_nav_servicios_to_nav_info_servicios"
+            app:destination="@id/nav_info_servicios" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_info_servicios"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiciosFragment"
+        tools:layout="@layout/fragment_servicios"
+        android:label="Info Services"
+        />
+
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileFragment"
