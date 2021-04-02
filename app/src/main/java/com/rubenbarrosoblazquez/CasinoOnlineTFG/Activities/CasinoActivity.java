@@ -79,10 +79,6 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casino);
-        Bundle b2=getIntent().getExtras();
-        if(b2!=null){
-            Toast.makeText(this, ""+b2.getString("message"), Toast.LENGTH_SHORT).show();
-        }
 
         model = new FirebaseCloudFirestore(getApplicationContext());
 
@@ -132,6 +128,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         } else {
             admin.setVisible(true);
         }
+
 
         messagingModel=new FirebaseMessagingModel(this);
         messagingModel.recuperarToken(user.getEmail());
@@ -343,7 +340,6 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "anuncio acabado", Toast.LENGTH_SHORT).show();
     }
 
     public void crearNotification(Context context, Bundle b){

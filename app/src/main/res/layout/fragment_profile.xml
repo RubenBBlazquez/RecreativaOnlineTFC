@@ -189,64 +189,105 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/nombreEditProfile"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:ems="10"
-                    android:hint="Nombre"
-                    android:inputType="text" />
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:hint="@string/hintName"
+                   >
 
-                <EditText
-                    android:id="@+id/apellidoEditProfile"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nombreEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:ems="10"
-                    android:hint="Apellidos"
-                    android:inputType="text" />
+                    android:layout_marginEnd="20dp"
+                    android:hint="@string/hintLastName">
 
-                <EditText
-                    android:id="@+id/direccionEditProfile"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/apellidoEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:ems="10"
-                    android:hint="Dirección"
-                    android:inputType="text" />
+                    android:layout_marginEnd="20dp"
+                    android:hint="@string/hintDireccion">
 
-                <EditText
-                    android:id="@+id/telefonoEditProfile"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/direccionEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:ems="10"
-                    android:hint="Teléfono"
-                    android:inputType="number" />
+                    android:layout_marginEnd="20dp"
+                    android:hint="@string/hintTelefono">
 
-                <EditText
-                    android:id="@+id/dniEditProfile"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/telefonoEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+
+                        >
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:ems="10"
-                    android:hint="Dni"
-                    android:inputType="text" />
+                    android:layout_marginEnd="20dp"
+                    android:hint="@string/hintDniPassword">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dniEditProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
 
+                        >
 
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

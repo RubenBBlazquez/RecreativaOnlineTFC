@@ -8,9 +8,11 @@
     <string name="hintEmail">Escribe tu email</string>
     <string name="hintPassword">Escribe tu Contraseña</string>
     <string name="hintRepeatPassword">Escribe de nuevo la Contraseña</string>
-    <string name="hintDniPassword">Escribe tu dni/nif</string>
-    <string name="hintName">Escribe tu Nombre</string>
-    <string name="hintLastName">Escribe tus apellidos</string>
+    <string name="hintDniPassword">dni/nif</string>
+    <string name="hintName">Nombre</string>
+    <string name="hintDireccion">Direccion</string>
+    <string name="hintLastName">Apellidos</string>
+    <string name="hintTelefono">Teléfono</string>
     <string name="volver_registro">Inicio de Sesion</string>
     <string name="error_repeatPassword_register">Las contraseñas no coinciden</string>
     <string name="error_dni_register">El dni no es correcto comprueba el formato</string>

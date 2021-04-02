@@ -23,7 +23,8 @@
         <activity
             android:name=".Activities.CasinoActivity"
             android:label="@string/title_activity_casino"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
         <activity android:name=".Activities.LoginRegisterActivity">
             <intent-filter>
