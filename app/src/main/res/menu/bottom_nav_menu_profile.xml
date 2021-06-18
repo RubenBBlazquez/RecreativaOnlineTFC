@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_nav_services_games"
+        android:icon="@drawable/ic_saldo"
+        android:title="@string/menu_tab_serv_games" />
+
+    <item
+        android:id="@+id/tab_nav_services_prod"
+        android:icon="@drawable/ic_perfil"
+        android:title="@string/menu_tab_sev_prod" />
+
+
+</menu>

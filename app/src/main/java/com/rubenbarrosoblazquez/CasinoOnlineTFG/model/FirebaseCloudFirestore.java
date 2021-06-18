@@ -1,34 +1,54 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.MyUsersAdminRecyclerViewAdapter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class FirebaseCloudFirestore {
 
     private Context context;
     private FirebaseFirestore mFirebaseFirestore;
+    private FirebaseStorage storage;
 
     public FirebaseCloudFirestore(Context context) {
         this.context = context;
         this.mFirebaseFirestore = FirebaseFirestore.getInstance();
+        this.storage=FirebaseStorage.getInstance();
     }
 
     public void updateSaldo(String user,Float saldo) {
@@ -171,4 +191,61 @@ public class FirebaseCloudFirestore {
             }
         });
     }
+
+
+    public void saveProfilePic(Bitmap pic,User u){
+        StorageReference storageRef = storage.getReference();
+        StorageReference profilePicRef = storageRef.child("/ProfilesImages/"+(u.getEmail().replace(".","_"))+".png");
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        pic.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = profilePicRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(context, "error al guardar la imagen en la base de datos, comprueba la conexion a intenet", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(context, taskSnapshot.getMetadata().getName(), Toast.LENGTH_SHORT).show();               // ...
+            }
+        });
+
+    }
+
+    public void getProfilePicFromStorage(ImageView imagen,String email) {
+        StorageReference storageRef = storage.getReference();
+        StorageReference profileRef = storageRef.child("/ProfilesImages/"+email.replace(".","_")+".png");
+        Log.d("path",storageRef.getBucket()+"-->"+profileRef.getPath());
+
+        try{
+
+            profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context).load(uri)
+                            .override(100,100)
+                            .fitCenter()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.ruleta)
+                            .into(imagen);
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    imagen.setImageResource(R.drawable.ruleta);
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d("path", ""+e.getMessage());
+        }
+
+    }
+
 }

@@ -97,7 +97,7 @@
                     android:text="@string/login"
                     android:textColor="@color/cardview_light_background"
                     android:textSize="20dp"
-                    android:textStyle="italic|bold" />
+                    android:textStyle="bold|italic" />
             </LinearLayout>
 
             <ImageView

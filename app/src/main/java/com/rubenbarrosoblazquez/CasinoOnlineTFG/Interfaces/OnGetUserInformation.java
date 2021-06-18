@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 public interface OnGetUserInformation {
     public User getUserInformation();
+    public void setUserInformation(User u);
     public boolean UpdateUserInformation(User u);
+    public void reloadHeaderDraweInfo();
     public void updateBalanceTexts();
     public FirebaseCloudFirestore getFirestoreInstance();
 }

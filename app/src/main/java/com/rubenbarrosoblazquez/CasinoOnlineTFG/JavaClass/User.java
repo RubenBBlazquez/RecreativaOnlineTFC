@@ -1,5 +1,7 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -18,6 +20,7 @@ public class User implements Serializable {
     private boolean dniVerified;
     private boolean telefonoVerified;
     private String token;
+    private Bitmap profilePic;
 
     public User(String name, String email, String apellidos, String provider) {
         this.name = name;
@@ -35,6 +38,15 @@ public class User implements Serializable {
         this.telefonoVerified=false;
         this.saldo_gastado=0.0f;
         this.token="";
+        this.profilePic=null;
+    }
+
+    public Bitmap getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(Bitmap profilePic) {
+        this.profilePic = profilePic;
     }
 
     public String getToken() {

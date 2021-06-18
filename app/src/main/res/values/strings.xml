@@ -6,6 +6,7 @@
     <string name="loginWithFacebook">Inicio Sesion Facebook</string>
     <string name="registro">Registrarse</string>
     <string name="hintEmail">Escribe tu email</string>
+    <string name="hintSaldoSlotMachine">Saldo a usar</string>
     <string name="hintPassword">Escribe tu Contraseña</string>
     <string name="hintRepeatPassword">Escribe de nuevo la Contraseña</string>
     <string name="hintDniPassword">dni/nif</string>
@@ -37,6 +38,10 @@
     <string name="email_Verified">Tu Email ya ha sido validado, redireccionando a la siguiente página</string>
     <string name="menu_rule">Ruleta</string>
     <string name="menu_init">Inicio</string>
+    <string name="menu_tab_serv_games">Servicios Juegos</string>
+    <string name="menu_tab_profile">Perfil</string>
+    <string name="menu_tab_basket">Compras</string>
+    <string name="menu_tab_sev_prod">Servicios Productos</string>
     <string name="menu_tragaperras">TragaPerras</string>
     <string name="menu_blackjack">BlackJack</string>
     <string name="menu_servicios">Servicios</string>
@@ -61,5 +66,23 @@
     <string name="tituloNotificacion">Titulo de la notificación</string>
     <string name="contenidoNotificacion">Contenido de la notificación</string>
     <string name="enviarNotificacion">Enviar Notificación a Usuarios</string>
+    <string name="servicioJuegosRuleta">Servicios Juegos Ruleta</string>
+    <string name="servicioJuegosTragaperras">Servicios Juegos Tragaperras</string>
+    <string name="servicioJuegosVarios">Servicios Juegos Varios</string>
+    <string name="servicioJuegosRuletaEditText">Buscar Servicio Juego Ruleta</string>
+    <string name="servicioJuegosTragaperrasEditText">Buscar Servicio Juego Tragaperras</string>
+    <string name="servicioJuegosVariosEditText">Buscar Servicio Juegos Vario</string>
+    <string name="añadirComentarioBoton">Añadir Comentario</string>
+    <string name="hintContenidoComentarioDialogo">Comentario</string>
+    <string name="BotonComentarioDialogo">Añadir Comentario</string>
+    <string name="codePhoneSent">Código Verificación telefono enviado</string>
+    <string name="codePhoneSentError">Error al enviar el código de verificación de teléfono</string>
+    <string name="codePhoneSentVerified">Teléfono Verificado</string>
+    <string name="phoneAlreadyVerified">Teléfono ya verificado</string>
+    <string name="noPhone">No hay un teléfono disponible, añádelo y actualiza tus datos</string>
+    <string name="VerifiedPhoneNumberCodeHint">Codigo Verificación SMS</string>
+    <string name="dniNoValido">Foto Dni no válida, recuerda que debe ser una foto realizada en vertical, no horizontal, gracias</string>
+    <string name="dniNoValidated">Antes de poder jugar debes validar tu dni, ve a la pestaña de perfil, actualiza tus datos con tu dni, y valídalo con una foto del mismo</string>
+    <string name="setSlotMachineBet">Antes de poder tirar, establece una apuesta</string>
 
 </resources>

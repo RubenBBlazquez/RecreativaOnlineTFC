@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_nav_init_to_nav_info_servicios"
             app:destination="@id/nav_info_servicios" />
+        <action
+            android:id="@+id/action_nav_init_to_nav_profilePager"
+            app:destination="@id/nav_profilePager" />
     </fragment>
     <fragment
         android:id="@+id/nav_ruleta"
@@ -39,6 +42,7 @@
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.BlackJack.BlackjackFragment"
         android:label="@string/menu_blackjack"
         tools:layout="@layout/fragment_blackjack" />
+
     <fragment
         android:id="@+id/nav_servicios"
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiciosFragment"
@@ -46,15 +50,13 @@
         tools:layout="@layout/fragment_servicios" >
         <action
             android:id="@+id/action_nav_servicios_to_nav_info_servicios"
-            app:destination="@id/nav_info_servicios" />
+            app:destination="@id/nav_info_servicios"
+            app:enterAnim="@anim/enter_right_to_left"
+            app:exitAnim="@anim/exit_right_to_left"
+            app:popEnterAnim="@anim/enter_left_to_right"
+            app:popExitAnim="@anim/exit_left_to_right" />
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_info_servicios"
-        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiciosFragment"
-        tools:layout="@layout/fragment_servicios"
-        android:label="Info Services"
-        />
 
     <fragment
         android:id="@+id/nav_profile"
@@ -65,9 +67,28 @@
             android:id="@+id/action_nav_profile_self"
             app:destination="@id/nav_profile" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_profilePager"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileViewPager"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_view_pager_profile" >
+
+    </fragment>
     <fragment
         android:id="@+id/nav_admin_sendNotification"
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.SendNotificationToUsers"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_send_notification_to_users" />
+
+
+
+    <fragment
+        android:id="@+id/nav_info_servicios"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.InfoServicios.InfoServicioFragment"
+        tools:layout="@layout/fragment_info_servicio"
+        android:label="Info Services"
+        >
+
+    </fragment>
 </navigation>

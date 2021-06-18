@@ -28,6 +28,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnRegisterLogInUserListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Login_SigIn.LogInFragment;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Login_SigIn.SignInFragment;
 
@@ -37,6 +38,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
     private FrameLayout container;
     private User InfoUserLogged;
     //private motionLetter task;
+    private FirebaseCloudFirestore db;
 
 
     @Override
@@ -44,6 +46,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
         this.container = findViewById(R.id.container_session);
+        this.db = new FirebaseCloudFirestore(getApplicationContext());
         getSupportActionBar().hide();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -72,6 +75,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
     public void changeFragmentToRegistered() {
         getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.enter_right_to_left,R.anim.exit_right_to_left)
                 .replace(R.id.container_session, new SignInFragment())
                 .commit();
     }
@@ -80,6 +84,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
     public void backToLoginFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.enter_left_to_right,R.anim.exit_left_to_right)
                 .replace(R.id.container_session, new LogInFragment())
                 .commit();
     }
@@ -129,6 +134,11 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
         db.collection("users").document(u.getEmail()).set(usuario);
         db.collection("users").document(u.getEmail()).update("Saldo",u.getSaldo());
         db.collection("users").document(u.getEmail()).update("SaldoGastado",u.getSaldo_gastado());
+    }
+
+    @Override
+    public FirebaseCloudFirestore getFirestoreInstance() {
+        return this.db;
     }
 
 

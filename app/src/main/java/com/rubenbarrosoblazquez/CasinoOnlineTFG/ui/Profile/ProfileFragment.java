@@ -1,13 +1,29 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.camera.core.ImageAnalysis;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +33,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
@@ -37,14 +70,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private TextView email;
     private TextView nombreYApellidos;
     private OnAdsListener mListenerAds;
-
+    private AlertDialog dialog;
+    private EditText verifiedSmsCode;
+    private String verificationPhoneId="";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.u=mListener.getUserInformation();
         if (getArguments() != null) {
 
         }
+
+        if (ContextCompat.checkSelfPermission(
+                this.getContext(), Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED){
+            this.getActivity().requestPermissions(new String[] { Manifest.permission.CAMERA },
+                    3);
+        }
+        if (ContextCompat.checkSelfPermission(
+                this.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED){
+            this.getActivity().requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                    3);
+        }
+
+
+
     }
 
     @Override
@@ -52,6 +102,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_profile, container, false);
+        this.u=mListener.getUserInformation();
         //v.getContext().setTheme(R.style.AppThemeProfile);
         this.saldo=v.findViewById(R.id.textoCasino);
         this.saldo.setText(this.u.getSaldo()+" €");
@@ -74,6 +125,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         this.perfil=v.findViewById(R.id.imageProfile);
 
+        if(u.getProfilePic()!=null){
+            perfil.setImageBitmap(u.getProfilePic());
+        }else{
+            this.mListener.getFirestoreInstance().getProfilePicFromStorage(perfil,this.u.getEmail());
+        }
+
         this.email=v.findViewById(R.id.emailPerfil);
         this.email.setText(this.u.getEmail());
 
@@ -86,8 +143,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         Button actualizarDatos = v.findViewById(R.id.actualizarDatosPersonales);
         actualizarDatos.setOnClickListener(this);
 
+        Button validartelefono= v.findViewById(R.id.validarTelefono);
+        validartelefono.setOnClickListener(this);
+
+        Button validarDni = v.findViewById(R.id.sacarFotoDni);
+        validarDni.setOnClickListener(this);
+
+        Button getProfilePic = v.findViewById(R.id.sacarFotoPerfil);
+        getProfilePic.setOnClickListener(this);
+
         this.mListenerAds.rewardedAd();
         this.mListenerAds.loadRewardedVideoAd();
+
+
 
         return v;
     }
@@ -106,7 +174,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.verAnuncioPerfil:
-                Toast.makeText(getContext(), "fsdf", Toast.LENGTH_SHORT).show();
+
                 this.mListenerAds.showAd();
                 this.mListener.updateBalanceTexts();
                 this.saldo.setText(this.u.getSaldo()+0.5+" €");
@@ -121,13 +189,196 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         u.setDirection(this.direccion.getText().toString());
 
                         if(this.mListener.UpdateUserInformation(u)){
-                            Navigation.findNavController(v).navigate(R.id.action_nav_profile_self);
+                            mListener.setUserInformation(u);
+                            mListener.reloadHeaderDraweInfo();
+                            Toast.makeText(getContext(), "datos personales actualizados correctamente", Toast.LENGTH_SHORT).show();
                         }
+
                     }catch (Exception e){
                         Toast.makeText(getContext(), "Error indeterminado, comprueba los datos que has introducido", Toast.LENGTH_SHORT).show();
                     }
 
                     break;
+                    case R.id.sacarFotoPerfil:
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                        if (pickPhoto.resolveActivity(this.getActivity().getPackageManager()) != null) {
+                            startActivityForResult(pickPhoto, 1);
+                        }
+                        break;
+
+            case R.id.validarTelefono:
+
+                verifiedPhone();
+
+                break;
+            case R.id.sacarFotoDni:
+
+                    Intent pickDni = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                    if (pickDni.resolveActivity(this.getActivity().getPackageManager()) != null) {
+                        startActivityForResult(pickDni, 2);
+                    }
+
+
+                break;
         }
+    }
+
+    private void verifiedPhone(){
+        if(!u.getPhone().isEmpty() && !u.isTelefonoVerified()){
+
+
+            PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+                @Override
+                public void onVerificationCompleted(PhoneAuthCredential credential) {
+                    Toast.makeText(getContext(), getString(R.string.codePhoneSentVerified)+" --> "+credential.getSmsCode(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onVerificationFailed(@NonNull FirebaseException e) {
+                    Toast.makeText(getContext(), getString(R.string.codePhoneSentError), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCodeSent(@NonNull String verificationId,
+                                       @NonNull PhoneAuthProvider.ForceResendingToken token) {
+                    verificationPhoneId=verificationId;
+                    Toast.makeText(getContext(), getString(R.string.codePhoneSent), Toast.LENGTH_SHORT).show();
+                    dialogVerifyphone();
+                }
+            };
+
+
+            PhoneAuthOptions options =
+                    PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
+                            .setPhoneNumber(u.getPhone())       // Phone number to verify
+                            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                            .setActivity(getActivity())                 // Activity (for callback binding)
+                            .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                            .build();
+            PhoneAuthProvider.verifyPhoneNumber(options);
+        }else{
+            if(u.isTelefonoVerified()){
+                Toast.makeText(getContext(), getString(R.string.phoneAlreadyVerified), Toast.LENGTH_SHORT).show();
+            }else if(u.getPhone().isEmpty()){
+                Toast.makeText(getContext(), getString(R.string.noPhone), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void dialogVerifyphone() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View v = getLayoutInflater().inflate(R.layout.dialog_verified_phone_number, null);
+
+        verifiedSmsCode=v.findViewById(R.id.verifiedSmsCodeEditText);
+
+        Button cerrarDialogo = v.findViewById(R.id.verificarTelefonoDialog);
+        cerrarDialogo.setOnClickListener(this);
+
+        builder.setView(v);
+        builder.create();
+        dialog = builder.show();
+
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1 && resultCode == this.getActivity().RESULT_OK){
+            Uri imageUri = data.getData();
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), imageUri);
+                this.perfil.setImageBitmap(imageBitmap);
+                this.u.setProfilePic(imageBitmap);
+                this.mListener.getFirestoreInstance().saveProfilePic(imageBitmap,this.u);
+                mListener.setUserInformation(u);
+                mListener.reloadHeaderDraweInfo();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(requestCode==2 && resultCode == this.getActivity().RESULT_OK){
+
+            Uri imageUri = data.getData();
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), imageUri);
+                textRecognizer(imageBitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private void textRecognizer(Bitmap bitmap){
+        InputImage image = InputImage.fromBitmap(bitmap, 0);
+        TextRecognizer recognizer = TextRecognition.getClient();
+        Task<Text> result =
+                recognizer.process(image)
+                        .addOnSuccessListener(new OnSuccessListener<Text>() {
+                            @Override
+                            public void onSuccess(Text visionText) {
+                                String resultText = visionText.getText();
+                                Log.d("textRecognizion",resultText);
+
+                                if(resultText.contains("DNI")){
+                                    boolean encontrado=false;
+                                    String dni_foto ="";
+                                    for (Text.TextBlock block : visionText.getTextBlocks()) {
+                                        String blockText = block.getText();
+                                        for (Text.Line line : block.getLines()) {
+                                            String lineText = line.getText();
+
+                                            if(lineText.contains("DNI") && lineText.matches("^[a-zA-Z].+[0,9].")){
+                                                dni_foto = lineText.trim().substring(lineText.indexOf(" "),lineText.length());
+                                                encontrado=true;
+                                                break;
+                                            }
+                                        }
+
+                                        if(encontrado){
+                                            break;
+                                        }
+
+                                    }
+
+                                    if(u.getDni().equalsIgnoreCase("")){
+                                        Toast.makeText(getContext(), "Dni añadido Con éxito", Toast.LENGTH_SHORT).show();
+                                        u.setDniVerified(true);
+                                        u.setDni(dni_foto);
+                                        mListener.getFirestoreInstance().updateUser(u);
+                                        mListener.setUserInformation(u);
+                                    }else{
+                                        if(dni_foto.trim().equalsIgnoreCase(u.getDni())){
+                                            Toast.makeText(getContext(), "Dni Validado Con éxito", Toast.LENGTH_SHORT).show();
+                                            u.setDniVerified(true);
+                                            mListener.getFirestoreInstance().updateUser(u);
+                                        }else{
+                                            Toast.makeText(getContext(), "El dni de la foto no se corresponde con el puesto en los datos personales", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                }else{
+                                    Toast.makeText(getContext(), getString(R.string.dniNoValido), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .addOnFailureListener(
+                                new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(), "error with textRecognizion", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
     }
 }

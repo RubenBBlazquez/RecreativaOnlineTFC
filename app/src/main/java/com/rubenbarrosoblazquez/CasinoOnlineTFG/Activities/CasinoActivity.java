@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -40,9 +42,12 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnProductsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
@@ -50,7 +55,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseMessagingModel;
 
 import java.util.Arrays;
 
-public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener, OnGetUserInformation, OnAdsListener, View.OnClickListener {
+public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener, OnGetUserInformation, OnAdsListener, View.OnClickListener , OnProductsListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private User user;
@@ -61,12 +66,16 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private FirebaseCloudFirestore model;
     private FirebaseMessagingModel messagingModel;
     private BroadcastReceiver messageReceiver;
-
+    private NavigationView navigationView;
 
     @Override
     protected void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("informacion"));
+        try{
+            LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("informacion"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -93,15 +102,16 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        final NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setBackgroundColor(getColor(R.color.colorbackgoundDrawer));
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_init, R.id.nav_ruleta, R.id.nav_tragaperras, R.id.nav_blackjact, R.id.nav_servicios, R.id.nav_profile)
+                R.id.nav_init, R.id.nav_ruleta, R.id.nav_tragaperras, R.id.nav_blackjact, R.id.nav_servicios, R.id.nav_profilePager)
                 .setDrawerLayout(drawer)
                 .build();
+
 
         final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -153,6 +163,14 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
 
         TextView email = header_view.findViewById(R.id.userEmailHeader);
         email.setText(user.getEmail());
+
+        ImageView perfil = header_view.findViewById(R.id.profilePhoto_header);
+
+        if(user.getProfilePic()!=null){
+            perfil.setImageBitmap(user.getProfilePic());
+        }else{
+            this.getFirestoreInstance().getProfilePicFromStorage(perfil,this.user.getEmail());
+        }
 
         Button logout = header_view.findViewById(R.id.logout);
 
@@ -310,8 +328,18 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     }
 
     @Override
+    public void setUserInformation(User u) {
+        this.user=u;
+    }
+
+    @Override
     public boolean UpdateUserInformation(User u) {
         return getFirestoreInstance().updateUser(u);
+    }
+
+    @Override
+    public void reloadHeaderDraweInfo() {
+        this.initElementsHeaderView(navigationView,this.user);
     }
 
 
@@ -374,5 +402,10 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         notificationManager.notify(1,constructorNotif.build());
 
 
+    }
+
+    @Override
+    public void goToInfoProduct(View v,Bundle b) {
+        Navigation.findNavController(v).navigate(R.id.action_nav_servicios_to_nav_info_servicios,b);
     }
 }

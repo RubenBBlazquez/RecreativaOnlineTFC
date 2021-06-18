@@ -37,7 +37,7 @@
         <item android:title="User Info">
             <menu>
                 <item
-                    android:id="@+id/nav_profile"
+                    android:id="@+id/nav_profilePager"
                     android:icon="@drawable/ic_perfil"
                     android:title="Perfil" />
                 <item

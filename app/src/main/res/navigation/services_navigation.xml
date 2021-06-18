@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/services_navigation">
+
+    <fragment
+        android:id="@+id/tab_nav_services_games"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiceGamesFragment"
+        android:label="@string/menu_tab_serv_games"
+        tools:layout="@layout/fragment_service_games">
+        <action
+            android:id="@+id/action_tab_nav_services_games_to_nav_info_servicios"
+            app:destination="@id/nav_info_servicios" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tab_nav_services_prod"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ProductsFragment"
+        android:label="@string/menu_tab_sev_prod"
+        tools:layout="@layout/fragment_products">
+        <action
+            android:id="@+id/action_tab_nav_services_prod_to_nav_info_servicios"
+            app:destination="@id/nav_info_servicios" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_info_servicios"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.InfoServicios.InfoServicioFragment"
+        android:label="Info Services"
+        tools:layout="@layout/fragment_info_servicio">
+
+    </fragment>
+</navigation>

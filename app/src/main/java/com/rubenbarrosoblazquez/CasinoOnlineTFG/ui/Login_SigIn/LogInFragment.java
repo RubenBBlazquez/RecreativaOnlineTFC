@@ -43,6 +43,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.LoginRegisterActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnRegisterLogInUserListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;

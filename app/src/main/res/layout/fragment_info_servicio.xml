@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <TextView
+        android:id="@+id/InfoNameProduct"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:background="@color/colorPrimary"
+        android:text="Name Product"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:textStyle="bold|italic" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="52dp"
+        android:layout_marginRight="52dp"
+        android:elevation="20dp"
+        app:cardCornerRadius="10dp">
+
+        <ImageView
+            android:id="@+id/ProductImageInfo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@android:mipmap/sym_def_app_icon" />
+    </androidx.cardview.widget.CardView>
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/infoDescriptionProduct"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginRight="52dp"
+        android:justificationMode="inter_word"
+        android:padding="5dp"
+        android:text="Description of the product"
+        android:textColor="@android:color/black" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="171dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="52dp"
+                android:text="Price :"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"
+                android:textStyle="bold|italic"
+                android:paddingLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/infoPriceProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="52dp"
+                android:gravity="center"
+                android:text="1000$ "
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="171dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:text="Units"
+                android:textAlignment="textStart"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"
+                android:textStyle="bold|italic"
+                android:layout_marginLeft="52dp"/>
+
+
+            <NumberPicker
+                android:id="@+id/infoUnitsProduct"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="52dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                android:textStyle="bold|italic" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <Button
+        android:id="@+id/InfoBuyProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="52dp"
+        android:layout_marginRight="52dp"
+        android:text="Buy"
+        android:textColor="@android:color/white"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Comments"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:textStyle="bold|italic" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <Button
+        android:id="@+id/addNewComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:drawableEnd="@drawable/ic_baseline_add_24"
+        android:padding="5dp"
+        android:text="Add new Comment"
+        android:textColor="@android:color/white" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerViewComentarios"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/comment_item"
+        android:visibility="gone">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:id="@+id/textNoCommentsYet"
+        android:text="There Arent Comments Yet"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@android:color/black"
+        android:visibility="visible"
+        android:textStyle="bold|italic">
+
+    </TextView>
+
+
+</LinearLayout>
