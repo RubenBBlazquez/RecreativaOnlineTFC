@@ -5,16 +5,16 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/CountryName"
+        android:id="@+id/multiplier"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DF000000"
-        android:fontFamily="@font/letra_casino"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/bungee"
         android:padding="7dp"
         android:text="Pais"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="14dp"
+        android:textSize="15dp"
         tools:layout_editor_absoluteX="90dp"
         tools:layout_editor_absoluteY="27dp" />
 </LinearLayout>

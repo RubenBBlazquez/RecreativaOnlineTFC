@@ -26,7 +26,7 @@
                     android:title="@string/menu_tragaperras" />
                 <item
                     android:id="@+id/nav_blackjact"
-                    android:icon="@drawable/ic_menu_slideshow"
+                    android:icon="@drawable/ic_black_jack"
                     android:title="@string/menu_blackjack" />
                 <item
                     android:id="@+id/nav_servicios"

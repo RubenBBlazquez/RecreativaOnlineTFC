@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/tab_nav_services_games"
-        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiceGamesFragment"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiceRuletaFragment"
         android:label="@string/menu_tab_serv_games"
         tools:layout="@layout/fragment_service_games">
         <action

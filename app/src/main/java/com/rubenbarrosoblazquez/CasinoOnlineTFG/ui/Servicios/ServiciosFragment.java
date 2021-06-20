@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -33,7 +32,7 @@ public class ServiciosFragment extends Fragment {
 
         ViewPager2 viewPager=root.findViewById(R.id.pager);
 
-        arrayList.add(new ServiceGamesFragment());
+        arrayList.add(new ServiceRuletaFragment());
         arrayList.add(new ProductsFragment());
 
         adapter=new viewPager2Adapter(getActivity().getSupportFragmentManager(),getLifecycle(),root);
@@ -51,11 +50,15 @@ public class ServiciosFragment extends Fragment {
                 (tab, position) ->{
                     switch (position) {
                         case 0:
-                            tab.setText(getString(R.string.menu_tab_serv_games));
+                            tab.setIcon(R.drawable.ic_ruleta_de_casino_icon_white);
                             break;
                         case 1:
-                            tab.setText(getString(R.string.menu_tab_sev_prod));
+                            tab.setIcon(R.drawable.ic_slot_machine_white);
                             break;
+                        case 2:
+                            tab.setIcon(R.drawable.ic_black_jack_white);
+                            break;
+
                     }
                 }).attach();
 
@@ -77,9 +80,11 @@ public class ServiciosFragment extends Fragment {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new ServiceGamesFragment();
+                    return new ServiceRuletaFragment();
                 case 1:
-                    return new ProductsFragment();
+                    return new ServiceTragaperrasFragment();
+                case 2:
+                    return new ServiceBlackJackFragment();
 
             }
             return null;
@@ -87,7 +92,7 @@ public class ServiciosFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 3;
         }
 
     }

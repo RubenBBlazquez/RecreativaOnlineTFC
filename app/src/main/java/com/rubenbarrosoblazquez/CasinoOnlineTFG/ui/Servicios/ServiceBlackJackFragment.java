@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +20,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
 import java.util.ArrayList;
 
-public class ServiceGamesFragment extends Fragment {
+public class ServiceBlackJackFragment extends Fragment {
 
     private ArrayList<products> productsPrueba;
     private OnProductsListener mListener;
@@ -34,7 +35,7 @@ public class ServiceGamesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_service_games, container, false);
+        View v = inflater.inflate(R.layout.fragment_service_blackjack, container, false);
         productsPrueba=new ArrayList<>();
         // public products(String descripcion, Bitmap DIR_IMG, String nombre, int n_bastidor, double precio, String tipo, int cantidad) {
         productsPrueba.add(new products("buenas tardes", BitmapFactory.decodeResource(getResources(), android.R.drawable.star_big_on), "product 1", 0, 99.92, "1", 20));
@@ -43,42 +44,19 @@ public class ServiceGamesFragment extends Fragment {
         productsPrueba.add(new products("buenas tardes", BitmapFactory.decodeResource(getResources(), android.R.drawable.star_big_on), "product 1", 0, 99.92, "1", 20));
         productsPrueba.add(new products("buenas tardes", BitmapFactory.decodeResource(getResources(), android.R.drawable.star_big_on), "product 1", 0, 99.92, "1", 20));
 
-        initRecyclerViewServiciosRuleta(v);
-
-        initRecyclerViewServiciosTragaperras(v);
 
         initRecyclerViewServiciosVarios(v);
 
         return v;
     }
 
-    public void initRecyclerViewServiciosRuleta(View v) {
-        final View view = v;
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.recyclerServiciosRuleta);
-        recyclerViewProductsShoppingCart.setLayoutManager(linearLayoutManager);
-        recyclerViewProductsShoppingCart.setAdapter(new MyProductsRecyclerViewAdapter(productsPrueba,mListener));
-
-
-    }
-
-    public void initRecyclerViewServiciosTragaperras(View v) {
-        final View view = v;
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.recyclerServiciosTragaperras);
-        recyclerViewProductsShoppingCart.setLayoutManager(linearLayoutManager);
-        recyclerViewProductsShoppingCart.setAdapter(new MyProductsRecyclerViewAdapter(productsPrueba,mListener));
-
-
-    }
 
     public void initRecyclerViewServiciosVarios(View v) {
         final View view = v;
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.recyclerServiciosVarios);
+        RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.recyclerBlackJack);
         recyclerViewProductsShoppingCart.setLayoutManager(linearLayoutManager);
         recyclerViewProductsShoppingCart.setAdapter(new MyProductsRecyclerViewAdapter(productsPrueba,mListener));
 

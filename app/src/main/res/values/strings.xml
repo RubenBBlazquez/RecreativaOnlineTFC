@@ -38,10 +38,12 @@
     <string name="email_Verified">Tu Email ya ha sido validado, redireccionando a la siguiente página</string>
     <string name="menu_rule">Ruleta</string>
     <string name="menu_init">Inicio</string>
-    <string name="menu_tab_serv_games">Servicios Juegos</string>
+    <string name="menu_tab_serv_games">Ruleta</string>
+    <string name="menu_tab_serv_slotMachine">TragaPerras</string>
+    <string name="menu_tab_serv_black">BlackJack</string>
     <string name="menu_tab_profile">Perfil</string>
     <string name="menu_tab_basket">Compras</string>
-    <string name="menu_tab_sev_prod">Servicios Productos</string>
+    <string name="menu_tab_sev_prod">Productos</string>
     <string name="menu_tragaperras">TragaPerras</string>
     <string name="menu_blackjack">BlackJack</string>
     <string name="menu_servicios">Servicios</string>
@@ -55,6 +57,7 @@
     <string name="apuestaactual">APUESTA ACTUAL</string>
     <string name="seleccionaMoneda">Antes de apostar selecciona una moneda</string>
     <string name="noSaldoParaApostar">No puedes apostar si no tienes el saldo suficiente, consigue saldo y prueba de nuevo</string>
+    <string name="tiradasSeguidas">No puedes tirar 2 veces seguidas, espera a obtener el resultado de la tirada anterior</string>
     <string name="ver_anuncio">Obtener saldo con anuncios</string>
     <string name="opciones_perfil_menu">Opciones Perfil</string>
     <string name="saldo_perfil_menu_item">Saldo Actual : </string>
@@ -67,9 +70,11 @@
     <string name="contenidoNotificacion">Contenido de la notificación</string>
     <string name="enviarNotificacion">Enviar Notificación a Usuarios</string>
     <string name="servicioJuegosRuleta">Servicios Juegos Ruleta</string>
+    <string name="servicioJuegoBlackjack">Servicios Juego BlackJack</string>
     <string name="servicioJuegosTragaperras">Servicios Juegos Tragaperras</string>
     <string name="servicioJuegosVarios">Servicios Juegos Varios</string>
     <string name="servicioJuegosRuletaEditText">Buscar Servicio Juego Ruleta</string>
+    <string name="servicioJuegosBlackJackEditText">Buscar Servicio Juego Black Jack</string>
     <string name="servicioJuegosTragaperrasEditText">Buscar Servicio Juego Tragaperras</string>
     <string name="servicioJuegosVariosEditText">Buscar Servicio Juegos Vario</string>
     <string name="añadirComentarioBoton">Añadir Comentario</string>

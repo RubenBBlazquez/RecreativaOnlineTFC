@@ -18,8 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ProductsFragment;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiceGamesFragment;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiciosFragment;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiceRuletaFragment;
 
 import java.util.ArrayList;
 
@@ -36,7 +35,7 @@ public class ProfileViewPager extends Fragment {
 
         ViewPager2 viewPager = root.findViewById(R.id.pagerProfile);
 
-        arrayList.add(new ServiceGamesFragment());
+        arrayList.add(new ServiceRuletaFragment());
         arrayList.add(new ProductsFragment());
 
         viewPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
@@ -54,7 +53,6 @@ public class ProfileViewPager extends Fragment {
                 (tab, position) -> {
                     switch (position) {
                         case 0:
-
                             tab.setText(getString(R.string.menu_tab_profile));
                             break;
                         case 1:

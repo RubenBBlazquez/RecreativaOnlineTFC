@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="@string/servicioJuegosRuletaEditText">
+                android:hint="@string/servicioJuegosBlackJackEditText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/serviciosRuletaEditProfile"
@@ -46,13 +46,13 @@
                     android:background="@color/colorSecondary"
                     android:fontFamily="@font/bungee"
                     android:padding="10dp"
-                    android:text="@string/servicioJuegosRuleta"
+                    android:text="@string/servicioJuegoBlackjack"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerServiciosRuleta"
+                    android:id="@+id/recyclerBlackJack"
                     android:layout_width="match_parent"
                     android:layout_height="173dp"
                     android:padding="10dp" />
