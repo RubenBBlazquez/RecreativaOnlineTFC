@@ -13,10 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,8 +31,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.MyUsersAdminRecyclerViewAdapter;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.MyProductsRecyclerViewAdapter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -246,6 +251,78 @@ public class FirebaseCloudFirestore {
             Log.d("path", ""+e.getMessage());
         }
 
+    }
+
+
+    public void getAllProductsByType(ArrayList<products> products, String type, MyProductsRecyclerViewAdapter adapter){
+        mFirebaseFirestore.collection("productos").whereEqualTo("type",type).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<DocumentSnapshot> productos=task.getResult().getDocuments();
+
+                    for (DocumentSnapshot d: productos) {
+                        // public products(String descripcion, Bitmap DIR_IMG, String nombre, int n_bastidor, double precio, String tipo, int cantidad) {
+                        com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products product = new products(d.getString("description"),d.getString("name"),Double.valueOf(d.getString("price")),d.getString("type"),Integer.parseInt(d.getString("unidades")));
+                        getProductImage(products,d.getString("imageName"),adapter,product);
+                    }
+                    adapter.notifyDataSetChanged();
+
+                }
+            }
+        });
+    }
+
+    public void getProductImage(ArrayList<products> products,String identifier,MyProductsRecyclerViewAdapter adapter,products product){
+        StorageReference storageRef = storage.getReference();
+        StorageReference productRef = storageRef.child("/productImages/"+identifier+".png");
+        Log.d("path",storageRef.getBucket()+"-->"+productRef.getPath());
+
+        try{
+
+            productRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context)
+                            .asBitmap()
+                            .load(uri)
+                            .into(new CustomTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    product.setImg(resource);
+                                    products.add(product);
+                                    adapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onLoadCleared(@Nullable Drawable placeholder) {
+                                    Bitmap bf = BitmapFactory.decodeResource(context.getResources(),R.drawable.ruleta);
+                                    product.setImg(bf);
+                                    products.add(product);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Bitmap bf = BitmapFactory.decodeResource(context.getResources(),R.drawable.ruleta);
+                            product.setImg(bf);
+                            products.add(product);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d("path", ""+e.getMessage());
+        }
+
+    }
+
+    public void insertProduct(products p){
+        mFirebaseFirestore.collection("productos").add(p);
     }
 
 }

@@ -78,8 +78,15 @@
     <fragment
         android:id="@+id/nav_admin_sendNotification"
         android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.SendNotificationToUsers"
-        android:label="@string/menu_profile"
+        android:label="@string/menu_admin_send_noti"
         tools:layout="@layout/fragment_send_notification_to_users" />
+
+
+<fragment
+        android:id="@+id/nav_admin_add_product"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.AddProductFragment"
+        android:label="@string/menu_admin_add_product"
+        tools:layout="@layout/fragment_add_product" />
 
 
 

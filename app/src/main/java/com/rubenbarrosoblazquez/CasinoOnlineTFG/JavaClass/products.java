@@ -8,40 +8,18 @@ import java.io.Serializable;
 
 public class products implements Parcelable {
     private String Descripcion;
-    private Bitmap img;
     private String Nombre;
-    private int n_bastidor;
     private double precio;
     private String tipo;
     private int Cantidad;
 
-    public products(){
-        this.Descripcion="";
-        this.img=null;
-        this.n_bastidor=0;
-        this.Nombre="";
-        this.precio=0.0;
-        this.tipo="";
-    }
-
-    public products(String descripcion, Bitmap DIR_IMG, String nombre, int n_bastidor, double precio, String tipo, int cantidad) {
-        Descripcion = descripcion;
-        this.img = DIR_IMG;
-        Nombre = nombre;
-        this.n_bastidor = n_bastidor;
-        this.precio = precio;
-        this.tipo = tipo;
-        Cantidad = cantidad;
-    }
-
     protected products(Parcel in) {
         Descripcion = in.readString();
-        img = in.readParcelable(Bitmap.class.getClassLoader());
         Nombre = in.readString();
-        n_bastidor = in.readInt();
         precio = in.readDouble();
         tipo = in.readString();
         Cantidad = in.readInt();
+        img = in.readParcelable(Bitmap.class.getClassLoader());
     }
 
     public static final Creator<products> CREATOR = new Creator<products>() {
@@ -56,20 +34,40 @@ public class products implements Parcelable {
         }
     };
 
+    public Bitmap getImg() {
+        return img;
+    }
+
+    public void setImg(Bitmap img) {
+        this.img = img;
+    }
+
+    private Bitmap img;
+
+    public products(){
+        this.Descripcion="";
+        this.Nombre="";
+        this.precio=0.0;
+        this.tipo="";
+        this.img=null;
+    }
+
+    public products(String descripcion, String nombre, double precio, String tipo, int cantidad) {
+        Descripcion = descripcion;
+        Nombre = nombre;
+        this.precio = precio;
+        this.tipo = tipo;
+        Cantidad = cantidad;
+        this.img=null;
+    }
+
+
     public String getDescripcion() {
         return Descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         Descripcion = descripcion;
-    }
-
-    public Bitmap getImg() {
-        return img;
-    }
-
-    public void setImg(Bitmap DIR_IMG) {
-        this.img = DIR_IMG;
     }
 
     public String getNombre() {
@@ -80,13 +78,6 @@ public class products implements Parcelable {
         Nombre = nombre;
     }
 
-    public int getN_bastidor() {
-        return n_bastidor;
-    }
-
-    public void setN_bastidor(int n_bastidor) {
-        this.n_bastidor = n_bastidor;
-    }
 
     public double getPrecio() {
         return precio;
@@ -116,9 +107,7 @@ public class products implements Parcelable {
     public String toString() {
         return "products{" +
                 "Descripcion='" + Descripcion + '\'' +
-                ", DIR_IMG='" + img.toString() + '\'' +
                 ", Nombre='" + Nombre + '\'' +
-                ", n_bastidor=" + n_bastidor +
                 ", precio=" + precio +
                 ", tipo='" + tipo + '\'' +
                 '}';
@@ -130,13 +119,12 @@ public class products implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(Descripcion);
-        parcel.writeParcelable(img, i);
-        parcel.writeString(Nombre);
-        parcel.writeInt(n_bastidor);
-        parcel.writeDouble(precio);
-        parcel.writeString(tipo);
-        parcel.writeInt(Cantidad);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Descripcion);
+        dest.writeString(Nombre);
+        dest.writeDouble(precio);
+        dest.writeString(tipo);
+        dest.writeInt(Cantidad);
+        dest.writeParcelable(img, flags);
     }
 }

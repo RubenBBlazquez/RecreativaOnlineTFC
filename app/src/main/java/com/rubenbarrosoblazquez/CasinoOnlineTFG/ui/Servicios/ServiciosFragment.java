@@ -37,10 +37,9 @@ public class ServiciosFragment extends Fragment {
 
         adapter=new viewPager2Adapter(getActivity().getSupportFragmentManager(),getLifecycle(),root);
 
-        viewPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
+        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
         viewPager.setAdapter(adapter);
-        viewPager.setUserInputEnabled(false);
         viewPager.setPageTransformer(new MarginPageTransformer(1500));
 
         TabLayout tabLayout = root.findViewById(R.id.tab_layout);

@@ -42,7 +42,7 @@ public class MyProductsRecyclerViewAdapter extends RecyclerView.Adapter<MyProduc
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.ProductPrize.setText(String.valueOf(holder.mItem.getPrecio()));
+        holder.ProductPrize.setText(String.valueOf(holder.mItem.getPrecio())+" €");
         holder.ProductName.setText(holder.mItem.getNombre());
         holder.mItem.setCantidad(1);
         holder.ProductImage.setImageBitmap(holder.mItem.getImg());

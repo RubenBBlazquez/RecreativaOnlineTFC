@@ -62,8 +62,6 @@ public class InfoServicioFragment extends Fragment {
         if (getArguments() != null) {
             this.information=getArguments();
             this.product= (products) information.getParcelable("ProductInfo");
-
-            Toast.makeText(getContext(),String.valueOf(product.getN_bastidor()) , Toast.LENGTH_SHORT).show();
         }
     }
 

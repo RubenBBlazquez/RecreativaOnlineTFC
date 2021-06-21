@@ -6,7 +6,13 @@
     <string name="loginWithFacebook">Inicio Sesion Facebook</string>
     <string name="registro">Registrarse</string>
     <string name="hintEmail">Escribe tu email</string>
+    <string name="hintnameAddProduct">Nombre del Producto</string>
+    <string name="hintdescriptionAddProduct">Descripción del producto</string>
+    <string name="hintunidadesAddProduct">Unidades del Producto</string>
+    <string name="hintpriceAddProduct">Precio del Producto</string>
     <string name="hintSaldoSlotMachine">Saldo a usar</string>
+    <string name="hintAddProductImage">Añadir Imagen</string>
+    <string name="hintAddProduct">Añadir Producto</string>
     <string name="hintPassword">Escribe tu Contraseña</string>
     <string name="hintRepeatPassword">Escribe de nuevo la Contraseña</string>
     <string name="hintDniPassword">dni/nif</string>
@@ -48,6 +54,8 @@
     <string name="menu_blackjack">BlackJack</string>
     <string name="menu_servicios">Servicios</string>
     <string name="menu_profile">Perfil</string>
+    <string name="menu_admin_send_noti">Enviar Notificaciones</string>
+    <string name="menu_admin_add_product">Añadir Producto</string>
     <string name="saldo_actual">Saldo Actual De La Cuenta :</string>
     <string name="saldo_actual_perfil">Saldo</string>
     <string name="numero_sacado">Ha Salido El Número ....</string>
@@ -66,9 +74,11 @@
     <string name="ver_anuncio_menu_item">Obtener Saldo Gratis</string>
     <string name="textoDatosPersonales">Datos Personales</string>
     <string name="tituloFragmentEnviarNoti">Enviar Notificación a Usuarios</string>
+    <string name="tituloFragmentAddProduct">Añadir Productos</string>
     <string name="tituloNotificacion">Titulo de la notificación</string>
     <string name="contenidoNotificacion">Contenido de la notificación</string>
     <string name="enviarNotificacion">Enviar Notificación a Usuarios</string>
+    <string name="añadirProducto">Añadir Producto</string>
     <string name="servicioJuegosRuleta">Servicios Juegos Ruleta</string>
     <string name="servicioJuegoBlackjack">Servicios Juego BlackJack</string>
     <string name="servicioJuegosTragaperras">Servicios Juegos Tragaperras</string>

@@ -54,7 +54,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerServiciosRuleta"
                     android:layout_width="match_parent"
-                    android:layout_height="173dp"
+                    android:layout_height="300dp"
                     android:padding="10dp" />
 
                 <TextView

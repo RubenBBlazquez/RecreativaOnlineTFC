@@ -53,6 +53,10 @@
                     android:id="@+id/nav_admin_sendNotification"
                     android:icon="@drawable/ic_notificaciones"
                     android:title="@string/enviarNotificacion" />
+                <item
+                    android:id="@+id/nav_admin_add_product"
+                    android:icon="@drawable/ic_baseline_add_24"
+                    android:title="@string/añadirProducto" />
             </menu>
         </item>
     </group>

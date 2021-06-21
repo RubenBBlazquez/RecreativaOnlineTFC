@@ -38,12 +38,6 @@ public class ServiceTragaperrasFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_service_slot_machine, container, false);
         productsPrueba=new ArrayList<>();
         // public products(String descripcion, Bitmap DIR_IMG, String nombre, int n_bastidor, double precio, String tipo, int cantidad) {
-        productsPrueba.add(new products("buenas tardes", BitmapFactory.decodeResource(getResources(), android.R.drawable.star_big_on), "product 1", 0, 99.92, "1", 20));
-        productsPrueba.add(new products("buenas tardes", BitmapFactory.decodeResource(getResources(), android.R.drawable.star_big_on), "product 1", 0, 99.92, "1", 20));
-        productsPrueba.add(new products("buenas tardes", BitmapFactory.decodeResource(getResources(), android.R.drawable.star_big_on), "product 1", 0, 99.92, "1", 20));
-        productsPrueba.add(new products("buenas tardes", BitmapFactory.decodeResource(getResources(), android.R.drawable.star_big_on), "product 1", 0, 99.92, "1", 20));
-        productsPrueba.add(new products("buenas tardes", BitmapFactory.decodeResource(getResources(), android.R.drawable.star_big_on), "product 1", 0, 99.92, "1", 20));
-
 
         initRecyclerViewServiciosTragaperras(v);
 
