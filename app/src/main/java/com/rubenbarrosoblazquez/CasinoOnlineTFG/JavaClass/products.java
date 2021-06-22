@@ -12,10 +12,12 @@ public class products implements Parcelable {
     private double precio;
     private String tipo;
     private int Cantidad;
+    private String imgName;
 
     protected products(Parcel in) {
         Descripcion = in.readString();
         Nombre = in.readString();
+        imgName = in.readString();
         precio = in.readDouble();
         tipo = in.readString();
         Cantidad = in.readInt();
@@ -52,13 +54,14 @@ public class products implements Parcelable {
         this.img=null;
     }
 
-    public products(String descripcion, String nombre, double precio, String tipo, int cantidad) {
+    public products(String imgName,String descripcion, String nombre, double precio, String tipo, int cantidad) {
         Descripcion = descripcion;
         Nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
         Cantidad = cantidad;
         this.img=null;
+        this.imgName=imgName;
     }
 
 
@@ -113,6 +116,14 @@ public class products implements Parcelable {
                 '}';
     }
 
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -122,6 +133,7 @@ public class products implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Descripcion);
         dest.writeString(Nombre);
+        dest.writeString(imgName);
         dest.writeDouble(precio);
         dest.writeString(tipo);
         dest.writeInt(Cantidad);

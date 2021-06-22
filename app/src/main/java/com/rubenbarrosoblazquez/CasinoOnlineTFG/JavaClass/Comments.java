@@ -1,19 +1,21 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass;
 
+import android.graphics.Bitmap;
+
 public class Comments {
     private String comment;
-    private String DirImg;
+    private Bitmap img;
     private String email;
 
     public Comments(){
         this.comment="";
-        this.DirImg="";
+        this.img=null;
         this.email="";
     }
 
-    public Comments(String comment, String dirImg, String email) {
+    public Comments(String comment, Bitmap dirImg, String email) {
         this.comment = comment;
-        DirImg = dirImg;
+        this.img = dirImg;
         this.email = email;
     }
 
@@ -25,12 +27,12 @@ public class Comments {
         this.comment = comment;
     }
 
-    public String getDirImg() {
-        return DirImg;
+    public Bitmap getDirImg() {
+        return img;
     }
 
-    public void setDirImg(String dirImg) {
-        DirImg = dirImg;
+    public void setDirImg(Bitmap dirImg) {
+        img = dirImg;
     }
 
     public String getEmail() {

@@ -53,10 +53,10 @@ public class ProfileViewPager extends Fragment {
                 (tab, position) -> {
                     switch (position) {
                         case 0:
-                            tab.setText(getString(R.string.menu_tab_profile));
+                            tab.setIcon(R.drawable.ic_perfil_white);
                             break;
                         case 1:
-                            tab.setText(getString(R.string.menu_tab_basket));
+                            tab.setIcon(R.drawable.ic_round_shopping_cart_24);
                             break;
                     }
                 }).attach();

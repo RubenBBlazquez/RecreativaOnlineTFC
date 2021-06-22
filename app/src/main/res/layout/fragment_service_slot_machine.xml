@@ -59,20 +59,22 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerServiciosTragaperras"
                     android:layout_width="match_parent"
-                    android:layout_height="173dp"
+                    android:layout_height="400dp"
                     android:padding="10dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:background="@color/colorPrimaryDark"
-                    android:fontFamily="@font/bungee" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DE000000"
+                    android:fontFamily="@font/bungee" />
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

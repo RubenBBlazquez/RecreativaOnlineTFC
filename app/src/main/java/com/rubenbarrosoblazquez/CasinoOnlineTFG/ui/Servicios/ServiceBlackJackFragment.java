@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +16,26 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnProductsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ServiceBlackJackFragment extends Fragment {
 
-    private ArrayList<products> productsPrueba;
+    private ArrayList<products> products=new ArrayList<>();
     private OnProductsListener mListener;
+    private OnGetUserInformation mListenerUser;
+    private MyProductsRecyclerViewAdapter adapter;
+
+    @BindView(R.id.serviciosBlackEditProfileSearch)
+    TextInputEditText search;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,9 +48,29 @@ public class ServiceBlackJackFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_service_blackjack, container, false);
-        productsPrueba=new ArrayList<>();
+        ButterKnife.bind(this,v);
 
         initRecyclerViewServiciosVarios(v);
+
+        mListenerUser.getFirestoreInstance().getAllProductsByType(products,"blackjack",adapter);
+
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mListenerUser.getFirestoreInstance().getProductsByName(s.toString(),"blackjack",adapter,products);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         return v;
     }
@@ -48,10 +80,11 @@ public class ServiceBlackJackFragment extends Fragment {
     public void initRecyclerViewServiciosVarios(View v) {
         final View view = v;
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(view.getContext(),2);
         RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.recyclerBlackJack);
         recyclerViewProductsShoppingCart.setLayoutManager(linearLayoutManager);
-        recyclerViewProductsShoppingCart.setAdapter(new MyProductsRecyclerViewAdapter(productsPrueba,mListener));
+        adapter=new MyProductsRecyclerViewAdapter(products,mListener);
+        recyclerViewProductsShoppingCart.setAdapter(adapter);
 
 
     }
@@ -62,6 +95,7 @@ public class ServiceBlackJackFragment extends Fragment {
         if (context instanceof Activity){
             Activity activity=(Activity) context;
             mListener=(OnProductsListener) activity;
+            mListenerUser=(OnGetUserInformation)activity;
         }
     }
 

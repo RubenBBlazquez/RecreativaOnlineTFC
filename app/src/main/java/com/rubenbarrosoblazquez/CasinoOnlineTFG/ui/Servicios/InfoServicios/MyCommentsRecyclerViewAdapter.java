@@ -1,5 +1,6 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.InfoServicios;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,10 @@ import java.util.List;
 public class MyCommentsRecyclerViewAdapter extends RecyclerView.Adapter<MyCommentsRecyclerViewAdapter.ViewHolder> {
 
     private final List<Comments> mValues;
-    public MyCommentsRecyclerViewAdapter(List<Comments> items) {
+    private final InfoServicioFragment infoServicioFragment;
+    public MyCommentsRecyclerViewAdapter(InfoServicioFragment infoServicioFragment,List<Comments> items) {
         mValues = items;
+        this.infoServicioFragment=infoServicioFragment;
     }
 
     @Override
@@ -30,19 +33,21 @@ public class MyCommentsRecyclerViewAdapter extends RecyclerView.Adapter<MyCommen
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Log.d("cositas",mValues.get(position).toString());
+
+
+        if (getItemCount()>0){
+            infoServicioFragment.RecyclerViewComentarios.setVisibility(View.VISIBLE);
+            infoServicioFragment.textNoComments.setVisibility(View.GONE);
+        }else{
+            infoServicioFragment.RecyclerViewComentarios.setVisibility(View.VISIBLE);
+            infoServicioFragment.textNoComments.setVisibility(View.GONE);
+        }
+
         holder.mItem = mValues.get(position);
         holder.comment.setText(holder.mItem.getComment());
         holder.nombre.setText(holder.mItem.getEmail());
-
-        int random_avatar=(int)(Math.random()*3);
-        ArrayList<Integer> avatarDrawables=new ArrayList<>();
-        avatarDrawables.add(R.drawable.avatar_1);
-        avatarDrawables.add(R.drawable.avatar_2);
-        avatarDrawables.add(R.drawable.avatar_3);
-        avatarDrawables.add(R.drawable.avatar_4);
-        avatarDrawables.add(R.drawable.avatar_5);
-
-        holder.avatar.setBackgroundResource(avatarDrawables.get(random_avatar));
+        holder.avatar.setImageBitmap(holder.mItem.getDirImg());
 
 
     }

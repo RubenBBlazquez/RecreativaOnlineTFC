@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -25,7 +25,7 @@
                 android:hint="@string/servicioJuegosRuletaEditText">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/serviciosRuletaEditProfile"
+                    android:id="@+id/serviciosRuletaEditProfileSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -37,7 +37,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
@@ -54,25 +54,15 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerServiciosRuleta"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="400dp"
                     android:padding="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:background="@color/colorSecondary"
+                    android:layout_height="match_parent"
+                    android:background="#DE000000"
                     android:fontFamily="@font/bungee" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

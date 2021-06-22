@@ -36,8 +36,11 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.MyUsersAdminRecyclerViewAdapter;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.MyProductsRecyclerViewAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -263,7 +266,7 @@ public class FirebaseCloudFirestore {
 
                     for (DocumentSnapshot d: productos) {
                         // public products(String descripcion, Bitmap DIR_IMG, String nombre, int n_bastidor, double precio, String tipo, int cantidad) {
-                        com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products product = new products(d.getString("description"),d.getString("name"),Double.valueOf(d.getString("price")),d.getString("type"),Integer.parseInt(d.getString("unidades")));
+                        com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products product = new products(d.getString("imageName"),d.getString("description"),d.getString("name"),Double.valueOf(d.getString("price")),d.getString("type"),Integer.parseInt(d.getString("unidades")));
                         getProductImage(products,d.getString("imageName"),adapter,product);
                     }
                     adapter.notifyDataSetChanged();
@@ -271,6 +274,29 @@ public class FirebaseCloudFirestore {
                 }
             }
         });
+    }
+
+    public void getProductsByName(String name,String type, MyProductsRecyclerViewAdapter adapter, ArrayList<products> products){
+        products.clear();
+        if(name.equalsIgnoreCase("")){
+            getAllProductsByType(products,type,adapter);
+        }else{
+            mFirebaseFirestore.collection("productos").whereEqualTo("type",type).whereEqualTo("name",name).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        List<DocumentSnapshot> productos=task.getResult().getDocuments();
+
+                        for (DocumentSnapshot d: productos) {
+                            // public products(String descripcion, Bitmap DIR_IMG, String nombre, int n_bastidor, double precio, String tipo, int cantidad) {
+                            com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products product = new products(d.getString("imageName"),d.getString("description"),d.getString("name"),Double.valueOf(d.getString("price")),d.getString("type"),Integer.parseInt(d.getString("unidades")));
+                            getProductImage(products,d.getString("imageName"),adapter,product);
+                        }
+                    }
+                }
+            });
+        }
+
     }
 
     public void getProductImage(ArrayList<products> products,String identifier,MyProductsRecyclerViewAdapter adapter,products product){
@@ -321,8 +347,55 @@ public class FirebaseCloudFirestore {
 
     }
 
-    public void insertProduct(products p){
-        mFirebaseFirestore.collection("productos").add(p);
+    public void saveProductImage(String imageName,Bitmap image){
+        StorageReference storageRef = storage.getReference();
+        StorageReference profilePicRef = storageRef.child("/productImages/"+imageName+".png");
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = profilePicRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(context, context.getString(R.string.productImageSavedError), Toast.LENGTH_SHORT).show();               // ...
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(context, context.getString(R.string.productImageSaved)+"("+taskSnapshot.getMetadata().getName()+")", Toast.LENGTH_SHORT).show();               // ...
+            }
+        });
     }
 
+
+    public void insertProduct(products p){
+
+        mFirebaseFirestore.collection("productos").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    long count=task.getResult().getDocuments().stream().count();
+
+                    Map<String,String> data = new HashMap<>();
+                    data.put("description",p.getDescripcion());
+                    data.put("imageName","product"+(count+1));
+                    data.put("name",p.getNombre());
+                    data.put("type",p.getTipo());
+                    data.put("unidades",p.getCantidad()+"");
+                    data.put("price",p.getPrecio()+"");
+
+                    mFirebaseFirestore.collection("productos")
+                            .document("product"+(count+1))
+                            .set(data);
+
+                    saveProductImage("product"+(count+1),p.getImg());
+
+            }
+        }
+    });
+
+}
 }

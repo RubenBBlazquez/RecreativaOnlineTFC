@@ -52,6 +52,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseMessagingModel;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseRealTimeModel;
 
 import java.util.Arrays;
 
@@ -67,6 +68,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private FirebaseMessagingModel messagingModel;
     private BroadcastReceiver messageReceiver;
     private NavigationView navigationView;
+    private FirebaseRealTimeModel realtime;
 
     @Override
     protected void onStart() {
@@ -90,6 +92,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         setContentView(R.layout.activity_casino);
 
         model = new FirebaseCloudFirestore(getApplicationContext());
+        realtime = new FirebaseRealTimeModel(getApplicationContext());
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -355,6 +358,11 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     @Override
     public FirebaseCloudFirestore getFirestoreInstance() {
         return model;
+    }
+
+    @Override
+    public FirebaseRealTimeModel getFirestoreRealTimeInstance() {
+        return realtime;
     }
 
 

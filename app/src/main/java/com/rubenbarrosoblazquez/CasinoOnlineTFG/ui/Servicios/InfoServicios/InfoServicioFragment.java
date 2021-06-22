@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Comments;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.CommentsRealTime;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
@@ -44,14 +46,14 @@ public class InfoServicioFragment extends Fragment {
     private RecyclerView recyclerViewComments;
     private ProgressDialog progreso;
     private OnGetUserInformation mListener;
-
+    private ArrayList<Comments> comments;
     private String url;
-
+    private MyCommentsRecyclerViewAdapter commentAdapter;
     private Button Buy;
     private Button newComment;
     private Activity activity;
-
-    private TextView textNoComments;
+    public RecyclerView RecyclerViewComentarios;
+    public TextView textNoComments;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class InfoServicioFragment extends Fragment {
             this.information=getArguments();
             this.product= (products) information.getParcelable("ProductInfo");
         }
+
+        comments = new ArrayList<>();
     }
 
     @Override
@@ -89,6 +93,7 @@ public class InfoServicioFragment extends Fragment {
 
         this.initRecyclerViewComentarios(v);
 
+        this.mListener.getFirestoreRealTimeInstance().getComments(product,comments,commentAdapter);
 
         this.numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -114,9 +119,10 @@ public class InfoServicioFragment extends Fragment {
         final View view = v;
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.RecyclerViewComentarios);
-        recyclerViewProductsShoppingCart.setLayoutManager(linearLayoutManager);
-        recyclerViewProductsShoppingCart.setAdapter(new MyCommentsRecyclerViewAdapter(new ArrayList<Comments>()));
+        recyclerViewComments = (RecyclerView) v.findViewById(R.id.RecyclerViewComentarios);
+        recyclerViewComments.setLayoutManager(linearLayoutManager);
+        commentAdapter=new MyCommentsRecyclerViewAdapter(this,comments);
+        recyclerViewComments.setAdapter(commentAdapter);
 
 
     }
@@ -142,7 +148,7 @@ public class InfoServicioFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                         EditText comment = (EditText) v.findViewById(R.id.contenidoComentarioDialogo);
-
+                        mListener.getFirestoreRealTimeInstance().insertComment(new CommentsRealTime(comment.getText().toString(),u.getEmail(),p.getImgName()));
                     }
 
                 })

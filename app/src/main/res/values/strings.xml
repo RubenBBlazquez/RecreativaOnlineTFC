@@ -80,6 +80,9 @@
     <string name="enviarNotificacion">Enviar Notificación a Usuarios</string>
     <string name="añadirProducto">Añadir Producto</string>
     <string name="servicioJuegosRuleta">Servicios Juegos Ruleta</string>
+    <string name="rellenaCampos">Todos los campos deben estar completados</string>
+    <string name="productImageSaved">Producto Registrado Correctamente</string>
+    <string name="productImageSavedError">Fallo al registrar el producto</string>
     <string name="servicioJuegoBlackjack">Servicios Juego BlackJack</string>
     <string name="servicioJuegosTragaperras">Servicios Juegos Tragaperras</string>
     <string name="servicioJuegosVarios">Servicios Juegos Varios</string>
