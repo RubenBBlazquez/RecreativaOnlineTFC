@@ -3,13 +3,11 @@ package com.rubenbarrosoblazquez.CasinoOnlineTFG.model;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,22 +28,24 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Compras;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.MyUsersAdminRecyclerViewAdapter;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.MyBuysRecyclerViewAdapter;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.MyProductsRecyclerViewAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class FirebaseCloudFirestore {
 
@@ -346,6 +346,53 @@ public class FirebaseCloudFirestore {
         }
 
     }
+    public void getProductImageBuys(ArrayList<Compras> compras,String identifier,MyBuysRecyclerViewAdapter adapter,Compras c){
+        StorageReference storageRef = storage.getReference();
+        StorageReference productRef = storageRef.child("/productImages/"+identifier+".png");
+        Log.d("path",storageRef.getBucket()+"-->"+productRef.getPath());
+
+        try{
+
+            productRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context)
+                            .asBitmap()
+                            .load(uri)
+                            .into(new CustomTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    c.setImagen(resource);
+                                    compras.add(c);
+                                    adapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onLoadCleared(@Nullable Drawable placeholder) {
+                                    Bitmap bf = BitmapFactory.decodeResource(context.getResources(),R.drawable.ruleta);
+                                    c.setImagen(bf);
+                                    compras.add(c);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Bitmap bf = BitmapFactory.decodeResource(context.getResources(),R.drawable.ruleta);
+                            c.setImagen(bf);
+                            compras.add(c);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d("path", ""+e.getMessage());
+        }
+
+    }
 
     public void saveProductImage(String imageName,Bitmap image){
         StorageReference storageRef = storage.getReference();
@@ -398,4 +445,54 @@ public class FirebaseCloudFirestore {
     });
 
 }
+    public void insertBuy(products p , User u) {
+        Log.d("cositas","casdadasd");
+        mFirebaseFirestore.collection("compras").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    long count = task.getResult().getDocuments().stream().count();
+
+                    Map<String, String> data = new HashMap<>();
+                    data.put("email", u.getEmail());
+                    data.put("productId", p.getImgName());
+                    data.put("name", p.getNombre());
+                    data.put("type", p.getTipo());
+                    data.put("unidades", p.getCantidad() + "");
+                    data.put("price", p.getPrecio() + "");
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    Date date = new Date();
+                    data.put("date", dateFormat.format(date));
+
+                    mFirebaseFirestore.collection("compras")
+                            .document("compra" + (count + 1))
+                            .set(data);
+
+                }else{
+                    Log.d("cositas","error");
+                }
+
+            }
+
+        });
+    }
+
+    public void getAllBuysByUser(User u, ArrayList<Compras> comprasAL, MyBuysRecyclerViewAdapter adapter){
+        mFirebaseFirestore.collection("compras").whereEqualTo("email",u.getEmail())
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<DocumentSnapshot> compras = task.getResult().getDocuments();
+                    for (DocumentSnapshot d : compras) {
+                        Compras c = new Compras(d.getString("date"),d.getString("name"),d.getString("price"),d.getString("unidades"),d.getString("type"));
+                        getProductImageBuys(comprasAL,d.getString("productId"),adapter,c);
+                    }
+                }
+            }
+        });
+
+
+    }
 }

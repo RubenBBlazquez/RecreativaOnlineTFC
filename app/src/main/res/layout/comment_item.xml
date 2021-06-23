@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/CommentsRecyclerView"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CommentsRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
     android:elevation="13dp"
     android:padding="15dp"
+    android:background="@android:color/white"
     android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:padding="2dp">
+        android:background="#DE000000"
+        android:padding="2dp"
+        android:layout_margin="2dp">
 
         <ImageView
             android:id="@+id/CommentAvatar"
             android:layout_width="82dp"
             android:layout_height="82dp"
+            android:scaleType="fitXY"
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
@@ -33,21 +37,25 @@
                 android:id="@+id/emailComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:text="Email"
                 android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/parma_heavy"
                 android:textStyle="bold|italic"
-                android:textColor="@android:color/black"
                 />
+
             <TextView
                 android:id="@+id/Comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Comment"
-                android:padding="5dp"
-                android:textStyle="bold|italic"
-                android:textColor="@android:color/black"
                 android:justificationMode="inter_word"
-                />
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Comment"
+                android:fontFamily="@font/parma_heavy"
+                android:textColor="@android:color/white"
+                android:textStyle="bold|italic" />
         </LinearLayout>
     </LinearLayout>
 

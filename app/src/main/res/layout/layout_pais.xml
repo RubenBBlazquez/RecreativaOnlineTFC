@@ -10,11 +10,11 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:fontFamily="@font/bungee"
-        android:padding="7dp"
+        android:padding="4dp"
         android:text="Pais"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:textSize="15dp"
+        android:textSize="12dp"
         tools:layout_editor_absoluteX="90dp"
         tools:layout_editor_absoluteY="27dp" />
 </LinearLayout>

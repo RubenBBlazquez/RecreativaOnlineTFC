@@ -18,10 +18,10 @@ import java.util.List;
 public class MyCommentsRecyclerViewAdapter extends RecyclerView.Adapter<MyCommentsRecyclerViewAdapter.ViewHolder> {
 
     private final List<Comments> mValues;
-    private final InfoServicioFragment infoServicioFragment;
-    public MyCommentsRecyclerViewAdapter(InfoServicioFragment infoServicioFragment,List<Comments> items) {
+    private final InfoServicioFragment rview;
+    public MyCommentsRecyclerViewAdapter(InfoServicioFragment rview,List<Comments> items) {
         mValues = items;
-        this.infoServicioFragment=infoServicioFragment;
+        this.rview=rview;
     }
 
     @Override
@@ -33,18 +33,13 @@ public class MyCommentsRecyclerViewAdapter extends RecyclerView.Adapter<MyCommen
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Log.d("cositas",mValues.get(position).toString());
-
-
-        if (getItemCount()>0){
-            infoServicioFragment.RecyclerViewComentarios.setVisibility(View.VISIBLE);
-            infoServicioFragment.textNoComments.setVisibility(View.GONE);
-        }else{
-            infoServicioFragment.RecyclerViewComentarios.setVisibility(View.VISIBLE);
-            infoServicioFragment.textNoComments.setVisibility(View.GONE);
-        }
-
         holder.mItem = mValues.get(position);
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rview.openDialogComment();
+            }
+        });
         holder.comment.setText(holder.mItem.getComment());
         holder.nombre.setText(holder.mItem.getEmail());
         holder.avatar.setImageBitmap(holder.mItem.getDirImg());

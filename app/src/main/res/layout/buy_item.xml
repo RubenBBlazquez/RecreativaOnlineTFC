@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:layout_weight="1"
+    app:cardElevation="15dp"
+    app:cardCornerRadius="10dp"
+    android:theme="@style/Theme.MaterialComponents.DayNight">
+
+        <RelativeLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_shape"
+            android:backgroundTint="#DE000000"
+            android:layout_margin="5dp"
+            >
+            <LinearLayout
+                android:id="@+id/imageLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignStart="@+id/rootView"
+                android:orientation="vertical"
+                android:gravity="center"
+                tools:ignore="NotSibling"
+                android:layout_margin="5dp"
+                >
+                <ImageView
+                    android:id="@+id/imageCompra"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ruleta"
+                    android:background="@drawable/image_shape"
+                    android:scaleType="fitXY"
+                    tools:ignore="NotSibling"
+                    android:padding="10dp">
+
+                </ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_toRightOf="@+id/imageLayout">
+
+                <TextView
+                    android:id="@+id/nombreProductoCompra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:fontFamily="@font/bungee"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical|center"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"/>
+                <TextView
+                    android:id="@+id/PrecioCompra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Precio :     20€ x 5      Total : 100€"
+                    android:fontFamily="@font/bungee"
+                    android:gravity="center_vertical|center"
+                    android:textSize="12dp"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/fechaCompra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Comprado el 20/05/2001 20:00"
+                    android:fontFamily="@font/bungee"
+                    android:gravity="center_vertical|end"
+                    android:textSize="8dp"
+                    android:paddingEnd="20dp"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

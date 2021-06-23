@@ -51,14 +51,16 @@ public class FirebaseRealTimeModel {
 
     public void getComments(products p,ArrayList<Comments> comments, MyCommentsRecyclerViewAdapter adapter){
         final int[] i = {0};
-
-        db.child("comments").equalTo(p.getImgName(),"product").addValueEventListener(new ValueEventListener() {
+        db.child("comments").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     for(DataSnapshot ds : snapshot.getChildren()){
-                        CommentsRealTime comment = new CommentsRealTime(ds.child("comment").getValue().toString(),ds.child("email").getValue().toString(),ds.child("product").getValue().toString());
-                        getEmailImage(comment, comments, adapter);
+                        if(ds.child("product").getValue().toString().equalsIgnoreCase(p.getImgName())){
+                            CommentsRealTime comment = new CommentsRealTime(ds.child("comment").getValue().toString(),ds.child("email").getValue().toString(),ds.child("product").getValue().toString());
+                            getEmailImage(comment, comments, adapter);
+                        }
+
                     }
                 }
             }

@@ -2,6 +2,9 @@
     <string name="rewarder_ad_id">ca-app-pub-3940256099942544/5224354917</string>
     <string name="app_name">CASINO ONLINE</string>
     <string name="login">Inicio Sesion</string>
+    <string name="comprarServicio">Comprar</string>
+    <string name="addServiceComment">Añadir Comentario</string>
+    <string name="comments">Comentarios</string>
     <string name="loginWithGoogle">Inicio Sesion Google</string>
     <string name="loginWithFacebook">Inicio Sesion Facebook</string>
     <string name="registro">Registrarse</string>
@@ -65,7 +68,15 @@
     <string name="apuestaactual">APUESTA ACTUAL</string>
     <string name="seleccionaMoneda">Antes de apostar selecciona una moneda</string>
     <string name="noSaldoParaApostar">No puedes apostar si no tienes el saldo suficiente, consigue saldo y prueba de nuevo</string>
+    <string name="noSaldoParaComprar">No puedes comprar nada si no tienes el saldo suficiente, consigue saldo y prueba de nuevo</string>
+    <string name="compraRealizada">Compra Realizada correctamente, Para más Información ve a Perfil --> Compras</string>
     <string name="tiradasSeguidas">No puedes tirar 2 veces seguidas, espera a obtener el resultado de la tirada anterior</string>
+    <string name="orderByDateDesc">Ordenar Por Fecha Ascendente</string>
+    <string name="orderByDateAsc">Ordenar Por Fecha Descendente</string>
+    <string name="filtro">Filtrar por .....</string>
+    <string name="orderByName">Ordenar por Nombre</string>
+    <string name="orderByPriceAsc">Ordenar Por Precio Ascendente</string>
+    <string name="orderByPriceDesc">Ordenar Por Precio Descendente</string>
     <string name="ver_anuncio">Obtener saldo con anuncios</string>
     <string name="opciones_perfil_menu">Opciones Perfil</string>
     <string name="saldo_perfil_menu_item">Saldo Actual : </string>

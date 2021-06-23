@@ -1,14 +1,39 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Compras;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.InfoServicios.MyCommentsRecyclerViewAdapter;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +50,13 @@ public class BasketFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private MyBuysRecyclerViewAdapter adapter;
+    private ArrayList<Compras> compras;
+    private OnGetUserInformation mListener;
+
+    @BindView(R.id.filterBuys)
+    Spinner filter;
 
     public BasketFragment() {
         // Required empty public constructor
@@ -61,6 +93,99 @@ public class BasketFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_basket, container, false);
+        View v = inflater.inflate(R.layout.fragment_basket, container, false);
+
+        ButterKnife.bind(this,v);
+
+        compras = new ArrayList<>();
+
+        initRecyclerViewComentarios(v);
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add(getString(R.string.filtro));
+        list.add(getString(R.string.orderByDateDesc));
+        list.add(getString(R.string.orderByDateAsc));
+        list.add(getString(R.string.orderByName));
+        list.add(getString(R.string.orderByPriceAsc));
+        list.add(getString(R.string.orderByPriceDesc));
+
+        filterAdapter filteradapter = new filterAdapter(getContext(),R.layout.layout_pais,list);
+        filter.setAdapter(filteradapter);
+
+        mListener.getFirestoreInstance().getAllBuysByUser(mListener.getUserInformation(),compras,adapter);
+
+
+        return v;
     }
+
+    public void initRecyclerViewComentarios(View v) {
+        final View view = v;
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.rcBuys);
+        recyclerViewProductsShoppingCart.setLayoutManager(linearLayoutManager);
+        recyclerViewProductsShoppingCart.scheduleLayoutAnimation();
+        adapter=new MyBuysRecyclerViewAdapter(compras);
+        recyclerViewProductsShoppingCart.setAdapter(adapter);
+        recyclerViewProductsShoppingCart.setItemAnimator(new DefaultItemAnimator());
+
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity){
+            Activity activity=(Activity) context;
+            mListener=(OnGetUserInformation) activity;
+
+        }
+    }
+
+
+    public class filterAdapter extends ArrayAdapter<String> {
+
+        private ArrayList<String> filtros;
+        private Context context;
+
+        public filterAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            this.filtros = (ArrayList<String>) objects;
+        }
+
+        @SuppressLint("ResourceAsColor")
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View v = convertView;
+
+            if (v == null) {
+                v = getLayoutInflater().inflate(R.layout.layout_pais, parent, false);
+            }
+
+            TextView multiplicator = v.findViewById(R.id.multiplier);
+            multiplicator.setBackgroundColor(R.color.colorSecondary);
+            multiplicator.setText(filtros.get(position));
+
+            return v;
+        }
+
+        @SuppressLint("ResourceAsColor")
+        @Override
+        public View getDropDownView(int position, @Nullable @org.jetbrains.annotations.Nullable View convertView, @NonNull @NotNull ViewGroup parent) {
+            View v = convertView;
+
+            if (v == null) {
+                v = getLayoutInflater().inflate(R.layout.layout_pais, parent, false);
+            }
+
+            TextView multiplicator = v.findViewById(R.id.multiplier);
+            multiplicator.setBackgroundColor(R.color.colorSecondary);
+            multiplicator.setText(filtros.get(position));
+
+            return v;
+
+        }
+    }
+
 }
