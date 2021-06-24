@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -454,16 +455,16 @@ public class FirebaseCloudFirestore {
                 if (task.isSuccessful()) {
                     long count = task.getResult().getDocuments().stream().count();
 
-                    Map<String, String> data = new HashMap<>();
+                    Map<String, Object> data = new HashMap<>();
                     data.put("email", u.getEmail());
                     data.put("productId", p.getImgName());
                     data.put("name", p.getNombre());
                     data.put("type", p.getTipo());
-                    data.put("unidades", p.getCantidad() + "");
-                    data.put("price", p.getPrecio() + "");
+                    data.put("unidades", p.getCantidad());
+                    data.put("price", p.getPrecio());
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date();
-                    data.put("date", dateFormat.format(date));
+                    data.put("date", date);
 
                     mFirebaseFirestore.collection("compras")
                             .document("compra" + (count + 1))
@@ -486,7 +487,25 @@ public class FirebaseCloudFirestore {
                 if(task.isSuccessful()){
                     List<DocumentSnapshot> compras = task.getResult().getDocuments();
                     for (DocumentSnapshot d : compras) {
-                        Compras c = new Compras(d.getString("date"),d.getString("name"),d.getString("price"),d.getString("unidades"),d.getString("type"));
+                        Compras c = new Compras(d.getDate("date").toString(),d.getString("name"),String.valueOf(d.getDouble("price")),String.valueOf(d.getLong("unidades")),d.getString("type"));
+                        getProductImageBuys(comprasAL,d.getString("productId"),adapter,c);
+                    }
+                }
+            }
+        });
+
+
+    }
+public void getAllBuysOrderByPrice(User u, ArrayList<Compras> comprasAL, MyBuysRecyclerViewAdapter adapter, Query.Direction direction,String field){
+        comprasAL.clear();
+        mFirebaseFirestore.collection("compras").whereEqualTo("email",u.getEmail()).orderBy(field, direction)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<DocumentSnapshot> compras = task.getResult().getDocuments();
+                    for (DocumentSnapshot d : compras) {
+                        Compras c = new Compras(d.getDate("date").toString(),d.getString("name"),String.valueOf(d.getDouble("price")),String.valueOf(d.getLong("unidades")),d.getString("type"));
                         getProductImageBuys(comprasAL,d.getString("productId"),adapter,c);
                     }
                 }

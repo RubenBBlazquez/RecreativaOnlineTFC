@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.Query;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Compras;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
@@ -141,6 +142,23 @@ public class BasketFragment extends Fragment {
         }
     }
 
+    public void orderBuysBY(String order){
+        if(order.equalsIgnoreCase(getString(R.string.orderByPriceAsc))){
+            mListener.getFirestoreInstance().getAllBuysOrderByPrice(mListener.getUserInformation(),compras,adapter, Query.Direction.ASCENDING,"price");
+        }else if(order.equalsIgnoreCase(getString(R.string.orderByPriceDesc))){
+            mListener.getFirestoreInstance().getAllBuysOrderByPrice(mListener.getUserInformation(),compras,adapter, Query.Direction.DESCENDING,"price");
+        }else if(order.equalsIgnoreCase(getString(R.string.orderByDateDesc))){
+            mListener.getFirestoreInstance().getAllBuysOrderByPrice(mListener.getUserInformation(),compras,adapter, Query.Direction.DESCENDING,"date");
+        }else if(order.equalsIgnoreCase(getString(R.string.orderByDateAsc))){
+            mListener.getFirestoreInstance().getAllBuysOrderByPrice(mListener.getUserInformation(),compras,adapter, Query.Direction.ASCENDING,"date");
+        }else if(order.equalsIgnoreCase(getString(R.string.orderByName))){
+            mListener.getFirestoreInstance().getAllBuysOrderByPrice(mListener.getUserInformation(),compras,adapter, Query.Direction.ASCENDING,"name");
+        }else{
+            mListener.getFirestoreInstance().getAllBuysByUser(mListener.getUserInformation(),compras,adapter);
+
+        }
+    }
+
 
     public class filterAdapter extends ArrayAdapter<String> {
 
@@ -167,6 +185,8 @@ public class BasketFragment extends Fragment {
             multiplicator.setBackgroundColor(R.color.colorSecondary);
             multiplicator.setText(filtros.get(position));
 
+            Toast.makeText(context, filtros.get(position), Toast.LENGTH_SHORT).show();
+            orderBuysBY(filtros.get(position));
             return v;
         }
 
@@ -183,9 +203,14 @@ public class BasketFragment extends Fragment {
             multiplicator.setBackgroundColor(R.color.colorSecondary);
             multiplicator.setText(filtros.get(position));
 
+
+
             return v;
 
         }
+
+
+
     }
 
 }

@@ -53,6 +53,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseMessagingModel;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseRealTimeModel;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileFragment;
 
 import java.util.Arrays;
 
@@ -69,7 +70,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private BroadcastReceiver messageReceiver;
     private NavigationView navigationView;
     private FirebaseRealTimeModel realtime;
-
+    private ProfileFragment profile;
     @Override
     protected void onStart() {
         super.onStart();
@@ -93,7 +94,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
 
         model = new FirebaseCloudFirestore(getApplicationContext());
         realtime = new FirebaseRealTimeModel(getApplicationContext());
-
+        profile=new ProfileFragment();
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -285,9 +286,11 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
                 Toast.makeText(CasinoActivity.this, "Has conseguido al ver el video " + (Float.valueOf(rewardItem.getAmount()) / 20), Toast.LENGTH_SHORT).show();
                 user.setSaldo(user.getSaldo() + Float.valueOf(rewardItem.getAmount()) / 20);
                 model.updateSaldo(user.getEmail(), user.getSaldo());
-
                 //actualizo los textos de la aplicación donde aparece el saldo del usuario
                 updateBalanceTexts();
+                if(profile!=null && profile.isVisible()){
+                    profile.saldo.setText(String.valueOf(user.getSaldo()));
+                }
 
             }
 
@@ -363,6 +366,15 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     @Override
     public FirebaseRealTimeModel getFirestoreRealTimeInstance() {
         return realtime;
+    }
+
+    @Override
+    public CasinoActivity getActivity() {
+        return this;
+    }
+
+    public void setProfileFragment(ProfileFragment profile){
+        this.profile=profile;
     }
 
 

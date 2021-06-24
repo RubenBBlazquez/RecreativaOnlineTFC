@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private OnGetUserInformation mListener;
     private User u;
-    private TextView saldo;
+    public TextView saldo;
     private EditText nombre;
     private EditText apellidos;
     private EditText telefono;
@@ -73,6 +73,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private AlertDialog dialog;
     private EditText verifiedSmsCode;
     private String verificationPhoneId="";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +156,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         this.mListenerAds.rewardedAd();
         this.mListenerAds.loadRewardedVideoAd();
 
-
+        mListener.getActivity().setProfileFragment(this);
 
         return v;
     }
@@ -177,7 +178,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 this.mListenerAds.showAd();
                 this.mListener.updateBalanceTexts();
-                this.saldo.setText(this.u.getSaldo()+0.5+" €");
+                //this.saldo.setText(this.u.getSaldo()+0.5+" €");
                 break;
                 case R.id.actualizarDatosPersonales:
                     try{
