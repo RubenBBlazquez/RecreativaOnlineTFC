@@ -186,6 +186,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
                 preferences.apply();
                 Intent i = new Intent(getApplicationContext(), LoginRegisterActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 

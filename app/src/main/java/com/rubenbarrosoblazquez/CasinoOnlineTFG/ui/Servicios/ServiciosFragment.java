@@ -1,5 +1,6 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,12 +51,15 @@ public class ServiciosFragment extends Fragment {
                     switch (position) {
                         case 0:
                             tab.setIcon(R.drawable.ic_ruleta_de_casino_icon_white);
+                            tabLayout.setBackgroundColor(Color.parseColor("#DE000000"));
                             break;
                         case 1:
                             tab.setIcon(R.drawable.ic_slot_machine_white);
+                            tabLayout.setBackgroundColor(Color.parseColor("#000000"));
                             break;
                         case 2:
                             tab.setIcon(R.drawable.ic_black_jack_white);
+                            tabLayout.setBackgroundColor(Color.parseColor("#DE000000"));
                             break;
 
                     }

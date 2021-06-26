@@ -2,15 +2,23 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:elevation="30dp"
-    android:padding="5dp"
-    app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="@color/colorPrimary"
+    android:layout_width="wrap_content"
+    android:layout_height="130dp"
+    android:elevation="100dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="10dp"
     android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24"
     >
+    <RelativeLayout
+        android:id="@+id/rootView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/image_shape"
+        android:backgroundTint="#DE000000"
+        android:layout_margin="4dp"
+        >
 
 
         <LinearLayout
@@ -19,13 +27,50 @@
             android:layout_weight="1"
             android:padding="5dp"
             android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/parentRoot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:orientation="horizontal"
+               >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/imageProducto"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_launcher_foreground"
+                        />
+                </RelativeLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
 
-            <ImageView
-                android:id="@+id/imageProducto"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                    <ImageView
+                        android:id="@+id/infoProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_alignRight="@+id/imageProducto"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_info_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:ignore="NotSibling" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="8dp" />
@@ -34,8 +79,7 @@
                 android:id="@+id/NombreProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:padding="5dp"
+                android:fontFamily="@font/parmapetitoutline"
                 android:text="Producto"
                 android:textAlignment="center"
                 android:textAllCaps="false"
@@ -53,7 +97,7 @@
                     android:id="@+id/PrecioProducto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="serif"
+                    android:fontFamily="@font/parmapetitoutline"
                     android:text="0€"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
@@ -69,5 +113,5 @@
 
         </LinearLayout>
 
-
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

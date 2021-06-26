@@ -3,59 +3,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".ui.Servicios.ServiceRuletaFragment">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/servicioJuegosRuletaEditText">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/serviciosRuletaEditProfileSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-
-                    >
-
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorSecondary"
+                    android:background="#DE000000"
                     android:fontFamily="@font/bungee"
-                    android:padding="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:text="@string/servicioJuegosRuleta"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="18dp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerServiciosRuleta"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:padding="10dp" />
+                    android:layout_height="5dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#DE000000"
+                    >
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/servicioJuegosRuletaEditText"
+                        android:outlineAmbientShadowColor="@android:color/white"
+                        android:outlineSpotShadowColor="@android:color/white"
+                        android:textColorHint="@android:color/white"
+                        app:boxStrokeColor="@android:color/white"
+                        app:boxStrokeErrorColor="@android:color/white"
+                        app:counterOverflowTextColor="@android:color/white"
+                        app:counterTextColor="@android:color/black"
+                        app:helperTextTextColor="@android:color/white"
+                        app:hintTextColor="@android:color/white"
+                        app:placeholderTextColor="@android:color/white"
+                        app:prefixTextColor="@android:color/white"
+                        app:suffixTextColor="@android:color/white"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/serviciosRuletaEditProfileSearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:pointerIcon="text"
+                            android:textColor="@android:color/white">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@drawable/frame_vintash2"
+                    android:layout_weight="1">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerServiciosRuleta"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="8">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -63,8 +112,5 @@
                     android:background="#DE000000"
                     android:fontFamily="@font/bungee" />
             </LinearLayout>
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

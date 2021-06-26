@@ -3,68 +3,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".ui.Servicios.ServiceRuletaFragment">
 
-    <androidx.core.widget.NestedScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DE000000"
+            android:fontFamily="@font/bungee"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/servicioJuegoBlackjack"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="18dp" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="5dp"
+            android:background="@android:color/white">
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#DE000000"
+            >
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/servicioJuegosBlackJackEditText">
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/servicioJuegosBlackJackEditText"
+                android:outlineAmbientShadowColor="@android:color/white"
+                android:outlineSpotShadowColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                app:boxStrokeColor="@android:color/white"
+                app:boxStrokeErrorColor="@android:color/white"
+                app:counterOverflowTextColor="@android:color/white"
+                app:counterTextColor="@android:color/black"
+                app:helperTextTextColor="@android:color/white"
+                app:hintTextColor="@android:color/white"
+                app:placeholderTextColor="@android:color/white"
+                app:prefixTextColor="@android:color/white"
+                app:suffixTextColor="@android:color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/serviciosBlackEditProfileSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-
-                    >
+                    android:textColor="@android:color/white">
 
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/frame_vintash2"
+            android:layout_weight="1">
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerBlackJack"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorSecondary"
-                    android:fontFamily="@font/bungee"
-                    android:padding="10dp"
-                    android:text="@string/servicioJuegoBlackjack"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerBlackJack"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:padding="10dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#DE000000"
-                    android:fontFamily="@font/bungee" />
-            </LinearLayout>
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"/>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="12">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#DE000000"
+            android:fontFamily="@font/bungee" />
+    </LinearLayout>
+
+
 
 </LinearLayout>

@@ -270,7 +270,6 @@ public class FirebaseCloudFirestore {
                         com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products product = new products(d.getString("imageName"),d.getString("description"),d.getString("name"),Double.valueOf(d.getString("price")),d.getString("type"),Integer.parseInt(d.getString("unidades")));
                         getProductImage(products,d.getString("imageName"),adapter,product);
                     }
-                    adapter.notifyDataSetChanged();
 
                 }
             }

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/slots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/frame">
+
+
+            <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
+                android:id="@+id/scrolling1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+            </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
+
+            <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
+                android:id="@+id/scrolling2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+            </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
+
+            <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
+                android:id="@+id/scrolling3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+            </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignTop="@+id/slots"
+        android:visibility="visible"
+        android:background="@drawable/frame">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/hintSaldoSlotMachine"
+            android:outlineAmbientShadowColor="@android:color/white"
+            android:outlineSpotShadowColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            app:boxStrokeColor="@android:color/white"
+            app:boxStrokeErrorColor="@android:color/white"
+            app:counterOverflowTextColor="@android:color/white"
+            app:counterTextColor="@android:color/black"
+            app:helperTextTextColor="@android:color/white"
+            app:hintTextColor="@android:color/white"
+            app:placeholderTextColor="@android:color/white"
+            app:prefixTextColor="@android:color/white"
+            app:suffixTextColor="@android:color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/saldoSlotMachine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@android:color/white">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Spinner
+            android:id="@+id/multiSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/spinner_custom" />
+
+        <Button
+            android:id="@+id/throwRandom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/bungee"
+            android:text="Tirar"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

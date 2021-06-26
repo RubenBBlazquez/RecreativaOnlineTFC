@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.Servicios.ServiciosFragment">
+    tools:context=".ui.Servicios.ServiciosFragment"
+    >
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="15">
+        android:layout_weight="15"
+        android:background="#DE000000">
 
     </androidx.viewpager2.widget.ViewPager2>
 
@@ -20,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#DE000000"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
 </LinearLayout>
