@@ -9,161 +9,174 @@
     android:background="@android:color/black">
 
 
-    <TextView
-        android:id="@+id/textView6"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F44336"
-        android:fontFamily="@font/bungee"
-        android:text="Apuestas"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="24sp" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="5dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#1d1d1d"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/monedasApuestas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></androidx.gridlayout.widget.GridLayout>
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="5dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="267dp"
-        android:background="#1d1d1d"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.gridlayout.widget.GridLayout
-                    android:id="@+id/numerosApuestas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:padding="10dp"
-                    app:columnCount="3"
-                    tools:layout_gravity="center">
-
-                    <Button
-                        android:id="@+id/zeroButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/color_bid_number_green"
-                        android:tag="0"
-                        android:text="0"
-                        app:layout_columnSpan="3"
-                        app:layout_gravity="fill_horizontal" />
-
-                </androidx.gridlayout.widget.GridLayout>
-            </LinearLayout>
-        </ScrollView>
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="5dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#1d1d1d"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textoDialogoSaldo"
-                android:layout_width="423dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/bungee"
-                android:text="Saldo Actual : "
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:layout_marginLeft="10dp"/>
-
-            <TextView
-                android:id="@+id/saldoActualDialogoApuesta"
+                android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="#d0b36a"
                 android:fontFamily="@font/bungee"
-                android:text="0€"
+                android:text="Apuestas"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:textSize="24sp" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1d1d1d"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/monedasApuestas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></androidx.gridlayout.widget.GridLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <Button
-                android:id="@+id/apostarRuleta"
+            android:layout_height="267dp"
+            android:background="#1d1d1d"
+            android:gravity="center"
+            android:orientation="vertical">
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#F44336"
-                android:fontFamily="@font/bungee"
-                android:text="Apostar"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:fillViewport="true">
 
-            <Button
-                android:id="@+id/cerrarDialogoApuesta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:background="#F44336"
-                android:fontFamily="@font/bungee"
-                android:text="Cerrar "
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <androidx.gridlayout.widget.GridLayout
+                        android:id="@+id/numerosApuestas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="10dp"
+                        app:columnCount="3"
+                        tools:layout_gravity="center">
+
+                        <Button
+                            android:id="@+id/zeroButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/color_bid_number_green"
+                            android:tag="0"
+                            android:text="0"
+                            app:layout_columnSpan="3"
+                            app:layout_gravity="fill_horizontal" />
+
+                    </androidx.gridlayout.widget.GridLayout>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
 
-    </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/banner_apuesta_ruleta"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#1d1d1d"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/textoDialogoSaldo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bungee"
+                        android:text="Saldo Actual : "
+                        android:textFontWeight="1"
+                        android:textAlignment="viewStart"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:id="@+id/saldoActualDialogoApuesta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/bungee"
+                        android:text="0€"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <Button
+                        android:id="@+id/apostarRuleta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#d0b36a"
+                        android:fontFamily="@font/bungee"
+                        android:text="Apostar"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/cerrarDialogoApuesta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:background="#d0b36a"
+                        android:fontFamily="@font/bungee"
+                        android:text="Cerrar "
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/banner_apuesta_ruleta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>
 

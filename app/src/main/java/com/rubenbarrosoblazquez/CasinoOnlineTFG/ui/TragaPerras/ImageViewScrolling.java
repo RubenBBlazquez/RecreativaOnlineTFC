@@ -25,7 +25,7 @@ public class ImageViewScrolling extends FrameLayout {
     private static int ANIMATION_DUR = 300;
     private ImageView current_image,secondImage,thirdImage;
     private int results[]={0,0,0};
-    public static int BAR[] = {0,2} , SEVEN[] ={3,4} , LEMON[] = {5,10},ORANGE[] = {11,16},TRIPLE[] = {17}, WATERMELON[]={17,21};
+    public static int BAR[] = {0,2} , SEVEN[] ={3,4} , LEMON[] = {5,10},ORANGE[] = {11,16},TRIPLE[] = {17}, WATERMELON[]={18,21};
     private int tag;
     private int movement=1;
     IEventEnd eventEnd;

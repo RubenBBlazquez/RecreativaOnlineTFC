@@ -66,6 +66,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     implementation 'com.google.firebase:firebase-database'
     implementation 'biz.kasual:materialnumberpicker:1.2.1'
+    implementation 'com.airbnb.android:lottie:3.4.2'
 
 
 

@@ -43,6 +43,7 @@
                     android:layout_height="200dp"
                     android:layout_marginLeft="52dp"
                     android:layout_marginRight="52dp"
+                    android:background="@color/colorSecondary"
                     android:elevation="20dp"
                     android:layout_marginTop="50dp"
                     app:cardCornerRadius="10dp">
@@ -51,6 +52,7 @@
                         android:id="@+id/ProductImageInfo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="#d0b36a"
                         android:src="@android:mipmap/sym_def_app_icon"
                         android:scaleType="fitXY"/>
                 </androidx.cardview.widget.CardView>
@@ -152,6 +154,7 @@
                             android:id="@+id/infoUnitsProduct"
                             android:layout_width="match_parent"
                             android:layout_height="80dp"
+                            android:theme="@style/AppTheme.Picker"
                             android:layout_marginRight="52dp"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
@@ -164,22 +167,63 @@
                         android:layout_width="match_parent"
                         android:layout_height="20dp" />
 
-
-                    <Button
-                        android:id="@+id/InfoBuyProduct"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
                         android:layout_marginLeft="40dp"
                         android:layout_marginRight="40dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/button_shape"
-                        android:elevation="5dp"
-                        android:fontFamily="@font/bungee"
-                        android:text="@string/comprarServicio"
-                        android:textColor="@android:color/white"
-                        android:textSize="14sp"
-                        android:textStyle="italic"
-                        android:layout_marginBottom="50dp"/>
+                        android:layout_marginBottom="50dp"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/InfoBuyProduct"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_shape"
+                            android:fontFamily="@font/bungee"
+                            android:text="@string/comprarServicio"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            android:textStyle="italic" />
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/cartAnimation"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="-1dp"
+                            android:layout_marginBottom="-1dp"
+                            android:src="@drawable/ic_round_shopping_cart_24"
+                            android:translationZ="3dp">
+
+                        </com.airbnb.lottie.LottieAnimationView>
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/cartAnimation2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="-1dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="-1dp"
+                            android:src="@drawable/ic_round_shopping_cart_24"
+                            android:translationZ="3dp">
+
+                        </com.airbnb.lottie.LottieAnimationView>
+
+                    </RelativeLayout>
+
 
 
                 </LinearLayout>
@@ -215,10 +259,9 @@
                 android:id="@+id/addNewComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
                 android:drawableEnd="@drawable/ic_baseline_add_24"
-                android:padding="5dp"
                 android:background="@drawable/button_shape"
                 android:elevation="5dp"
                 android:fontFamily="@font/bungee"

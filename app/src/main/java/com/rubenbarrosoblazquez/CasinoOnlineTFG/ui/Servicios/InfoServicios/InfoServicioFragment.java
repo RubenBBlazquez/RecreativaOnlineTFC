@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Comments;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.CommentsRealTime;
@@ -33,6 +36,9 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.MyProductsRecyclerViewAdapter;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class InfoServicioFragment extends Fragment {
 
@@ -56,6 +62,11 @@ public class InfoServicioFragment extends Fragment {
     private User u;
     private TextView textNoComments;
 
+    @BindView(R.id.cartAnimation)
+    LottieAnimationView cartAnimation;
+    @BindView(R.id.cartAnimation2)
+    LottieAnimationView cartAnimation2;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +87,8 @@ public class InfoServicioFragment extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_info_servicio, container, false);
 
+        ButterKnife.bind(this,v);
+
         this.ProductDecriptionInfo=(TextView)v.findViewById(R.id.infoDescriptionProduct);
         this.ProductImageInfo=(ImageView)v.findViewById(R.id.ProductImageInfo);
         this.ProductNameInfo=(TextView)v.findViewById(R.id.InfoNameProduct);
@@ -94,6 +107,21 @@ public class InfoServicioFragment extends Fragment {
                     mListener.updateBalanceTexts();
                     mListener.setUserInformation(u);
                     Toast.makeText(getContext(), getString(R.string.compraRealizada), Toast.LENGTH_SHORT).show();
+
+                    cartAnimation.setAnimation(R.raw.cart_animation);
+                    cartAnimation.playAnimation();
+                    cartAnimation2.setAnimation(R.raw.cart_animation);
+                    cartAnimation2.playAnimation();
+
+                    final Runnable r = new Runnable() {
+                        public void run() {
+                           cartAnimation.setImageResource(R.drawable.ic_round_shopping_cart_24);
+                           cartAnimation2.setImageResource(R.drawable.ic_round_shopping_cart_24);
+                        }
+                    };
+
+                    new Handler(Looper.getMainLooper()).postDelayed(r,2000);
+
                 }else{
                     Toast.makeText(getContext(), getString(R.string.noSaldoParaComprar), Toast.LENGTH_SHORT).show();
                 }

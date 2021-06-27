@@ -13,6 +13,7 @@ import android.os.CountDownTimer;
 
 import java.util.DoubleSummaryStatistics;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +36,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +49,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Apuesta;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Monedas;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.slideshow.SlideshowViewModel;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -52,6 +58,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -93,13 +102,30 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     private androidx.gridlayout.widget.GridLayout numerosApuestas;
     private OnGetUserInformation userListener;
     private ArrayList<Apuesta> apuestaActual;
+    private ArrayList<Apuesta> apuestaSumaTotales;
     private TextView saldo;
     private TextView cantidadApostada;
+
+    private boolean launchReady=true;
+    private boolean isTheFragmentStart = true;
+
+    private RuletaViewModel ruleta;
+
+    private MyBidsRecyclerViewAdapter adapterApuestas;
+
+    @BindView(R.id.launchRulette)
+    ImageButton launchRulette;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_ruleta, container, false);
+        Log.d("lyfeCycle","creo vista");
+        ruleta = new ViewModelProvider(this).get(RuletaViewModel.class);
+
+        ButterKnife.bind(this,root);
+
+        this.apuestaSumaTotales = new ArrayList<>();
 
         this.motionWheel = new WheelMotionAsync();
 
@@ -122,9 +148,21 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
         setHasOptionsMenu(true);
 
+        this.launchRulette.setOnClickListener(this);
+
         if(userListener.getUserInformation().isDniVerified()){
             root.findViewById(R.id.dniNoValidatedLayer).setVisibility(View.GONE);
         }
+
+        ruleta.getApuestaActual().observe(getViewLifecycleOwner(), new Observer<List<Apuesta>>() {
+            @Override
+            public void onChanged(List<Apuesta> apuestas) {
+                apuestaActual = (ArrayList<Apuesta>) apuestas;
+                cantidadApostada.setText(String.valueOf(getTotalApuesta()));
+            }
+        });
+
+
 
         return root;
     }
@@ -135,10 +173,17 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         if(userListener.getUserInformation().isDniVerified()) {
             try{
                 motionWheel.execute();
+
+                ruleta = new ViewModelProvider(this).get(RuletaViewModel.class);
+
+
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
+
+
+
     }
 
     @Override
@@ -197,14 +242,18 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         RecyclerView recyclerView = v.findViewById(R.id.recyclerApuestasExtendido);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        Map<String, List<Apuesta>> apuestas = this.apuestaActual.stream().collect(groupingBy(Apuesta::getNumero));
-        List<Apuesta> apuestasAgrupadas = new ArrayList<>();
+
+        Map<String, List<Apuesta>> apuestas = apuestaActual.stream().collect(groupingBy(Apuesta::getNumero));
         apuestas.forEach((k, valor) -> {
             DoubleSummaryStatistics suma = valor.stream().collect(Collectors.summarizingDouble(p -> (p.getCantidadApostada())));
-            apuestasAgrupadas.add(new Apuesta(k, suma.getSum(), valor.stream().findFirst().get().getColor()));
+            apuestaSumaTotales.add(new Apuesta(k, suma.getSum(), valor.stream().findFirst().get().getColor()));
         });
 
-        recyclerView.setAdapter(new MyBidsRecyclerViewAdapter(apuestasAgrupadas));
+        ruleta.setApuestas(apuestaSumaTotales);
+
+        adapterApuestas = new MyBidsRecyclerViewAdapter(apuestaSumaTotales);
+        recyclerView.setAdapter(adapterApuestas);
+
 
         Button cerrar = v.findViewById(R.id.cerrarDialogoApuestaExtendida);
         cerrar.setOnClickListener(new View.OnClickListener() {
@@ -334,6 +383,19 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             case R.id.apuestasExtendido:
                 this.dialogoApuestasExtendida();
                 break;
+            case R.id.launchRulette:
+
+                if(launchReady){
+                    if(motionWheel.chronometer != null){
+                        motionWheel.chronometer.onFinish();
+                        motionWheel.launch=true;
+                        launchReady=false;
+                    }else{
+                        Toast.makeText(this.getContext(), getString(R.string.launchRuletteReady), Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this.getContext(), getString(R.string.launchRuletteReady), Toast.LENGTH_SHORT).show();
+                }
 
         }
 
@@ -409,6 +471,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 despulsarMonedas(index);
             }
 
+            this.ruleta.setApuestaActual(apuestaActual);
 
         }
     }
@@ -454,30 +517,36 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
     private Double getDineroGanado(String numero_sacado) {
         double dineroGanado = 0.0;
-        int numero = Integer.parseInt(numero_sacado.split(" ")[0]);
-        for (Apuesta a : apuestaActual) {
-            int number=0;
-            if(!a.getNumero().contains("/")){
-                number=Integer.parseInt(a.getNumero());
-                if (numero == number) {
-                    dineroGanado += a.getCantidadApostada() * 36;
+        try{
+            int numero = Integer.parseInt(numero_sacado.split(" ")[0]);
+
+            for (Apuesta a : apuestaActual) {
+                int number=0;
+                if(!a.getNumero().contains("/")){
+                    number=Integer.parseInt(a.getNumero());
+                    if (numero == number) {
+                        dineroGanado += a.getCantidadApostada() * 36;
+                    }
+
+                }else{
+                    number=Integer.parseInt(a.getNumero().substring(0,a.getNumero().indexOf("/")));
+
+                    if(isNumeroInTercio(number,numero)){
+                        dineroGanado += a.getCantidadApostada() * 2;
+                    }
+
                 }
 
-            }else{
-                number=Integer.parseInt(a.getNumero().substring(0,a.getNumero().indexOf("/")));
-
-                if(isNumeroInTercio(number,numero)){
-                    dineroGanado += a.getCantidadApostada() * 2;
-                }
 
             }
 
+            userListener.getUserInformation().setSaldo((float) (userListener.getUserInformation().getSaldo() + dineroGanado));
+            userListener.getFirestoreInstance().updateSaldo(userListener.getUserInformation().getEmail(), userListener.getUserInformation().getSaldo());
+            userListener.updateBalanceTexts();
+        }catch (Exception e){
 
         }
 
-        userListener.getUserInformation().setSaldo((float) (userListener.getUserInformation().getSaldo() + dineroGanado));
-        userListener.getFirestoreInstance().updateSaldo(userListener.getUserInformation().getEmail(), userListener.getUserInformation().getSaldo());
-        userListener.updateBalanceTexts();
 
         return dineroGanado;
     }
@@ -498,17 +567,37 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     public class WheelMotionAsync extends AsyncTask<String, String, String> {
         public boolean salir = false;
         private int degree = 0, degreeOld = 0;
+        Timer chronometer ;
         private AlertDialog.Builder dialogNumber;
-
+        private boolean animationEnd = true;
+        boolean launch = true;
         @Override
         protected String doInBackground(String... strings) {
 
             while (!salir) {
-                try {
-                    publishProgress();
-                    Thread.sleep(60000);
+
+                Log.d("cositas","animationEnd : "+animationEnd);
+
+                if(chrono.getText().equals("00:00") && launch && !isTheFragmentStart) {
                     spinWheelWithResult();
-                    Thread.sleep(10000);
+                    launch=false;
+                    animationEnd=true;
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (animationEnd){
+                    publishProgress();
+                    animationEnd=false;
+                    launchReady=true;
+                    launch=true;
+                }
+
+                try {
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -520,8 +609,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            Timer chrono = (Timer) new Timer(60000, 1000);
-            chrono.start();
+            
+            chronometer = (Timer) new Timer(30000, 1000).start();
         }
 
         public void spinWheelWithResult() {
@@ -559,6 +648,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                     dialogNumeroSacado = dialogNumber.show();
                     apuestaActual.clear();
                     cantidadApostada.setText("0");
+                    chronometer.onFinish();
+                    animationEnd=true;
 
                 }
 
@@ -604,22 +695,26 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                     boton.setLayoutParams(layoutParams);
                     boton.setText(n_with_color[0]);
                     boton.setWidth(80);
+                    Drawable back = null;
                     int color = 0;
                     int colorLetter = 0;
                     if (n_with_color[1].equalsIgnoreCase("red")) {
                         color = Color.RED;
                         colorLetter = Color.BLACK;
-
+                        back = getActivity().getDrawable(R.drawable.borders_numbers_red_recents_out_rulette);
                     } else if (n_with_color[1].equalsIgnoreCase("black")) {
                         color = Color.BLACK;
                         colorLetter = Color.WHITE;
+                        back = getActivity().getDrawable(R.drawable.borders_numbers_recents_out_rulette);
                     } else {
                         color = Color.GREEN;
                         colorLetter = Color.BLACK;
+                        back = getActivity().getDrawable(R.drawable.borders_numbers_green_recents_out_rulette);
                     }
 
                     boton.setBackgroundColor(color);
                     boton.setTextColor(colorLetter);
+                    boton.setBackground(back);
 
                     if (recentNumbers.getChildCount() < 5) {
                         recentNumbers.addView(boton);
@@ -640,12 +735,16 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
         public void onTick(long millisUntilFinished) {
             // Used for formatting digit to be in 2 digits only
+            ruleta.addToTimer(millisUntilFinished);
+
             NumberFormat f = new DecimalFormat("00");
 
             long min = (millisUntilFinished / 60000) % 60;
             long sec = (millisUntilFinished / 1000) % 60;
 
             chrono.setText(f.format(min) + ":" + f.format(sec));
+
+            isTheFragmentStart=false;
 
             if (dialogNumeroSacado != null) {
                 dialogNumeroSacado.dismiss();
@@ -655,7 +754,13 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         // When the task is over it will print 00:00:00 there
         public void onFinish() {
             chrono.setText("00:00");
+            if(this!=null){
+                this.cancel();
+            }
         }
+
+
+
     }
 
     @Override

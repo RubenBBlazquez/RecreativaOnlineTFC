@@ -9,6 +9,7 @@
     android:layout_marginRight="5dp"
     android:layout_marginTop="10dp"
     app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="#d0b36a"
     android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24"
     >
     <RelativeLayout
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/image_shape"
         android:backgroundTint="#DE000000"
-        android:layout_margin="4dp"
+        android:layout_margin="2dp"
         >
 
 

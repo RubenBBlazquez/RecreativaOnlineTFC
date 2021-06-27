@@ -291,7 +291,9 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
     public void winDialog(String saldoGanado){
         View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_numero_sacado_ruleta,null);
         TextView dineroGanado = v.findViewById(R.id.DineroGanadoDialogoApuesta);
-        dineroGanado.setText("Has Ganado : "+saldoGanado+" €");
+        TextView titulo = v.findViewById(R.id.textView9);
+        titulo.setText("Has Ganado .. :");
+        dineroGanado.setText(saldoGanado+" €");
         builder.setView(v);
         builder.create();
         builder.show();

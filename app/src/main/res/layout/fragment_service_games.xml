@@ -33,6 +33,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
                     android:orientation="vertical"
+                    android:background="@android:color/white"
+
                     android:visibility="visible">
 
                 </LinearLayout>

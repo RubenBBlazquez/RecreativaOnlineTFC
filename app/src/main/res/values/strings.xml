@@ -17,6 +17,7 @@
     <string name="hintAddProductImage">Añadir Imagen</string>
     <string name="hintAddProduct">Añadir Producto</string>
     <string name="hintPassword">Escribe tu Contraseña</string>
+    <string name="launchRuletteReady">Aún no está la ruleta lista para lanzar de nuevo, espera a que se resetee el timer, gracias</string>
     <string name="hintRepeatPassword">Escribe de nuevo la Contraseña</string>
     <string name="hintDniPassword">dni/nif</string>
     <string name="hintName">Nombre</string>
