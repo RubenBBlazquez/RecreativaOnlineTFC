@@ -201,12 +201,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                     break;
                     case R.id.sacarFotoPerfil:
-                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                        if (pickPhoto.resolveActivity(this.getActivity().getPackageManager()) != null) {
-                            startActivityForResult(pickPhoto, 1);
-                        }
+
+                                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                                if (pickPhoto.resolveActivity(getActivity().getPackageManager()) != null) {
+                                    startActivityForResult(pickPhoto, 1);
+                                }
+
+
                         break;
 
             case R.id.validarTelefono:
@@ -216,13 +220,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.sacarFotoDni:
 
-                    Intent pickDni = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                View view = getLayoutInflater().inflate(R.layout.dialog_take_or_get_photo, null);
 
-                    if (pickDni.resolveActivity(this.getActivity().getPackageManager()) != null) {
-                        startActivityForResult(pickDni, 2);
+                TextView camera1 =(TextView) view.findViewById(R.id.takePhoto);
+                TextView gallery1 = (TextView) view.findViewById(R.id.photoGallery);
+
+                camera1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                            startActivityForResult(takePictureIntent, 3);
+                        }
                     }
+                });
 
+                gallery1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                        if (pickPhoto.resolveActivity(getActivity().getPackageManager()) != null) {
+                            startActivityForResult(pickPhoto, 2);
+                        }
+                    }
+                });
+                builder1.setView(view);
+                builder1.create();
+                builder1.show();
 
                 break;
         }
@@ -317,6 +345,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+        }else if(requestCode==3 && resultCode == this.getActivity().RESULT_OK){
+
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            textRecognizer(imageBitmap);
 
         }
     }
