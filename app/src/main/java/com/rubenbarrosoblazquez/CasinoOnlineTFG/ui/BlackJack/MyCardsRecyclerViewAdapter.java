@@ -50,6 +50,7 @@ public class MyCardsRecyclerViewAdapter extends RecyclerView.Adapter<MyCardsRecy
                 if(!holder.isTouched){
                     int random = new Random().nextInt(13);
                     holder.cards.setImageResource(picas[random]);
+                    mValues.set(position,picas[random]);
                     holder.isTouched=true;
                     totalPoints += (random+1);
 
@@ -75,12 +76,14 @@ public class MyCardsRecyclerViewAdapter extends RecyclerView.Adapter<MyCardsRecy
         public Integer mItem;
         public ImageView cards;
         public boolean isTouched;
+        public Integer cartRandomPicked;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             cards = view.findViewById(R.id.card);
             isTouched=false;
+            cartRandomPicked=null;
         }
     }
 }

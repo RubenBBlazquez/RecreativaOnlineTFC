@@ -101,6 +101,8 @@
     <string name="servicioJuegosRuletaEditText">Buscar Servicio Juego Ruleta</string>
     <string name="servicioJuegosBlackJackEditText">Buscar Servicio Juego Black Jack</string>
     <string name="servicioJuegosTragaperrasEditText">Buscar Servicio Juego Tragaperras</string>
+    <string name="plantarse">Me Planto</string>
+    <string name="SacarCarta">Sacar Otra Carta</string>
     <string name="servicioJuegosVariosEditText">Buscar Servicio Juegos Vario</string>
     <string name="añadirComentarioBoton">Añadir Comentario</string>
     <string name="hintContenidoComentarioDialogo">Comentario</string>
@@ -108,6 +110,7 @@
     <string name="codePhoneSent">Código Verificación telefono enviado</string>
     <string name="codePhoneSentError">Error al enviar el código de verificación de teléfono</string>
     <string name="codePhoneSentVerified">Teléfono Verificado</string>
+    <string name="debesApostarBlackjack">Para poder jugar debes dar al icono de la parte superior derecha, y realizar tu apuesta, una vez realizada, comenzará el juego</string>
     <string name="phoneAlreadyVerified">Teléfono ya verificado</string>
     <string name="noPhone">No hay un teléfono disponible, añádelo y actualiza tus datos</string>
     <string name="VerifiedPhoneNumberCodeHint">Codigo Verificación SMS</string>

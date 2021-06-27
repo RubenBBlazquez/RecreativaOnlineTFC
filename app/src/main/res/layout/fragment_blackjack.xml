@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.BlackJack.BlackjackFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#DE000000"
+    >
 
     <TextView
         android:id="@+id/text_slideshow"
@@ -22,64 +24,186 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/frame_vintash4"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerCardsDealer"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="35dp"
-            android:layout_weight="2"/>
+            android:orientation="vertical" >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textDealer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/bungee"
+                    android:paddingLeft="10dp"
+                    android:text="Dealer"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:padding="10dp"></TextView>
+
+                <TextView
+                    android:id="@+id/pointsBlackjackDealer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/bungee"
+                    android:paddingLeft="5dp"
+                    android:text="Puntos"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:padding="10dp"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_weight="1"
+                android:background="@drawable/frame_vintash4"
+                android:orientation="vertical">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCardsDealer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_weight="0.3" />
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#d0b36a"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/textYou"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/bungee"
+                    android:paddingLeft="10dp"
+                    android:text="You"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:padding="10dp"></TextView>
+
+                <TextView
+                    android:id="@+id/pointsBlackjackYou"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/bungee"
+                    android:paddingLeft="5dp"
+                    android:text="Puntos"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:padding="10dp"
+                    ></TextView>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:background="@drawable/frame_vintash4"
+                android:orientation="vertical">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCardsyou"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="15dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="30dp"
+
+                    >
+
+                    <Button
+                        android:id="@+id/Plantarse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_shape"
+                        android:text="@string/plantarse"
+                        android:fontFamily="@font/bungee"
+                        android:textColor="@android:color/white"
+                        android:textSize="10dp"/>
+
+                    <Button
+                        android:id="@+id/sacarOtraCarta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/SacarCarta"
+                        android:background="@drawable/button_shape"
+                        android:fontFamily="@font/bungee"
+                        android:textColor="@android:color/white"
+                        android:textSize="10dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/dniNoValidatedLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/grid_background"
+        android:layout_toStartOf="@+id/containerRuleta"
+        tools:ignore="NotSibling"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/logo_app"
+            android:layout_margin="30dp">
+
+        </ImageView>
         <TextView
-            android:id="@+id/pointsBlackjackDealer"
+            android:id="@+id/textError"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:fontFamily="@font/bungee"
+            android:layout_height="wrap_content"
+            android:text="@string/dniNoValidated"
             android:textColor="@android:color/white"
-            android:text="Puntos"></TextView>
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="0dp"
+            android:fontFamily="@font/bungee"
+            android:justificationMode="inter_word"/>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/frame_vintash4"
-        android:orientation="vertical">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerCardsyou"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="35dp"
-            android:layout_weight="2"/>
 
-        <TextView
-            android:id="@+id/pointsBlackjackYou"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:fontFamily="@font/bungee"
-            android:textColor="@android:color/white"
-            android:text="Puntos"></TextView>
-
-    </LinearLayout>
-
-
-
-</LinearLayout>
+</RelativeLayout>

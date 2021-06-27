@@ -179,7 +179,7 @@
         tools:ignore="NotSibling"
         android:orientation="vertical"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <ImageView
@@ -191,7 +191,6 @@
             android:layout_margin="30dp">
 
         </ImageView>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -204,4 +203,5 @@
             android:justificationMode="inter_word"/>
 
     </LinearLayout>
+
 </RelativeLayout>

@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_nav_init_to_nav_profilePager"
             app:destination="@id/nav_profilePager" />
+        <action
+            android:id="@+id/action_nav_init_to_nav_blackjact2"
+            app:destination="@id/nav_blackjact" />
     </fragment>
     <fragment
         android:id="@+id/nav_ruleta"
