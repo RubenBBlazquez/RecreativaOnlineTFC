@@ -38,12 +38,11 @@ public class ProfileViewPager extends Fragment {
         arrayList.add(new ServiceRuletaFragment());
         arrayList.add(new ProductsFragment());
 
-        viewPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
+        viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 
         adapter = new viewPager2Adapter(getActivity().getSupportFragmentManager(), getLifecycle(), root);
 
         viewPager.setAdapter(adapter);
-        viewPager.setUserInputEnabled(false);
         viewPager.setPageTransformer(new MarginPageTransformer(1500));
 
         TabLayout tabLayout = root.findViewById(R.id.tab_layoutProfile);

@@ -125,6 +125,11 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
         });
 
 
+        if(u.isDniVerified()){
+            root.findViewById(R.id.dniNoValidatedLayer).setVisibility(View.GONE);
+        }
+
+
         return root;
     }
 

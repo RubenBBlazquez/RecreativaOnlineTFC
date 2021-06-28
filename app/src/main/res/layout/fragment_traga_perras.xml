@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.TragaPerras.TragaPerrasFragment"
+    android:id="@+id/containerTragaperras"
     android:orientation="vertical"
     android:layout_gravity="center_horizontal"
     android:background="@android:color/black">
 
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
@@ -54,88 +58,122 @@
 
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_weight="14">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="@drawable/frame_vintash3"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="25dp"
-            android:orientation="vertical">
-
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="40dp"
-                android:orientation="vertical">
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:hint="@string/hintSaldoSlotMachine"
-                    android:outlineAmbientShadowColor="@android:color/white"
-                    android:outlineSpotShadowColor="@android:color/white"
-                    android:textColorHint="@android:color/white"
-                    app:boxStrokeColor="@android:color/white"
-                    app:boxStrokeErrorColor="@android:color/white"
-                    app:counterOverflowTextColor="@android:color/white"
-                    app:counterTextColor="@android:color/black"
-                    app:helperTextTextColor="@android:color/white"
-                    app:hintTextColor="@android:color/white"
-                    app:placeholderTextColor="@android:color/white"
-                    app:prefixTextColor="@android:color/white"
-                    app:suffixTextColor="@android:color/white">
+                android:fillViewport="true"
+                android:layout_weight="14">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/saldoSlotMachine"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/frame_vintash3"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="25dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="@android:color/white">
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="40dp"
+                        android:orientation="vertical">
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:hint="@string/hintSaldoSlotMachine"
+                            android:outlineAmbientShadowColor="@android:color/white"
+                            android:outlineSpotShadowColor="@android:color/white"
+                            android:textColorHint="@android:color/white"
+                            app:boxStrokeColor="@android:color/white"
+                            app:boxStrokeErrorColor="@android:color/white"
+                            app:counterOverflowTextColor="@android:color/white"
+                            app:counterTextColor="@android:color/black"
+                            app:helperTextTextColor="@android:color/white"
+                            app:hintTextColor="@android:color/white"
+                            app:placeholderTextColor="@android:color/white"
+                            app:prefixTextColor="@android:color/white"
+                            app:suffixTextColor="@android:color/white">
 
-                    </com.google.android.material.textfield.TextInputEditText>
-                </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/saldoSlotMachine"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:textColor="@android:color/white">
+
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
-                <Spinner
-                    android:id="@+id/multiSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/spinner_custom" />
+                        <Spinner
+                            android:id="@+id/multiSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/spinner_custom" />
 
-                <Button
-                    android:id="@+id/throwRandom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="13dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="13dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/colorPrimary"
-                    android:fontFamily="@font/bungee"
-                    android:text="Tirar"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
+                        <Button
+                            android:id="@+id/throwRandom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="13dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/colorPrimary"
+                            android:fontFamily="@font/bungee"
+                            android:text="Tirar"
+                            android:textColor="@android:color/white" />
+                    </LinearLayout>
 
 
+                </LinearLayout>
+
+            </ScrollView>
         </LinearLayout>
 
-    </ScrollView>
+    <LinearLayout
+        android:id="@+id/dniNoValidatedLayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/grid_background"
+        android:layout_toStartOf="@+id/containerTragaperras"
+        tools:ignore="NotSibling"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible"
+        >
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/logo_app"
+            android:layout_margin="30dp">
+
+        </ImageView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dniNoValidated"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="0dp"
+            android:fontFamily="@font/bungee"
+            android:justificationMode="inter_word"/>
+
+    </LinearLayout>
+</RelativeLayout>

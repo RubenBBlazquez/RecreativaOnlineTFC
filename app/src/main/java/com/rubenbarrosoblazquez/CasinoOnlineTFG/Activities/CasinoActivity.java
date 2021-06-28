@@ -73,11 +73,12 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private ProfileFragment profile;
     @Override
     protected void onStart() {
-        super.onStart();
         try{
+        super.onStart();
+
             LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("informacion"));
         }catch (Exception e){
-            e.printStackTrace();
+
         }
     }
 

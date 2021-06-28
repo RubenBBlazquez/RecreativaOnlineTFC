@@ -46,12 +46,14 @@ import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.TextRecognizerOptions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -338,82 +340,99 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             Uri imageUri = data.getData();
             try {
-                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), imageUri);
-                textRecognizer(imageBitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+                textRecognizer(imageUri);
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }else if(requestCode==3 && resultCode == this.getActivity().RESULT_OK){
 
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            textRecognizer(imageBitmap);
+            textRecognizer(getImageUri(getContext(), (Bitmap) extras.get("data")));
 
         }
     }
 
-    private void textRecognizer(Bitmap bitmap){
-        InputImage image = InputImage.fromBitmap(bitmap, 0);
-        TextRecognizer recognizer = TextRecognition.getClient();
-        Task<Text> result =
-                recognizer.process(image)
-                        .addOnSuccessListener(new OnSuccessListener<Text>() {
-                            @Override
-                            public void onSuccess(Text visionText) {
-                                String resultText = visionText.getText();
-                                Log.d("textRecognizion",resultText);
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
-                                if(resultText.contains("DNI")){
-                                    boolean encontrado=false;
-                                    String dni_foto ="";
-                                    for (Text.TextBlock block : visionText.getTextBlocks()) {
-                                        String blockText = block.getText();
-                                        for (Text.Line line : block.getLines()) {
-                                            String lineText = line.getText();
+    private void textRecognizer(Uri imageUri) {
 
-                                            if(lineText.contains("DNI") && lineText.matches("^[a-zA-Z].+[0,9].")){
-                                                dni_foto = lineText.trim().substring(lineText.indexOf(" "),lineText.length());
-                                                encontrado=true;
+        try {
+            InputImage image = InputImage.fromFilePath(getContext(), imageUri);
+            TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+            Task<Text> result =
+                    recognizer.process(image)
+                            .addOnSuccessListener(new OnSuccessListener<Text>() {
+                                @Override
+                                public void onSuccess(Text visionText) {
+                                    String resultText = visionText.getText();
+                                    Log.d("textRecognizionBlock",resultText.matches("^\\d{8}[A-Z]{1}$")+""+ resultText );
+
+                                        boolean encontrado = false;
+                                        String dni_foto = "";
+                                        for (Text.TextBlock block : visionText.getTextBlocks()) {
+                                            String blockText = block.getText();
+                                            Log.d("textRecognizionBlock", blockText);
+
+                                            for (Text.Line line : block.getLines()) {
+                                                String lineText = line.getText();
+                                                Log.d("textRecognizionLine", lineText);
+                                                Log.d("textRecognizionLine", lineText.trim().matches("^\\d{8}[A-Z]{1}$")+"");
+
+                                                if (lineText.trim().matches("^\\d{8}[A-Z]{1}$") || lineText.trim().matches("^.+?\\d{8}[A-Z]{1}+$")) {
+                                                    if(lineText.contains(" ")){
+                                                        dni_foto = lineText.trim().substring(lineText.indexOf(" "), lineText.length());
+                                                    }else{
+                                                        dni_foto = lineText.trim();
+                                                    }
+                                                    Log.d("textRecognizionLine","ENCONTRADOO"+dni_foto);
+
+                                                    encontrado = true;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (encontrado) {
                                                 break;
+                                            }
+
+                                        }
+
+                                        if (u.getDni().equalsIgnoreCase("")) {
+                                            Toast.makeText(getContext(), "Dni añadido Con éxito", Toast.LENGTH_SHORT).show();
+                                            u.setDniVerified(true);
+                                            u.setDni(dni_foto);
+                                            mListener.getFirestoreInstance().updateUser(u);
+                                            mListener.setUserInformation(u);
+                                        } else {
+                                            if (dni_foto.trim().equalsIgnoreCase(u.getDni())) {
+                                                Toast.makeText(getContext(), "Dni Validado Con éxito", Toast.LENGTH_SHORT).show();
+                                                u.setDniVerified(true);
+                                                mListener.getFirestoreInstance().updateUser(u);
+                                            } else {
+                                                Toast.makeText(getContext(), "EL Dni no se corresponde con los datos personales guardados o la foto no tiene la claridad necesaria, prueba de nuevo", Toast.LENGTH_SHORT).show();
                                             }
                                         }
 
-                                        if(encontrado){
-                                            break;
-                                        }
-
-                                    }
-
-                                    if(u.getDni().equalsIgnoreCase("")){
-                                        Toast.makeText(getContext(), "Dni añadido Con éxito", Toast.LENGTH_SHORT).show();
-                                        u.setDniVerified(true);
-                                        u.setDni(dni_foto);
-                                        mListener.getFirestoreInstance().updateUser(u);
-                                        mListener.setUserInformation(u);
-                                    }else{
-                                        if(dni_foto.trim().equalsIgnoreCase(u.getDni())){
-                                            Toast.makeText(getContext(), "Dni Validado Con éxito", Toast.LENGTH_SHORT).show();
-                                            u.setDniVerified(true);
-                                            mListener.getFirestoreInstance().updateUser(u);
-                                        }else{
-                                            Toast.makeText(getContext(), "El dni de la foto no se corresponde con el puesto en los datos personales", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                }else{
-                                    Toast.makeText(getContext(), getString(R.string.dniNoValido), Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        })
-                        .addOnFailureListener(
-                                new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getContext(), "error with textRecognizion", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            })
+                            .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getContext(), "error with textRecognizion", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }
