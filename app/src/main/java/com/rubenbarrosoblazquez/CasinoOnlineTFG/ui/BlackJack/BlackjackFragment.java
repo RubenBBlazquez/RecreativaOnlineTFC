@@ -1,10 +1,14 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.BlackJack;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +36,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
@@ -82,7 +89,12 @@ public class BlackjackFragment extends Fragment {
     MyCardsRecyclerViewAdapter adapter;
     MyCardsRecyclerViewAdapter adapter2;
 
+    private AlertDialog dialog;
+
     private User u;
+    private boolean isYouGiveUp = false;
+    private double saldoApostado=0;
+    private double saldoGanado;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -95,12 +107,16 @@ public class BlackjackFragment extends Fragment {
 
         u = mListener.getUserInformation();
 
+        initRecyclerView(root);
+
+        setHasOptionsMenu(true);
+
         if(u.isDniVerified()){
-            setHasOptionsMenu(true);
             if(hayApuesta){
                 backgroundError.setVisibility(View.GONE);
-                initRecyclerView(root);
-
+                sacarOtraCarta(false);
+                setHasOptionsMenu(false);
+                new blackJackAsyncTask().execute("");
             }else{
                 backgroundError.setVisibility(View.VISIBLE);
                 textError.setText(getString(R.string.debesApostarBlackjack));
@@ -122,7 +138,59 @@ public class BlackjackFragment extends Fragment {
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                return false;
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                View v = getLayoutInflater().inflate(R.layout.dialog_apuesta_blackjack, null);
+
+                TextInputEditText apuestaET = v.findViewById(R.id.apuestaBlackjack);
+
+                Button apostar = v.findViewById(R.id.apostarButton);
+                apostar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String apuesta = apuestaET.getText().toString();
+                        if(!apuesta.isEmpty()){
+                            if(Integer.parseInt(apuesta) > u.getSaldo() ){
+                                Toast.makeText(getContext(), ""+getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
+                            }else if (Integer.parseInt(apuesta) <= 0){
+                                Toast.makeText(getContext(), ""+getString(R.string.apuestaCero), Toast.LENGTH_SHORT).show();
+                            }else{
+                                backgroundError.setVisibility(View.GONE);
+                                cardsDealer.clear();
+                                cardsYou.clear();
+                                adapter.notifyDataSetChanged();
+                                adapter2.notifyDataSetChanged();
+                                sacarOtraCarta(false);
+                                points.setText("0");
+                                pointsDealer.setText("0");
+                                isYouGiveUp=false;
+                                dialog.dismiss();
+                                saldoApostado=Integer.parseInt(apuesta);
+                                u.setSaldo((float) (u.getSaldo()-saldoApostado));
+                                u.setSaldo_gastado((float) ((float)u.getSaldo_gastado()+ saldoApostado));
+                                mListener.updateBalanceTexts();
+                                new blackJackAsyncTask().execute("");
+                            }
+                        }else{
+                            Toast.makeText(getContext(), ""+getString(R.string.apuestaEmpty), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+                Button cerrarDialogo = v.findViewById(R.id.cerrarDialogoBlackjack);
+                cerrarDialogo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setView(v);
+                builder.create();
+                dialog = builder.show();
+                return true;
             }
         });
 
@@ -142,9 +210,6 @@ public class BlackjackFragment extends Fragment {
         cartasDealer.setLayoutManager(gridLayoutManager);
         cartasDealer.scheduleLayoutAnimation();
 
-        cardsYou.add(R.drawable.back_card);
-        cardsDealer.add(R.drawable.back_card);
-
         adapter=new MyCardsRecyclerViewAdapter(this,cardsYou,false);
         cartasYou.setAdapter(adapter);
         cartasYou.setItemAnimator(new DefaultItemAnimator());
@@ -161,16 +226,42 @@ public class BlackjackFragment extends Fragment {
             adapter2.notifyDataSetChanged();
             Log.d("cositas",Arrays.toString(cardsDealer.toArray()));
         }else{
-            this.cardsYou.add(R.drawable.back_card);
-            adapter.notifyDataSetChanged();
-            Log.d("cositas",Arrays.toString(cardsYou.toArray()));
+            if (!isYouGiveUp) {
+                if (!isThereAnyCartNotTouched()) {
+                    this.cardsYou.add(R.drawable.back_card);
+                    adapter.notifyDataSetChanged();
+                    Log.d("cositas", Arrays.toString(cardsYou.toArray()));
+                } else {
+                    Toast.makeText(getContext(), "" + getString(R.string.cardNotTouched), Toast.LENGTH_SHORT).show();
+                }
+            }
+            Log.d("cositas",points.getText().toString());
+
+
         }
+    }
+
+    public boolean isThereAnyCartNotTouched(){
+        if (this.cardsYou.size() > 1){
+            for (int i = 0; i < this.cardsYou.size() ; i++) {
+                if(this.cardsYou.get(i) == R.drawable.back_card){
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 
     @OnClick(R.id.sacarOtraCarta)
     public void sacarCartaYou(){
         sacarOtraCarta(false);
+    }
+    @OnClick(R.id.Plantarse)
+    public void plantarse(){
+        isYouGiveUp=true;
+        Toast.makeText(getContext(), ""+getString(R.string.plantarse), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -181,4 +272,150 @@ public class BlackjackFragment extends Fragment {
             mListener=(OnGetUserInformation)activity;
         }
     }
+
+    public class blackJackAsyncTask extends AsyncTask<Object,Object,Object> {
+
+        public boolean salir = false;
+
+        @Override
+        protected Object doInBackground(Object... objects) {
+            int totalPoints = 0;
+            while (!salir) {
+                String message = "";
+
+                int youPoints = Integer.parseInt(points.getText().toString());
+                int dealerPoints = Integer.parseInt(pointsDealer.getText().toString());
+                if (youPoints <= 21) {
+                    if (isYouGiveUp) {
+
+                        if (dealerPoints <= 21 && dealerPoints >= youPoints) {
+                            if (dealerPoints == youPoints) {
+                                saldoGanado=saldoApostado;
+                                message="!EMPATE!";
+                                u.setSaldo((float) (u.getSaldo()+saldoApostado));
+                                salir = true;
+                            } else {
+                                saldoGanado=0.0;
+                                message="!EL DEALER GANÓ, PRUEBA DE NUEVO!";
+                                salir = true;
+                            }
+                        }else if (dealerPoints >21){
+                                salir = true;
+                                saldoGanado=saldoApostado*2;
+                                u.setSaldo((float)(u.getSaldo()+(saldoApostado*2)));
+                                message="!GANASTE EL DEALER SE PASÓ!";
+                        }
+
+                        if(!salir){
+                            cardsDealer.add(R.drawable.back_card);
+                            int random = new Random().nextInt(13);
+                            cardsDealer.set(cardsDealer.size() - 1, adapter.picas[random]);
+                            notifyAdapter();
+                            totalPoints = dealerPoints + (random + 1);
+                            pointsDealer.setText(""+totalPoints);
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+                    }
+                }else{
+                    salir = true;
+                    saldoGanado=0.0;
+                    message="PERDISTE, TE PASASTE DE 21!";
+                }
+
+                if(salir){
+
+                    String finalSaldoGanado = String.valueOf(saldoGanado);
+                    String finalMessage = message;
+                    Handler handler = new Handler(Looper.getMainLooper());
+
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mListener.getFirestoreInstance().updateUser(u);
+                            mListener.updateBalanceTexts();
+                            createPriceDialog(finalSaldoGanado, finalMessage);
+                        }
+                    });
+
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            cardsDealer.clear();
+                            cardsYou.clear();
+                            adapter2.notifyDataSetChanged();
+                            cartasDealer.setAdapter(adapter2);
+                            adapter.notifyDataSetChanged();
+                            adapter.totalPoints=0;
+                            cartasYou.setAdapter(adapter);
+                            points.setText("0");
+                            pointsDealer.setText("0");
+                            isYouGiveUp=false;
+
+
+                        }
+                    },1000);
+                }
+
+            }
+
+            return objects[0];
+        }
+
+        @Override
+        protected void onProgressUpdate(Object... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        public void notifyAdapter(){
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    adapter2.notifyDataSetChanged();
+                }
+            },0);
+        }
+    }
+
+
+
+
+    public void createPriceDialog(String salgoGanado,String tipo){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_blackjack_prized,null);
+            TextView dineroGanado = v.findViewById(R.id.DineroGanadoDialogoApuesta);
+            TextView titulo = v.findViewById(R.id.textView9);
+            TextView textDealer = v.findViewById(R.id.textoDealer);
+            TextView textYou = v.findViewById(R.id.textoYou);
+            textDealer.setText("Dealer : "+pointsDealer.getText());
+            textYou.setText("You : "+points.getText());
+            titulo.setText(tipo);
+            dineroGanado.setText(salgoGanado+" €");
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        RecyclerView dealerCardsDialog = v.findViewById(R.id.dealerDialogCards);
+        dealerCardsDialog.setLayoutManager(linearLayoutManager);
+        dealerCardsDialog.setAdapter(new MyCardsRecyclerViewAdapter(BlackjackFragment.this,this.cardsDealer,true));
+
+        RecyclerView youCardsDialog = v.findViewById(R.id.youDialogCards);
+        youCardsDialog.setLayoutManager(linearLayoutManager2);
+        youCardsDialog.setAdapter(new MyCardsRecyclerViewAdapter(BlackjackFragment.this,this.cardsYou,false));
+
+        builder.setView(v);
+            builder.create();
+            builder.show();
+
+        backgroundError.setVisibility(View.VISIBLE);
+    }
+
 }

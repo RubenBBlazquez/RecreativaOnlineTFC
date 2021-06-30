@@ -101,8 +101,9 @@ public class InfoServicioFragment extends Fragment {
             public void onClick(View v) {
                 if(u.getSaldo() >= (product.getPrecio()*product.getCantidad())){
                     u.setSaldo((float) (u.getSaldo() - (product.getPrecio()*product.getCantidad())));
+                    u.setSaldo_gastado(u.getSaldo_gastado ()+ (float) (product.getPrecio()*product.getCantidad()));
                     mListener.getFirestoreInstance().updateSaldo(u.getEmail(),u.getSaldo());
-                    mListener.getFirestoreInstance().updateSaldoGastado(u.getEmail(), (float) (product.getPrecio()*product.getCantidad()));
+                    mListener.getFirestoreInstance().updateSaldoGastado(u.getEmail(),u.getSaldo_gastado());
                     mListener.getFirestoreInstance().insertBuy(product,u);
                     mListener.updateBalanceTexts();
                     mListener.setUserInformation(u);

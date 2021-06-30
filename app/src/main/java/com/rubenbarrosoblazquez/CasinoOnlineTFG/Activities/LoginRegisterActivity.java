@@ -117,7 +117,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
     @Override
     public void saveUserInfoInFirestore(User u, FirebaseAuth mAuth) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        HashMap<String, String> usuario = new HashMap<>();
+        HashMap<String, Object> usuario = new HashMap<>();
 
         usuario.put("Email", u.getEmail());
         usuario.put("Name", u.getName());
@@ -130,10 +130,10 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
         usuario.put("TipoUser", u.getTipoUser() + "");
         usuario.put("DniVerificado",u.isDniVerified()+"");
         usuario.put("TelefonoVerificado",u.isTelefonoVerified()+"");
+        usuario.put("Saldo",u.getSaldo());
+        usuario.put("SaldoGastado",u.getSaldo_gastado());
 
         db.collection("users").document(u.getEmail()).set(usuario);
-        db.collection("users").document(u.getEmail()).update("Saldo",u.getSaldo());
-        db.collection("users").document(u.getEmail()).update("SaldoGastado",u.getSaldo_gastado());
     }
 
     @Override

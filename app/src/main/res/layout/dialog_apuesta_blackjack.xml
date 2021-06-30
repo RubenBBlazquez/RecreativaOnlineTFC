@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="#1d1d1d">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d0b36a"
+        android:fontFamily="@font/bungee"
+        android:padding="10dp"
+        android:text="Apuestas Ronda Actual"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="10dp"
+        android:hint="@string/blackjackBid"
+        android:outlineAmbientShadowColor="@android:color/white"
+        android:outlineSpotShadowColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        app:boxStrokeColor="@android:color/white"
+        app:boxStrokeErrorColor="@android:color/white"
+        app:counterOverflowTextColor="@android:color/white"
+        app:counterTextColor="@android:color/black"
+        app:helperTextTextColor="@android:color/white"
+        app:hintTextColor="@android:color/white"
+        app:placeholderTextColor="@android:color/white"
+        app:prefixTextColor="@android:color/white"
+        app:suffixTextColor="@android:color/white"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/apuestaBlackjack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/apostarButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_shape_gf"
+        android:fontFamily="@font/bungee"
+        android:text="@string/apostar"
+        android:backgroundTint="#d0b36a"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+    <Button
+        android:id="@+id/cerrarDialogoBlackjack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_shape_gf"
+        android:fontFamily="@font/bungee"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#d0b36a"
+        android:text="@string/cerrar"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+
+</LinearLayout>

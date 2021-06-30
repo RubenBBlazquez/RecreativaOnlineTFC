@@ -20,8 +20,13 @@
     <string name="launchRuletteReady">Aún no está la ruleta lista para lanzar de nuevo, espera a que se resetee el timer, gracias</string>
     <string name="hintRepeatPassword">Escribe de nuevo la Contraseña</string>
     <string name="hintDniPassword">dni/nif</string>
+    <string name="apostar">Apostar</string>
+    <string name="cerrar">Cerrar</string>
     <string name="hintName">Nombre</string>
+    <string name="hasPerdido">Has perdido, te pasaste de 21, vuelve a apostar y prueba de nuevo</string>
     <string name="hintDireccion">Direccion</string>
+    <string name="cardNotTouched">Debes dar la vuelta a la carta que acabas de sacar antes de sacar otra</string>
+    <string name="blackjackBid">Apuesta Blackjack</string>
     <string name="hintLastName">Apellidos</string>
     <string name="hintTelefono">Teléfono</string>
     <string name="volver_registro">Inicio de Sesion</string>
@@ -32,6 +37,7 @@
     <string name="error_password_register">La contraseña debe tener un mínimo de 6 carácteres</string>
     <string name="error_email_register">Rellena el campo del email , no puede estar vacío</string>
     <string name="error_password_login">Rellena el campo de la contraseña , no puede estar vacío</string>
+    <string name="apuestaEmpty">Rellena el campo de la apuesta , gracias</string>
     <string name="email_verfication_tittle">Verificación Email \n Pulsa el Enlace Enviado A Tu Correo</string>
     <string name="verificar_email_button">Reenviar Correo Verificación</string>
     <string name="title_activity_cosas">cosasActivity</string>
@@ -69,6 +75,7 @@
     <string name="apuestaactual">APUESTA ACTUAL</string>
     <string name="seleccionaMoneda">Antes de apostar selecciona una moneda</string>
     <string name="noSaldoParaApostar">No puedes apostar si no tienes el saldo suficiente, consigue saldo y prueba de nuevo</string>
+    <string name="apuestaCero">No puedes apostar una cantidad menor o igual a 0</string>
     <string name="noSaldoParaComprar">No puedes comprar nada si no tienes el saldo suficiente, consigue saldo y prueba de nuevo</string>
     <string name="compraRealizada">Compra Realizada correctamente, Para más Información ve a Perfil --> Compras</string>
     <string name="tiradasSeguidas">No puedes tirar 2 veces seguidas, espera a obtener el resultado de la tirada anterior</string>
@@ -105,6 +112,7 @@
     <string name="SacarCarta">Sacar Otra Carta</string>
     <string name="servicioJuegosVariosEditText">Buscar Servicio Juegos Vario</string>
     <string name="añadirComentarioBoton">Añadir Comentario</string>
+    <string name="teHasPlantado">No puedes sacar más cartas , te has plantado!</string>
     <string name="hintContenidoComentarioDialogo">Comentario</string>
     <string name="BotonComentarioDialogo">Añadir Comentario</string>
     <string name="codePhoneSent">Código Verificación telefono enviado</string>

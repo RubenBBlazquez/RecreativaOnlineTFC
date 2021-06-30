@@ -78,7 +78,8 @@ public class FirebaseCloudFirestore {
         usuario.put("Dni", u.getDni());
         usuario.put("Verified", u.getVerified());
         usuario.put("Provider", u.getProvider());
-        usuario.put("Saldo", u.getSaldo() + "");
+        usuario.put("Saldo", u.getSaldo());
+        usuario.put("SaldoGastado", u.getSaldo_gastado());
         usuario.put("TipoUser", u.getTipoUser() + "");
         usuario.put("DniVerificado",u.isDniVerified()+"");
         usuario.put("TelefonoVerificado",u.isTelefonoVerified()+"");
