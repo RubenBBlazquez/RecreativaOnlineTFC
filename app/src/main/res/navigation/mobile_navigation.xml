@@ -11,13 +11,21 @@
         tools:layout="@layout/fragment_init_casino" >
         <action
             android:id="@+id/action_nav_init_to_nav_ruleta"
-            app:destination="@id/nav_ruleta" />
+            app:destination="@id/nav_ruleta"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/stationary"
+            app:popEnterAnim="@anim/stationary"
+            app:popExitAnim="@anim/slide_down"/>
         <action
             android:id="@+id/action_nav_init_to_nav_servicios"
             app:destination="@id/nav_servicios" />
         <action
             android:id="@+id/action_nav_init_to_nav_tragaperras"
-            app:destination="@id/nav_tragaperras" />
+            app:destination="@id/nav_tragaperras"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/stationary"
+            app:popEnterAnim="@anim/stationary"
+            app:popExitAnim="@anim/slide_down"/>
         <action
             android:id="@+id/action_nav_init_to_nav_info_servicios"
             app:destination="@id/nav_info_servicios" />
@@ -26,7 +34,14 @@
             app:destination="@id/nav_profilePager" />
         <action
             android:id="@+id/action_nav_init_to_nav_blackjact2"
-            app:destination="@id/nav_blackjact" />
+            app:destination="@id/nav_blackjact"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/stationary"
+            app:popEnterAnim="@anim/stationary"
+            app:popExitAnim="@anim/slide_down"/>
+        <action
+            android:id="@+id/action_nav_init_to_nav_profile"
+            app:destination="@id/nav_profile" />
     </fragment>
     <fragment
         android:id="@+id/nav_ruleta"

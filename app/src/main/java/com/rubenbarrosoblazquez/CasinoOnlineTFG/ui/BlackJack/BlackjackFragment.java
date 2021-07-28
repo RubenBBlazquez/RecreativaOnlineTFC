@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -102,6 +104,8 @@ public class BlackjackFragment extends Fragment {
                 new ViewModelProvider(this).get(BlackjackViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_blackjack, container, false);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
 
         ButterKnife.bind(this,root);
 
@@ -221,24 +225,25 @@ public class BlackjackFragment extends Fragment {
     }
 
     public void sacarOtraCarta(boolean isDealer){
-        if(isDealer){
-            this.cardsDealer.add(R.drawable.back_card);
-            adapter2.notifyDataSetChanged();
-            Log.d("cositas",Arrays.toString(cardsDealer.toArray()));
-        }else{
-            if (!isYouGiveUp) {
-                if (!isThereAnyCartNotTouched()) {
-                    this.cardsYou.add(R.drawable.back_card);
-                    adapter.notifyDataSetChanged();
-                    Log.d("cositas", Arrays.toString(cardsYou.toArray()));
-                } else {
-                    Toast.makeText(getContext(), "" + getString(R.string.cardNotTouched), Toast.LENGTH_SHORT).show();
+        if(u.isDniVerified() && hayApuesta){
+            if(isDealer){
+                this.cardsDealer.add(R.drawable.back_card);
+                adapter2.notifyDataSetChanged();
+                Log.d("cositas",Arrays.toString(cardsDealer.toArray()));
+            }else{
+                if (!isYouGiveUp) {
+                    if (!isThereAnyCartNotTouched()) {
+                        this.cardsYou.add(R.drawable.back_card);
+                        adapter.notifyDataSetChanged();
+                        Log.d("cositas", Arrays.toString(cardsYou.toArray()));
+                    } else {
+                        Toast.makeText(getContext(), "" + getString(R.string.cardNotTouched), Toast.LENGTH_SHORT).show();
+                    }
                 }
+                Log.d("cositas",points.getText().toString());
             }
-            Log.d("cositas",points.getText().toString());
-
-
         }
+
     }
 
     public boolean isThereAnyCartNotTouched(){

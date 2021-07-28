@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -71,12 +72,15 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private NavigationView navigationView;
     private FirebaseRealTimeModel realtime;
     private ProfileFragment profile;
+    private NavController navController;
+    private AlertDialog profileDialog;
     @Override
     protected void onStart() {
         try{
         super.onStart();
 
             LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("informacion"));
+
         }catch (Exception e){
 
         }
@@ -103,12 +107,8 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
             }
         });
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -122,7 +122,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
                 .build();
 
 
-        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
@@ -147,6 +147,8 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         } else {
             admin.setVisible(true);
         }
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
 
 
         messagingModel=new FirebaseMessagingModel(this);
@@ -197,7 +199,6 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
 
     }
 
-
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -239,7 +240,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         profile.setOnClickListener(this);
 
         builder.setView(v);
-        builder.create();
+        this.profileDialog = builder.create();
         builder.show();
 
         return true;
@@ -253,7 +254,9 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
                 showAd();
                 break;
             case R.id.ProfileOptionsMenu:
-                Toast.makeText(this, "has pulsado ir al perfil", Toast.LENGTH_SHORT).show();
+                profileDialog.dismiss();
+                profileDialog.cancel();
+                this.navController.navigate(R.id.nav_profile);
                 break;
 
         }
@@ -434,4 +437,5 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     public void goToInfoProduct(View v,Bundle b) {
         Navigation.findNavController(v).navigate(R.id.action_nav_servicios_to_nav_info_servicios,b);
     }
+
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,21 +7,247 @@
     tools:context=".ui.home.InitCasinoFragment"
     android:orientation="vertical"
     android:id="@+id/initPageContainer"
+    android:background="#d0b36a"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/containerBannerInitPage"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/grid_background"
-        android:layout_alignParentBottom="true"
-       >
+        android:layout_height="match_parent"
+        android:elevation="100dp"
+        android:layout_weight="3.5"
+        android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24"
+        app:cardBackgroundColor="#d0b36a"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="1dp">
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="3.5"
+                        android:padding="1dp"
+                        android:gravity="center"
+                        android:background="@drawable/rounded_shape"
+                        >
+
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingBottom="10dp"
+                            android:fontFamily="@font/parma_heavy"
+                            android:gravity="center_vertical|center"
+                            android:text="RECREATIVA ONLINE"
+                            android:textColor="#FDF8CE"
+                            android:textSize="25sp"
+                            android:textStyle="italic"
+                            android:background="@drawable/fondo_formas"
+                            />
+
+                    </LinearLayout>
+            </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="3"
+        android:padding="1dp"
+        android:background="#d0b36a"
+        >
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/ruletteCard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="100dp"
+            android:layout_weight="1"
+            android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24"
+            app:cardBackgroundColor="#d0b36a"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
+                android:id="@+id/rootView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginStart="1dp"
+                android:background="@drawable/fondo_formas">
+
+                <LinearLayout
+                    android:id="@+id/backgroundImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/rounded_shape">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/gameImageItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:src="@drawable/ruleta" />
+
+                        <TextView
+                            android:id="@+id/nameGameItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/parma_heavy"
+                            android:textColor="#FDF8CE"
+                            android:textAlignment="center"
+                            android:textSize="25dp"
+                            android:text="@string/menu_rule" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/slotMachineCard"
+            android:layout_weight="1"
+            android:elevation="100dp"
+            android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24"
+            app:cardBackgroundColor="#d0b36a"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="@drawable/fondo_formas">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/rounded_shape">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:src="@drawable/slot_machine_icon" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/parma_heavy"
+                            android:textColor="#FDF8CE"
+                            android:textAlignment="center"
+                            android:textSize="25dp"
+                            android:text="@string/menu_tragaperras" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/blackjackCard"
+            android:elevation="100dp"
+            android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24"
+            app:cardBackgroundColor="#d0b36a"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="@drawable/fondo_formas">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/rounded_shape">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:src="@drawable/black_jack_icon" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:textColor="#FDF8CE"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/parma_heavy"
+                            android:textSize="25dp"
+                            android:text="@string/menu_blackjack" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:background="@drawable/fondo_formas"
+        android:gravity="center|center_vertical">
         <com.google.android.gms.ads.AdView
             android:id="@+id/banner_init_page"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:adSize="BANNER"
             app:adUnitId="ca-app-pub-3940256099942544/6300978111"
             android:layout_marginTop="10dp"
@@ -30,35 +256,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/containerBannerInitPage"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/fondo_cartas_poker">
+    </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:fontFamily="@font/parmapetitoutline"
-            android:gravity="center_vertical"
-            android:text="CASINO ONLINE BINTELLIAPPS"
-            android:textAlignment="center"
-            android:textColor="#FDF8CE"
-            android:textSize="28sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</RelativeLayout>
+</LinearLayout>

@@ -13,12 +13,15 @@ import android.os.CountDownTimer;
 
 import java.util.DoubleSummaryStatistics;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -34,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -125,6 +129,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
         ButterKnife.bind(this,root);
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+
         this.apuestaSumaTotales = new ArrayList<>();
 
         this.motionWheel = new WheelMotionAsync();
@@ -161,8 +167,6 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 cantidadApostada.setText(String.valueOf(getTotalApuesta()));
             }
         });
-
-
 
         return root;
     }
@@ -644,6 +648,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                     ((TextView) v.findViewById(R.id.textView9)).setText(getString(R.string.numero_sacado) + numero_sacado);
                     ((TextView) v.findViewById(R.id.DineroGanadoDialogoApuesta)).setText(getString(R.string.ganarDinero) + " " + getDineroGanado(numero_sacado));
                     addRecentNumberToGrid(numero_sacado);
+                    apuestaActual.clear();
                     dialogNumber.setView(v);
                     dialogNumeroSacado = dialogNumber.show();
                     apuestaActual.clear();
@@ -659,7 +664,6 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 }
             });
 
-            // we start the animation
             wheel.startAnimation(rotateAnim);
         }
 
@@ -670,13 +674,10 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             String text = null;
 
             do {
-                // start and end of each sector on the wheel
                 float start = HALF_SECTOR * (i * 2 + 1);
                 float end = HALF_SECTOR * (i * 2 + 3);
 
                 if (degrees >= start && degrees < end) {
-                    // degrees is in [start;end[
-                    // so text is equals to sectors[i];
                     text = sectors[i];
                 }
 
@@ -689,6 +690,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         private void addRecentNumberToGrid(String number) {
             if (number != null) {
                 if (number.contains(" ")) {
+
                     String n_with_color[] = number.split(" ");
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(210, ViewGroup.LayoutParams.WRAP_CONTENT);
                     Button boton = new Button(getActivity());
@@ -698,6 +700,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                     Drawable back = null;
                     int color = 0;
                     int colorLetter = 0;
+
                     if (n_with_color[1].equalsIgnoreCase("red")) {
                         color = Color.RED;
                         colorLetter = Color.BLACK;
