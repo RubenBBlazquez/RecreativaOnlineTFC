@@ -3,8 +3,6 @@ package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,10 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.Query;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Compras;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.InfoServicios.MyCommentsRecyclerViewAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -48,13 +45,9 @@ public class BasketFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private MyBuysRecyclerViewAdapter adapter;
     private ArrayList<Compras> compras;
-    private OnGetUserInformation mListener;
+    private OnGetUserActions mListener;
 
     @BindView(R.id.filterBuys)
     Spinner filter;
@@ -85,8 +78,7 @@ public class BasketFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -137,7 +129,7 @@ public class BasketFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof Activity){
             Activity activity=(Activity) context;
-            mListener=(OnGetUserInformation) activity;
+            mListener=(OnGetUserActions) activity;
 
         }
     }

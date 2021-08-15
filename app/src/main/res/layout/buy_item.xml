@@ -7,6 +7,7 @@
     android:layout_margin="5dp"
     android:layout_weight="1"
     app:cardElevation="15dp"
+    android:backgroundTint="#d0b36a"
     app:cardCornerRadius="10dp">
 
         <RelativeLayout
@@ -14,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/image_shape"
-            android:backgroundTint="#DE000000"
-            android:layout_margin="5dp"
+            android:backgroundTint="#DF000000"
+            android:layout_margin="2dp"
             >
             <LinearLayout
                 android:id="@+id/imageLayout"

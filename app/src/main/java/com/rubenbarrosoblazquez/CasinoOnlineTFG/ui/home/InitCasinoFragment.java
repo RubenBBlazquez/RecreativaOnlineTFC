@@ -27,6 +27,7 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Games;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.MyBuysRecyclerViewAdapter;
@@ -48,6 +49,8 @@ public class InitCasinoFragment extends Fragment {
     CardView blackjack;
     @BindView(R.id.slotMachineCard)
     CardView slot_machine;
+
+    private OnGetUserActions actionsListener;
 
     public InitCasinoFragment() {
         // Required empty public constructor
@@ -73,6 +76,23 @@ public class InitCasinoFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
 
+        v.findViewById(R.id.initPageContainer).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                actionsListener.showActionBar();
+
+                Handler hideHandler = new Handler();
+                hideHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        actionsListener.hideActionBar();
+                    }
+                },2000);
+
+                return true;
+            }
+        });
+
         return v;
 
     }
@@ -96,6 +116,7 @@ public class InitCasinoFragment extends Fragment {
         if(context instanceof CasinoActivity){
             Activity activity=(Activity)context;
             this.mAdsListener=(OnAdsListener)activity;
+            this.actionsListener = (OnGetUserActions)activity;
         }
     }
 }

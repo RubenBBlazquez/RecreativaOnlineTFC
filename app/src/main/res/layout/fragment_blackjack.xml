@@ -22,9 +22,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <ScrollView
+        android:id="@+id/containerBlackjack"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -46,7 +47,7 @@
                     android:text="Dealer"
                     android:layout_weight="1"
                     android:textColor="@android:color/white"
-                    android:padding="10dp"></TextView>
+                    android:padding="10dp"/>
 
                 <TextView
                     android:id="@+id/textPointsDealer"
@@ -58,7 +59,9 @@
                     android:paddingLeft="5dp"
                     android:text="Puntos :"
                     android:textAlignment="textEnd"
-                    android:textColor="@android:color/white"></TextView><TextView
+                    android:textColor="@android:color/white"/>
+
+                <TextView
                     android:id="@+id/pointsBlackjackDealer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -67,7 +70,7 @@
                     android:text="0"
                     android:layout_weight="1"
                     android:textColor="@android:color/white"
-                    android:padding="10dp"></TextView>
+                    android:padding="10dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -109,7 +112,7 @@
                     android:text="You"
                     android:layout_weight="1"
                     android:textColor="@android:color/white"
-                    android:padding="10dp"></TextView>
+                    android:padding="10dp"/>
 
                 <TextView
                     android:id="@+id/textpointsBlackjackYou"
@@ -121,7 +124,7 @@
                     android:paddingLeft="5dp"
                     android:text="Puntos :"
                     android:textAlignment="textEnd"
-                    android:textColor="@android:color/white"></TextView>
+                    android:textColor="@android:color/white"/>
                 <TextView
                     android:id="@+id/pointsBlackjackYou"
                     android:layout_width="match_parent"
@@ -132,7 +135,7 @@
                     android:layout_weight="1"
                     android:textColor="@android:color/white"
                     android:padding="10dp"
-                    ></TextView>
+                    />
             </LinearLayout>
 
 

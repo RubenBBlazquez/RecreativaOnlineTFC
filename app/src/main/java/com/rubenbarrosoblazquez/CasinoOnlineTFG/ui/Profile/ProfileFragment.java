@@ -3,24 +3,17 @@ package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.camera.core.ImageAnalysis;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -33,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +40,7 @@ import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.TextRecognizerOptions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
@@ -60,7 +52,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
-    private OnGetUserInformation mListener;
+    private OnGetUserActions mListener;
     private User u;
     public TextView saldo;
     private EditText nombre;
@@ -168,7 +160,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         if(context instanceof CasinoActivity){
             Activity activity= (Activity) context;
-            this.mListener=(OnGetUserInformation)activity;
+            this.mListener=(OnGetUserActions)activity;
             this.mListenerAds=(OnAdsListener)activity;
         }
     }

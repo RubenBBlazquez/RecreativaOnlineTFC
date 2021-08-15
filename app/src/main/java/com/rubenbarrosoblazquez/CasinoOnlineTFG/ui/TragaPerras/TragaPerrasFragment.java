@@ -3,11 +3,9 @@ package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,19 +22,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 
 public class TragaPerrasFragment extends Fragment implements IEventEnd{
@@ -45,7 +37,7 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
     private int resultsMatrix[][]=new int[3][3];
     private ImageViewScrolling imageViewScrollings[];
     private EditText saldoApostado;
-    private OnGetUserInformation mListener;
+    private OnGetUserActions mListener;
     private User u;
     private int x;
     private AlertDialog.Builder builder;
@@ -132,6 +124,23 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
         if(u.isDniVerified()){
             root.findViewById(R.id.dniNoValidatedLayer).setVisibility(View.GONE);
         }
+
+        root.findViewById(R.id.containerTragaperras).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                mListener.showActionBar();
+
+                Handler hideHandler = new Handler();
+                hideHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.hideActionBar();
+                    }
+                },2000);
+
+                return true;
+            }
+        });
 
 
         return root;
@@ -292,7 +301,7 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
         super.onAttach(context);
         if (context instanceof CasinoActivity) {
             Activity activity = (Activity) context;
-            this.mListener = (OnGetUserInformation) activity;
+            this.mListener = (OnGetUserActions) activity;
         }
     }
 

@@ -1,10 +1,12 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,12 +24,12 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiceRuletaFragme
 
 import java.util.ArrayList;
 
-public class ProfileViewPager extends Fragment {
+public class ProfileViewPager  extends Fragment implements TabLayout.OnTabSelectedListener {
 
     private viewPager2Adapter adapter;
     private ArrayList<Fragment> arrayList = new ArrayList<>();
+    private TabLayout tabLayout;
 
-    @SuppressLint("ResourceAsColor")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -45,7 +47,7 @@ public class ProfileViewPager extends Fragment {
         viewPager.setAdapter(adapter);
         viewPager.setPageTransformer(new MarginPageTransformer(1500));
 
-        TabLayout tabLayout = root.findViewById(R.id.tab_layoutProfile);
+        tabLayout = root.findViewById(R.id.tab_layoutProfile);
 
 
         new TabLayoutMediator(tabLayout, viewPager,
@@ -55,13 +57,33 @@ public class ProfileViewPager extends Fragment {
                             tab.setIcon(R.drawable.ic_perfil_white);
                             break;
                         case 1:
-                            tab.setIcon(R.drawable.ic_round_shopping_cart_24);
+                            tab.setIcon(R.drawable.ic_round_shopping_cart_24_white);
                             break;
                     }
                 }).attach();
 
+        tabLayout.addOnTabSelectedListener(this);
 
         return root;
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        if(tab.getPosition() == 0){
+            tabLayout.setBackgroundColor(Color.parseColor("#F44336"));;
+        }else if(tab.getPosition() == 1){
+            tabLayout.setBackgroundColor(Color.parseColor("#DE000000"));
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 
     public class viewPager2Adapter extends FragmentStateAdapter {

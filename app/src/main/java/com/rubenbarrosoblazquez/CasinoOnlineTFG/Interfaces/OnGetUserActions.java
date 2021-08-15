@@ -8,7 +8,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseRealTimeModel;
 
 import java.util.ArrayList;
 
-public interface OnGetUserInformation {
+public interface OnGetUserActions {
     public User getUserInformation();
     public void setUserInformation(User u);
     public boolean UpdateUserInformation(User u);
@@ -17,4 +17,6 @@ public interface OnGetUserInformation {
     public FirebaseCloudFirestore getFirestoreInstance();
     public FirebaseRealTimeModel getFirestoreRealTimeInstance();
     public CasinoActivity getActivity();
+    public void hideActionBar();
+    public void showActionBar();
 }

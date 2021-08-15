@@ -1,5 +1,6 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,7 +32,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -43,10 +42,8 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayoutMediator;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnProductsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
@@ -58,7 +55,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.ProfileFragment;
 
 import java.util.Arrays;
 
-public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener, OnGetUserInformation, OnAdsListener, View.OnClickListener , OnProductsListener {
+public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener, OnGetUserActions, OnAdsListener, View.OnClickListener , OnProductsListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private User user;
@@ -74,6 +71,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private ProfileFragment profile;
     private NavController navController;
     private AlertDialog profileDialog;
+
     @Override
     protected void onStart() {
         try{
@@ -92,6 +90,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +134,8 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("A5AC149BF65213880D4D353CECDCB424"));
         rewardedAd();
         loadRewardedVideoAd();
+
+        getSupportActionBar().hide();
 
         Menu menu = navigationView.getMenu();
         personalBalance = menu.findItem(R.id.personalBalance);
@@ -382,6 +383,20 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         return this;
     }
 
+    @Override
+    public void hideActionBar() {
+        if (getSupportActionBar() != null)
+            if (getSupportActionBar().isShowing())
+                getSupportActionBar().hide();
+    }
+
+    @Override
+    public void showActionBar() {
+        if (getSupportActionBar() != null)
+            if (!getSupportActionBar().isShowing())
+                getSupportActionBar().show();
+    }
+
     public void setProfileFragment(ProfileFragment profile){
         this.profile=profile;
     }
@@ -437,5 +452,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     public void goToInfoProduct(View v,Bundle b) {
         Navigation.findNavController(v).navigate(R.id.action_nav_servicios_to_nav_info_servicios,b);
     }
+
+
 
 }

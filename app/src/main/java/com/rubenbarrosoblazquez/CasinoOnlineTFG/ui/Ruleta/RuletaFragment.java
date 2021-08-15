@@ -14,7 +14,6 @@ import android.os.CountDownTimer;
 import java.util.DoubleSummaryStatistics;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,7 +39,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,11 +47,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.ads.AdView;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Apuesta;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Monedas;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.slideshow.SlideshowViewModel;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -104,7 +101,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     private OnAdsListener mAdsListener;
     private androidx.gridlayout.widget.GridLayout monedasApuestasgrid;
     private androidx.gridlayout.widget.GridLayout numerosApuestas;
-    private OnGetUserInformation userListener;
+    private OnGetUserActions userListener;
     private ArrayList<Apuesta> apuestaActual;
     private ArrayList<Apuesta> apuestaSumaTotales;
     private TextView saldo;
@@ -165,6 +162,23 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             public void onChanged(List<Apuesta> apuestas) {
                 apuestaActual = (ArrayList<Apuesta>) apuestas;
                 cantidadApostada.setText(String.valueOf(getTotalApuesta()));
+            }
+        });
+
+        root.findViewById(R.id.containerRuleta).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                userListener.showActionBar();
+
+                Handler hideHandler = new Handler();
+                hideHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        userListener.hideActionBar();
+                    }
+                },2000);
+
+                return true;
             }
         });
 
@@ -641,21 +655,23 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    // we display the correct sector pointed by the triangle at the end of the rotate animation
-                    LayoutInflater inflater = requireActivity().getLayoutInflater();
-                    View v = inflater.inflate(R.layout.dialog_numero_sacado_ruleta, null);
-                    numero_sacado = getSector(360 - (degree % 360));
-                    ((TextView) v.findViewById(R.id.textView9)).setText(getString(R.string.numero_sacado) + numero_sacado);
-                    ((TextView) v.findViewById(R.id.DineroGanadoDialogoApuesta)).setText(getString(R.string.ganarDinero) + " " + getDineroGanado(numero_sacado));
-                    addRecentNumberToGrid(numero_sacado);
-                    apuestaActual.clear();
-                    dialogNumber.setView(v);
-                    dialogNumeroSacado = dialogNumber.show();
-                    apuestaActual.clear();
-                    cantidadApostada.setText("0");
-                    chronometer.onFinish();
-                    animationEnd=true;
-
+                    try{
+                        LayoutInflater inflater = requireActivity().getLayoutInflater();
+                        View v = inflater.inflate(R.layout.dialog_numero_sacado_ruleta, null);
+                        numero_sacado = getSector(360 - (degree % 360));
+                        ((TextView) v.findViewById(R.id.textView9)).setText(getString(R.string.numero_sacado) + numero_sacado);
+                        ((TextView) v.findViewById(R.id.DineroGanadoDialogoApuesta)).setText(getString(R.string.ganarDinero) + " " + getDineroGanado(numero_sacado));
+                        addRecentNumberToGrid(numero_sacado);
+                        apuestaActual.clear();
+                        dialogNumber.setView(v);
+                        dialogNumeroSacado = dialogNumber.show();
+                        apuestaActual.clear();
+                        cantidadApostada.setText("0");
+                        chronometer.onFinish();
+                        animationEnd=true;
+                    }catch (Exception e){
+                        Log.e("errorRuleta",e.getMessage());
+                    }
                 }
 
                 @Override
@@ -772,7 +788,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         if (context instanceof CasinoActivity) {
             Activity activity = (Activity) context;
             this.mAdsListener = (OnAdsListener) activity;
-            this.userListener = (OnGetUserInformation) activity;
+            this.userListener = (OnGetUserActions) activity;
         }
     }
 }

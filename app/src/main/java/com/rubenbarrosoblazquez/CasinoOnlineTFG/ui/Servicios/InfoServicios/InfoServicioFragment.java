@@ -27,13 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Comments;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.CommentsRealTime;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.MyProductsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -52,7 +51,7 @@ public class InfoServicioFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerViewComments;
     private ProgressDialog progreso;
-    private OnGetUserInformation mListener;
+    private OnGetUserActions mListener;
     private ArrayList<Comments> comments;
     private String url;
     private MyCommentsRecyclerViewAdapter commentAdapter;
@@ -238,7 +237,7 @@ public class InfoServicioFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof Activity){
             activity=(Activity) context;
-            mListener=(OnGetUserInformation) activity;
+            mListener=(OnGetUserActions) activity;
 
         }
     }

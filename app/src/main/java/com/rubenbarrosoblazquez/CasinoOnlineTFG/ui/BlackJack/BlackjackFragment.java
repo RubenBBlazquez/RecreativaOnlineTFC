@@ -3,8 +3,6 @@ package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.BlackJack;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,34 +15,25 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.ads.AdView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.MyBuysRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,10 +72,11 @@ public class BlackjackFragment extends Fragment {
 
     ArrayList<Integer> cardsYou = new ArrayList<>();
     ArrayList<Integer> cardsDealer = new ArrayList<>();
+    ArrayList<Integer> ExtractedCards = new ArrayList<>();
 
     private boolean hayApuesta = false;
 
-    private OnGetUserInformation mListener;
+    private OnGetUserActions mListener;
 
     MyCardsRecyclerViewAdapter adapter;
     MyCardsRecyclerViewAdapter adapter2;
@@ -129,6 +119,23 @@ public class BlackjackFragment extends Fragment {
             backgroundError.setVisibility(View.VISIBLE);
 
         }
+
+        root.findViewById(R.id.containerBlackjack).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                mListener.showActionBar();
+
+                Handler hideHandler = new Handler();
+                hideHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.hideActionBar();
+                    }
+                },2000);
+
+                return true;
+            }
+        });
 
 
         return root;
@@ -173,6 +180,7 @@ public class BlackjackFragment extends Fragment {
                                 u.setSaldo((float) (u.getSaldo()-saldoApostado));
                                 u.setSaldo_gastado((float) ((float)u.getSaldo_gastado()+ saldoApostado));
                                 mListener.updateBalanceTexts();
+                                hayApuesta = true;
                                 new blackJackAsyncTask().execute("");
                             }
                         }else{
@@ -225,13 +233,13 @@ public class BlackjackFragment extends Fragment {
     }
 
     public void sacarOtraCarta(boolean isDealer){
-        if(u.isDniVerified() && hayApuesta){
+        if(u.isDniVerified()){
             if(isDealer){
                 this.cardsDealer.add(R.drawable.back_card);
                 adapter2.notifyDataSetChanged();
                 Log.d("cositas",Arrays.toString(cardsDealer.toArray()));
             }else{
-                if (!isYouGiveUp) {
+                if (!isYouGiveUp && hayApuesta) {
                     if (!isThereAnyCartNotTouched()) {
                         this.cardsYou.add(R.drawable.back_card);
                         adapter.notifyDataSetChanged();
@@ -274,7 +282,7 @@ public class BlackjackFragment extends Fragment {
         super.onAttach(context);
         if(context instanceof CasinoActivity){
             Activity activity = (Activity)context;
-            mListener=(OnGetUserInformation)activity;
+            mListener=(OnGetUserActions)activity;
         }
     }
 
@@ -313,10 +321,18 @@ public class BlackjackFragment extends Fragment {
 
                         if(!salir){
                             cardsDealer.add(R.drawable.back_card);
-                            int random = new Random().nextInt(13);
-                            cardsDealer.set(cardsDealer.size() - 1, adapter.picas[random]);
+
+                            int randomCards = new Random().nextInt(13);
+
+                            int [] cardsArrayToPick = adapter.getRandomCardTypeArray();
+
+                            while(adapter.isCardAlreadyUsed(cardsArrayToPick[randomCards])){
+                                randomCards = new Random().nextInt(13);
+                                cardsArrayToPick = adapter.getRandomCardTypeArray();
+                            }
+                            cardsDealer.set(cardsDealer.size() - 1, adapter.picas[randomCards]);
                             notifyAdapter();
-                            totalPoints = dealerPoints + (random + 1);
+                            totalPoints = dealerPoints + (randomCards + 1);
                             pointsDealer.setText(""+totalPoints);
                             try {
                                 Thread.sleep(2000);
@@ -346,6 +362,7 @@ public class BlackjackFragment extends Fragment {
                             mListener.getFirestoreInstance().updateUser(u);
                             mListener.updateBalanceTexts();
                             createPriceDialog(finalSaldoGanado, finalMessage);
+                            ExtractedCards.clear();
                         }
                     });
 
@@ -421,6 +438,7 @@ public class BlackjackFragment extends Fragment {
             builder.show();
 
         backgroundError.setVisibility(View.VISIBLE);
+        hayApuesta=false;
     }
 
 }

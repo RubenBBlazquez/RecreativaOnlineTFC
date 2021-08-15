@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.TragaPerras.TragaPerrasFragment"
-    android:id="@+id/containerTragaperras"
     android:orientation="vertical"
     android:layout_gravity="center_horizontal"
     android:background="@android:color/black">
 
         <LinearLayout
+            android:id="@+id/containerTragaperras"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">

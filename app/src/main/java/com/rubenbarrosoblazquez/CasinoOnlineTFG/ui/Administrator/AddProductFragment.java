@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserInformation;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
@@ -62,7 +61,7 @@ public class AddProductFragment extends Fragment {
     Spinner types;
 
     private String tipo;
-    private OnGetUserInformation mListener;
+    private OnGetUserActions mListener;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -196,7 +195,7 @@ public class AddProductFragment extends Fragment {
         super.onAttach(context);
         if(context instanceof CasinoActivity){
             Activity activity= (Activity) context;
-            this.mListener=(OnGetUserInformation)activity;
+            this.mListener=(OnGetUserActions)activity;
         }
     }
 
