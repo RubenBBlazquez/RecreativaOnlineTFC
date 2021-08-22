@@ -196,29 +196,36 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
 
     @Override
     public void onSuccess(DocumentSnapshot d) {
-        Log.d("user", String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
-        if (this.mAuth.getCurrentUser().isEmailVerified()) {
-            User u;
-            u = new User(String.valueOf(d.get("Name")), String.valueOf(d.get("Email")), String.valueOf(d.get("Last name's")), String.valueOf(d.get("Provider")));
-            u.setVerified(String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
-            u.setDirection((String) d.get("Direction"));
-            u.setPhone((String) d.get("Phone"));
-            u.setDni((String) d.get("Dni"));
-            u.setSaldo(Float.valueOf(String.valueOf( d.get("Saldo"))));
-            u.setSaldo_gastado(Float.valueOf(String.valueOf( d.get("SaldoGastado"))));
-            u.setTipoUser(Integer.parseInt(d.getString("TipoUser")));
-            u.setTelefonoVerified(Boolean.valueOf(d.getString("TelefonoVerificado")));
-            u.setDniVerified(Boolean.valueOf(d.getString("DniVerificado")));
-            addDataToSharedPreferences(u);
-            db.collection("users").document(u.getEmail()).update("Verified", "true");
-            mListener.logInOk(u);
+        try {
+            Log.d("user", String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
+            if (this.mAuth.getCurrentUser().isEmailVerified()) {
+                User u;
+                u = new User(String.valueOf(d.get("Name")), String.valueOf(d.get("Email")), String.valueOf(d.get("Last name's")), String.valueOf(d.get("Provider")));
+                u.setVerified(String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
+                u.setDirection((String) d.get("Direction"));
+                u.setPhone((String) d.get("Phone"));
+                u.setDni((String) d.get("Dni"));
+                u.setSaldo(Float.valueOf(String.valueOf(d.get("Saldo"))));
+                u.setSaldo_gastado(Float.valueOf(String.valueOf(d.get("SaldoGastado"))));
+                u.setTipoUser(Integer.parseInt(d.getString("TipoUser")));
+                u.setTelefonoVerified(Boolean.valueOf(d.getString("TelefonoVerificado")));
+                u.setDniVerified(Boolean.valueOf(d.getString("DniVerificado")));
+                addDataToSharedPreferences(u);
+                db.collection("users").document(u.getEmail()).update("Verified", "true");
+                mListener.logInOk(u);
 
-        } else {
-            Toast.makeText(getContext(), getString(R.string.email_send), Toast.LENGTH_SHORT).show();
-            Thread checkVerification = new Thread(this);
-            checkVerification.start();
-            this.mListener.sendEmailVerification(this.mAuth.getCurrentUser());
+            } else {
+                Toast.makeText(getContext(), getString(R.string.email_send), Toast.LENGTH_SHORT).show();
+                Thread checkVerification = new Thread(this);
+                checkVerification.start();
+                this.mListener.sendEmailVerification(this.mAuth.getCurrentUser());
 
+            }
+        }catch(Exception exp){
+            Log.d("error",exp.getMessage());
+            SharedPreferences.Editor preferences = this.getActivity().getSharedPreferences(getString(R.string.prefs_login), Context.MODE_PRIVATE).edit();
+            preferences.clear();
+            preferences.apply();
         }
     }
 

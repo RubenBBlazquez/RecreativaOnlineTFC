@@ -37,7 +37,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@android:color/white">
                 <TextView
                     android:id="@+id/textDealer"
                     android:layout_width="match_parent"
@@ -46,6 +47,7 @@
                     android:paddingLeft="10dp"
                     android:text="Dealer"
                     android:layout_weight="1"
+                    android:background="#DE000000"
                     android:textColor="@android:color/white"
                     android:padding="10dp"/>
 
@@ -57,6 +59,7 @@
                     android:fontFamily="@font/bungee"
                     android:padding="10dp"
                     android:paddingLeft="5dp"
+                    android:background="#DE000000"
                     android:text="Puntos :"
                     android:textAlignment="textEnd"
                     android:textColor="@android:color/white"/>
@@ -66,6 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/bungee"
+                    android:background="#DE000000"
                     android:paddingLeft="5dp"
                     android:text="0"
                     android:layout_weight="1"
@@ -102,6 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:background="@android:color/white"
                 >
                 <TextView
                     android:id="@+id/textYou"
@@ -112,7 +117,8 @@
                     android:text="You"
                     android:layout_weight="1"
                     android:textColor="@android:color/white"
-                    android:padding="10dp"/>
+                    android:padding="10dp"
+                    android:background="#DE000000" />
 
                 <TextView
                     android:id="@+id/textpointsBlackjackYou"
@@ -124,12 +130,14 @@
                     android:paddingLeft="5dp"
                     android:text="Puntos :"
                     android:textAlignment="textEnd"
+                    android:background="#DE000000"
                     android:textColor="@android:color/white"/>
                 <TextView
                     android:id="@+id/pointsBlackjackYou"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/bungee"
+                    android:background="#DE000000"
                     android:paddingLeft="5dp"
                     android:text="0"
                     android:layout_weight="1"

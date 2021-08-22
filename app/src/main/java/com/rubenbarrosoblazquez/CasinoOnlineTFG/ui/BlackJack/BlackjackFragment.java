@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -113,7 +114,9 @@ public class BlackjackFragment extends Fragment {
                 new blackJackAsyncTask().execute("");
             }else{
                 backgroundError.setVisibility(View.VISIBLE);
+                backgroundError.setBackground(AppCompatResources.getDrawable(this.getContext(), R.drawable.background_black_and_gold));
                 textError.setText(getString(R.string.debesApostarBlackjack));
+
             }
         }else{
             backgroundError.setVisibility(View.VISIBLE);
