@@ -42,8 +42,8 @@
                     android:title="Perfil" />
                 <item
                     android:id="@+id/nav_settings"
-                    android:icon="@drawable/ic_ajustes"
-                    android:title="Ajustes" />
+                    android:icon="@drawable/ic_notificaciones"
+                    android:title="App Information" />
             </menu>
         </item>
         <item android:title="Admin Panel"

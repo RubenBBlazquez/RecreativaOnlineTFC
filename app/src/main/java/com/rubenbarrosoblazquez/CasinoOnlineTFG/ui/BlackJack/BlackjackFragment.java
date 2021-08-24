@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -71,6 +73,9 @@ public class BlackjackFragment extends Fragment {
     @BindView(R.id.textError)
     TextView textError;
 
+    @BindView(R.id.containerApostarBlackjack)
+    RelativeLayout apostar;
+
     ArrayList<Integer> cardsYou = new ArrayList<>();
     ArrayList<Integer> cardsDealer = new ArrayList<>();
     ArrayList<Integer> ExtractedCards = new ArrayList<>();
@@ -104,28 +109,29 @@ public class BlackjackFragment extends Fragment {
 
         initRecyclerView(root);
 
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(false);
 
         if(u.isDniVerified()){
             if(hayApuesta){
                 backgroundError.setVisibility(View.GONE);
+                apostar.setVisibility(View.GONE);
                 sacarOtraCarta(false);
                 setHasOptionsMenu(false);
                 new blackJackAsyncTask().execute("");
             }else{
                 backgroundError.setVisibility(View.VISIBLE);
+                apostar.setVisibility(View.VISIBLE);
                 backgroundError.setBackground(AppCompatResources.getDrawable(this.getContext(), R.drawable.background_black_and_gold));
                 textError.setText(getString(R.string.debesApostarBlackjack));
-
             }
         }else{
             backgroundError.setVisibility(View.VISIBLE);
 
         }
 
-        root.findViewById(R.id.containerBlackjack).setOnTouchListener(new View.OnTouchListener() {
+        root.findViewById(R.id.containerBlackjack).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public boolean onLongClick(View v) {
                 mListener.showActionBar();
 
                 Handler hideHandler = new Handler();
@@ -136,80 +142,13 @@ public class BlackjackFragment extends Fragment {
                     }
                 },2000);
 
-                return true;
-            }
+                return true;            }
         });
 
 
         return root;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.blackjack_menu, menu);
-        MenuItem item = menu.findItem(R.id.apuestaBlackjack);
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                View v = getLayoutInflater().inflate(R.layout.dialog_apuesta_blackjack, null);
-
-                TextInputEditText apuestaET = v.findViewById(R.id.apuestaBlackjack);
-
-                Button apostar = v.findViewById(R.id.apostarButton);
-                apostar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String apuesta = apuestaET.getText().toString();
-                        if(!apuesta.isEmpty()){
-                            if(Integer.parseInt(apuesta) > u.getSaldo() ){
-                                Toast.makeText(getContext(), ""+getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
-                            }else if (Integer.parseInt(apuesta) <= 0){
-                                Toast.makeText(getContext(), ""+getString(R.string.apuestaCero), Toast.LENGTH_SHORT).show();
-                            }else{
-                                backgroundError.setVisibility(View.GONE);
-                                cardsDealer.clear();
-                                cardsYou.clear();
-                                adapter.notifyDataSetChanged();
-                                adapter2.notifyDataSetChanged();
-                                sacarOtraCarta(false);
-                                points.setText("0");
-                                pointsDealer.setText("0");
-                                isYouGiveUp=false;
-                                dialog.dismiss();
-                                saldoApostado=Integer.parseInt(apuesta);
-                                u.setSaldo((float) (u.getSaldo()-saldoApostado));
-                                u.setSaldo_gastado((float) ((float)u.getSaldo_gastado()+ saldoApostado));
-                                mListener.updateBalanceTexts();
-                                hayApuesta = true;
-                                new blackJackAsyncTask().execute("");
-                            }
-                        }else{
-                            Toast.makeText(getContext(), ""+getString(R.string.apuestaEmpty), Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    }
-                });
-
-                Button cerrarDialogo = v.findViewById(R.id.cerrarDialogoBlackjack);
-                cerrarDialogo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setView(v);
-                builder.create();
-                dialog = builder.show();
-                return true;
-            }
-        });
-
-    }
 
     public void initRecyclerView(View v) {
         final View view = v;
@@ -278,6 +217,62 @@ public class BlackjackFragment extends Fragment {
     public void plantarse(){
         isYouGiveUp=true;
         Toast.makeText(getContext(), ""+getString(R.string.plantarse), Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.apostarBlackjack)
+    public void apostar(){
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                View v = getLayoutInflater().inflate(R.layout.dialog_apuesta_blackjack, null);
+
+                TextInputEditText apuestaET = v.findViewById(R.id.apuestaBlackjack);
+
+                Button apostar = v.findViewById(R.id.apostarButton);
+                apostar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String apuesta = apuestaET.getText().toString();
+                        if(!apuesta.isEmpty()){
+                            if(Integer.parseInt(apuesta) > u.getSaldo() ){
+                                Toast.makeText(getContext(), ""+getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
+                            }else if (Integer.parseInt(apuesta) <= 0){
+                                Toast.makeText(getContext(), ""+getString(R.string.apuestaCero), Toast.LENGTH_SHORT).show();
+                            }else{
+                                backgroundError.setVisibility(View.GONE);
+                                cardsDealer.clear();
+                                cardsYou.clear();
+                                adapter.notifyDataSetChanged();
+                                adapter2.notifyDataSetChanged();
+                                sacarOtraCarta(false);
+                                points.setText("0");
+                                pointsDealer.setText("0");
+                                isYouGiveUp=false;
+                                dialog.dismiss();
+                                saldoApostado=Integer.parseInt(apuesta);
+                                u.setSaldo((float) (u.getSaldo()-saldoApostado));
+                                u.setSaldo_gastado((float) ((float)u.getSaldo_gastado()+ saldoApostado));
+                                mListener.updateBalanceTexts();
+                                hayApuesta = true;
+                                new blackJackAsyncTask().execute("");
+                            }
+                        }else{
+                            Toast.makeText(getContext(), ""+getString(R.string.apuestaEmpty), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+                Button cerrarDialogo = v.findViewById(R.id.cerrarDialogoBlackjack);
+                cerrarDialogo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setView(v);
+                builder.create();
+                dialog = builder.show();
     }
 
     @Override
@@ -416,25 +411,26 @@ public class BlackjackFragment extends Fragment {
 
     public void createPriceDialog(String salgoGanado,String tipo){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_blackjack_prized,null);
-            TextView dineroGanado = v.findViewById(R.id.DineroGanadoDialogoApuesta);
-            TextView titulo = v.findViewById(R.id.textView9);
-            TextView textDealer = v.findViewById(R.id.textoDealer);
-            TextView textYou = v.findViewById(R.id.textoYou);
-            textDealer.setText("Dealer : "+pointsDealer.getText());
-            textYou.setText("You : "+points.getText());
-            titulo.setText(tipo);
-            dineroGanado.setText(salgoGanado+" €");
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_blackjack_prized,null);
+        TextView dineroGanado = v.findViewById(R.id.DineroGanadoDialogoApuesta);
+        TextView titulo = v.findViewById(R.id.textView9);
+        TextView textDealer = v.findViewById(R.id.textoDealer);
+        TextView textYou = v.findViewById(R.id.textoYou);
+        textDealer.setText("Dealer : "+pointsDealer.getText());
+        textYou.setText("You : "+points.getText());
+        titulo.setText(tipo);
+        dineroGanado.setText(salgoGanado+" €");
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(v.getContext(), LinearLayoutManager.HORIZONTAL, false);
 
         RecyclerView dealerCardsDialog = v.findViewById(R.id.dealerDialogCards);
         dealerCardsDialog.setLayoutManager(linearLayoutManager);
-        dealerCardsDialog.setAdapter(new MyCardsRecyclerViewAdapter(BlackjackFragment.this,this.cardsDealer,true));
+        dealerCardsDialog.setAdapter(new MyCardsRecyclerViewAdapter(BlackjackFragment.this,new ArrayList<Integer>(this.cardsDealer),true));
 
         RecyclerView youCardsDialog = v.findViewById(R.id.youDialogCards);
         youCardsDialog.setLayoutManager(linearLayoutManager2);
-        youCardsDialog.setAdapter(new MyCardsRecyclerViewAdapter(BlackjackFragment.this,this.cardsYou,false));
+        youCardsDialog.setAdapter(new MyCardsRecyclerViewAdapter(BlackjackFragment.this,new ArrayList<Integer>(this.cardsYou),false));
 
         builder.setView(v);
             builder.create();

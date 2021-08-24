@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +108,22 @@ public class BasketFragment extends Fragment {
 
         mListener.getFirestoreInstance().getAllBuysByUser(mListener.getUserInformation(),compras,adapter);
 
+        v.findViewById(R.id.containerBasket).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mListener.showActionBar();
+
+                Handler hideHandler = new Handler();
+                hideHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.hideActionBar();
+                    }
+                },2000);
+
+                return true;
+            }
+        });
 
         return v;
     }

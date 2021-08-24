@@ -105,6 +105,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
         Button login = v.findViewById(R.id.login);
         ImageButton loginGoogle = v.findViewById(R.id.logingoogle);
         ImageButton loginFacebook = v.findViewById(R.id.loginfacebook);
+        ImageButton loginTwitter = v.findViewById(R.id.loginTwitter);
         this.email = (EditText) v.findViewById(R.id.email_login);
         this.password = (EditText) v.findViewById(R.id.password_login);
         this.errorEmail = v.findViewById(R.id.error_email_login);
@@ -115,6 +116,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
         registrar.setOnClickListener(this);
         login.setOnClickListener(this);
         loginGoogle.setOnClickListener(this);
+        loginTwitter.setOnClickListener(this);
         loginFacebook.setOnClickListener(this);
 
         return v;
@@ -127,16 +129,21 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
                 mListener.changeFragmentToRegistered();
                 break;
             case R.id.login:
+
                 if (this.ValidateLoginAndPassword()) {
                     this.logInBasic();
                 }
                 break;
+
             case R.id.logingoogle:
 
                 loginWithGoogle();
                 break;
+
             case R.id.loginfacebook:
-                loginWithFacebook();
+            case R.id.loginTwitter:
+
+                Toast.makeText(getContext(),getString(R.string.funcionalidadNoImplementada), Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -200,6 +207,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
             Log.d("user", String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
             if (this.mAuth.getCurrentUser().isEmailVerified()) {
                 User u;
+
                 u = new User(String.valueOf(d.get("Name")), String.valueOf(d.get("Email")), String.valueOf(d.get("Last name's")), String.valueOf(d.get("Provider")));
                 u.setVerified(String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
                 u.setDirection((String) d.get("Direction"));
@@ -210,6 +218,10 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
                 u.setTipoUser(Integer.parseInt(d.getString("TipoUser")));
                 u.setTelefonoVerified(Boolean.valueOf(d.getString("TelefonoVerificado")));
                 u.setDniVerified(Boolean.valueOf(d.getString("DniVerificado")));
+                u.setSkip(d.getBoolean("isSkip"));
+
+                Toast.makeText(this.getContext(), ""+u.isSkip(), Toast.LENGTH_SHORT).show();
+
                 addDataToSharedPreferences(u);
                 db.collection("users").document(u.getEmail()).update("Verified", "true");
                 mListener.logInOk(u);

@@ -29,6 +29,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -44,6 +45,8 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
     private double saldo_ganado;
     private int contador =0;
     private boolean isSlotMachineWorking;
+    private boolean isDialogOpen;
+    private boolean isAnyPrice;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +89,7 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
         u = mListener.getUserInformation();
 
         Button b = root.findViewById(R.id.throwRandom);
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +99,7 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
 
                     if(!isSlotMachineWorking){
 
-                        if(u.getSaldo() > Integer.parseInt(saldoApostado.getText().toString())){
+                        if(u.getSaldo() >= Integer.parseInt(saldoApostado.getText().toString())){
                             image.setValueRandom(100);
                             image2.setValueRandom(100);
                             image3.setValueRandom(100);
@@ -106,6 +110,9 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
                             contador=0;
                             saldo_ganado=0;
                             isSlotMachineWorking=true;
+                            isDialogOpen=true;
+                            isAnyPrice=true;
+
                         }else{
                             Toast.makeText(getContext(), getContext().getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
                         }
@@ -125,9 +132,9 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
             root.findViewById(R.id.dniNoValidatedLayer).setVisibility(View.GONE);
         }
 
-        root.findViewById(R.id.containerTragaperras).setOnTouchListener(new View.OnTouchListener() {
+        root.findViewById(R.id.containerTragaperras).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public boolean onLongClick(View v) {
                 mListener.showActionBar();
 
                 Handler hideHandler = new Handler();
@@ -155,21 +162,23 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
             resultsMatrix[0][0] = results[0];
             resultsMatrix[0][1] = results[1];
             resultsMatrix[0][2] = results[2];
-            booleanWins[0]=areThreeTheSame(resultsMatrix[0]);
+            booleanWins[0]=areThreeTheSame(resultsMatrix[0],"1");
 
         }else if(tag == 2){
             resultsMatrix[1][0] = results[0];
             resultsMatrix[1][1] = results[1];
             resultsMatrix[1][2] = results[2];
-            booleanWins[1]=areThreeTheSame(resultsMatrix[1]);
+            booleanWins[1]=areThreeTheSame(resultsMatrix[1],"2");
 
         }else if(tag == 3){
             resultsMatrix[2][0] = results[0];
             resultsMatrix[2][1] = results[1];
             resultsMatrix[2][2] = results[2];
-            booleanWins[2]=areThreeTheSame(resultsMatrix[2]);
+            booleanWins[2]=areThreeTheSame(resultsMatrix[2],"3");
 
         }
+
+        Log.d("tragaperrasFragment","///////////////////");
 
         if((!imageViewScrollings[0].isMovement && !imageViewScrollings[1].isMovement && !imageViewScrollings[2].isMovement)){
 
@@ -186,33 +195,36 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
 
 
 
-    public boolean areThreeTheSame(int[] results){
+    public boolean areThreeTheSame(int[] results,String type){
         String pic = "";
         String aux = "";
-
+        Log.d("tragaperrasFragment", type+Arrays.toString(results));
         for (int i = 0; i < results.length; i++) {
 
-                if((results[i] >= ImageViewScrolling.BAR[0] && results[i] <= ImageViewScrolling.BAR[1])){
+            if((results[i] >= ImageViewScrolling.BAR[0] && results[i] <= ImageViewScrolling.BAR[1])){
                     pic = "BAR";
-                }else if((results[i] >= ImageViewScrolling.LEMON[0] && results[i] <= ImageViewScrolling.LEMON[1])){
+            }else if((results[i] >= ImageViewScrolling.LEMON[0] && results[i] <= ImageViewScrolling.LEMON[1])){
                     pic = "LEMON";
-                }else if((results[i] >= ImageViewScrolling.WATERMELON[0] && results[i] <= ImageViewScrolling.WATERMELON[1])){
+            }else if((results[i] >= ImageViewScrolling.WATERMELON[0] && results[i] <= ImageViewScrolling.WATERMELON[1])){
                     pic = "WATERMELON";
-                }else if((results[i] >= ImageViewScrolling.ORANGE[0] && results[i] <= ImageViewScrolling.ORANGE[1])){
+            }else if((results[i] >= ImageViewScrolling.ORANGE[0] && results[i] <= ImageViewScrolling.ORANGE[1])){
                     pic = "ORANGE";
-                }else if((results[i] >= ImageViewScrolling.TRIPLE[0])){
+            }else if((results[i] >= ImageViewScrolling.TRIPLE[0])){
                     pic = "TRIPLE";
-                }else if((results[i] >= ImageViewScrolling.SEVEN[0] && results[i] <= ImageViewScrolling.SEVEN[1])){
+            }else if((results[i] >= ImageViewScrolling.SEVEN[0] && results[i] <= ImageViewScrolling.SEVEN[1])){
                     pic = "SEVEN";
-                }
+            }
 
-                if(!pic.equalsIgnoreCase(aux) && i>0){
-                    return false;
-                }
+                // si la foto es diferente de la anterior, significa que ya no son todas iguales,
+               //por lo que salimos
+            if(!pic.equalsIgnoreCase(aux) && i>0){
+                return false;
+            }
 
                 aux=pic;
             }
 
+        //comprobamos que foto es , en caso de ser iguales las 3, y sumamos al saldo final ganado
         if(updateUserBalance(pic)){
             return true;
         }else{
@@ -222,39 +234,34 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
     }
 
     public boolean updateUserBalance(String pic){
+
         if(pic.equalsIgnoreCase("BAR")){
 
-            this.u.setSaldo(this.u.getSaldo()+(Integer.parseInt(saldoApostado.getText().toString()))*(2*x));
             this.saldo_ganado=this.saldo_ganado+Double.parseDouble(saldoApostado.getText().toString())*(2*x);
             return true;
 
         }else if(pic.equalsIgnoreCase("LEMON")){
 
-            this.u.setSaldo(this.u.getSaldo()+(Integer.parseInt(saldoApostado.getText().toString()))*(2*x));
             this.saldo_ganado=this.saldo_ganado+Double.parseDouble(saldoApostado.getText().toString())*(2*x);
             return true;
 
         }else if(pic.equalsIgnoreCase("WATERMELON")){
 
-            this.u.setSaldo(this.u.getSaldo()+(Integer.parseInt(saldoApostado.getText().toString()))*(2*x));
             this.saldo_ganado=this.saldo_ganado+Double.parseDouble(saldoApostado.getText().toString())*(2*x);
             return true;
 
         }else if(pic.equalsIgnoreCase("ORANGE")){
 
-            this.u.setSaldo(this.u.getSaldo()+(Integer.parseInt(saldoApostado.getText().toString()))*(2*x));
             this.saldo_ganado=this.saldo_ganado+Double.parseDouble(saldoApostado.getText().toString())*(2*x);
             return true;
 
         }else if(pic.equalsIgnoreCase("TRIPLE")){
 
-            this.u.setSaldo(this.u.getSaldo()+(Integer.parseInt(saldoApostado.getText().toString()))*(10*x));
             this.saldo_ganado=this.saldo_ganado+Double.parseDouble(saldoApostado.getText().toString())*(10*x);
             return true;
 
         }else if(pic.equalsIgnoreCase("SEVEN")){
 
-            this.u.setSaldo(this.u.getSaldo()+(Integer.parseInt(saldoApostado.getText().toString()))*(6*x));
             this.saldo_ganado=this.saldo_ganado+Double.parseDouble(saldoApostado.getText().toString())*(6*x);
             return true;
         }
@@ -266,9 +273,26 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
 
         if(!isAllTheSame){
 
-            areThreeTheSame(new int[]{resultsMatrix[0][0],resultsMatrix[1][0],resultsMatrix[2][0]});
-            areThreeTheSame(new int[]{resultsMatrix[0][1],resultsMatrix[1][1],resultsMatrix[2][1]});
-            areThreeTheSame(new int[]{resultsMatrix[0][2],resultsMatrix[1][2],resultsMatrix[2][2]});
+            if (isAnyPrice) {
+
+                //primera fila
+                areThreeTheSame(new int[]{resultsMatrix[0][0], resultsMatrix[1][0], resultsMatrix[2][0]},"1");
+
+                //segunda fila
+                areThreeTheSame(new int[]{resultsMatrix[0][1], resultsMatrix[1][1], resultsMatrix[2][1]},"2");
+
+                //tercera fila
+                areThreeTheSame(new int[]{resultsMatrix[0][2], resultsMatrix[1][2], resultsMatrix[2][2]},"3");
+
+                //diagonal derecha
+                areThreeTheSame(new int[]{resultsMatrix[0][2], resultsMatrix[1][1], resultsMatrix[2][0]},"Diagonal Derecha");
+
+                //diagonal izquierda
+                areThreeTheSame(new int[]{resultsMatrix[0][0], resultsMatrix[1][1], resultsMatrix[2][2]},"Diagonal Izquierda");
+
+
+                isAnyPrice=false;
+            }
 
         }else{
             saldo_ganado= (Integer.parseInt(saldoApostado.getText().toString()))*(15*x);
@@ -281,8 +305,6 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
 
             double finalSaldo_ganado = saldo_ganado;
             Runnable myRunnable = () -> {
-                mListener.updateBalanceTexts();
-                mListener.UpdateUserInformation(u);
                 winDialog(String.valueOf(finalSaldo_ganado));
                 isSlotMachineWorking=false;
             };
@@ -307,15 +329,23 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
 
 
     public void winDialog(String saldoGanado){
-        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_numero_sacado_ruleta,null);
-        TextView dineroGanado = v.findViewById(R.id.DineroGanadoDialogoApuesta);
-        TextView titulo = v.findViewById(R.id.textView9);
-        titulo.setText("Has Ganado .. :");
-        dineroGanado.setText(saldoGanado+" €");
-        builder.setView(v);
-        builder.create();
-        builder.show();
-        saldoApostado.setEnabled(true);
+        if (isDialogOpen) {
+
+            View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_numero_sacado_ruleta, null);
+            TextView dineroGanado = v.findViewById(R.id.DineroGanadoDialogoApuesta);
+            TextView titulo = v.findViewById(R.id.textView9);
+            titulo.setText("Has Ganado .. :");
+            dineroGanado.setText(this.saldo_ganado + " €");
+            this.u.setSaldo((float) (this.u.getSaldo()+saldo_ganado));
+            this.mListener.updateBalanceTexts();
+            this.mListener.setUserInformation(u);
+            builder.setView(v);
+            builder.create();
+            builder.show();
+            saldoApostado.setEnabled(true);
+            isDialogOpen = false;
+
+        }
     }
 
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_info_general"
+        android:icon="@drawable/ic_home_white"
+        android:title="@string/menu_init" />
+
+    <item
+        android:id="@+id/navigation_info_ruleta"
+        android:icon="@drawable/ic_ruleta_de_casino_icon_white"
+        android:title="@string/menu_rule" />
+
+    <item
+        android:id="@+id/navigation_info_slot_machine"
+        android:icon="@drawable/ic_slot_machine_white"
+        android:title="@string/menu_tragaperras" />
+
+</menu>

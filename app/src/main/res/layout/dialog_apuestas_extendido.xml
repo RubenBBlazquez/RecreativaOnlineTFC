@@ -12,7 +12,7 @@
         android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F44336"
+        android:background="#d0b36a"
         android:fontFamily="@font/bungee"
         android:padding="10dp"
         android:text="Apuestas Ronda Actual"

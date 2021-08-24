@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -90,6 +91,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
 
+
+
     }
 
     @Override
@@ -151,6 +154,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         this.mListenerAds.loadRewardedVideoAd();
 
         mListener.getActivity().setProfileFragment(this);
+
+        v.findViewById(R.id.containerProfile).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mListener.showActionBar();
+
+                Handler hideHandler = new Handler();
+                hideHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.hideActionBar();
+                    }
+                },2000);
+
+                return true;
+            }
+        });
 
         return v;
     }

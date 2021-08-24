@@ -83,6 +83,7 @@ public class FirebaseCloudFirestore {
         usuario.put("TipoUser", u.getTipoUser() + "");
         usuario.put("DniVerificado",u.isDniVerified()+"");
         usuario.put("TelefonoVerificado",u.isTelefonoVerified()+"");
+        usuario.put("isSkip",u.isSkip());
 
         try{
             this.mFirebaseFirestore.collection("users").document(u.getEmail()).update(usuario);

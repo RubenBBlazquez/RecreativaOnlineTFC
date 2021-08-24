@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,6 +80,14 @@ public class InitCasinoFragment extends Fragment {
         v.findViewById(R.id.initPageContainer).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                return true;
+            }
+        });
+
+        v.findViewById(R.id.minorContainerInitHome).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
                 actionsListener.showActionBar();
 
                 Handler hideHandler = new Handler();
@@ -89,7 +98,7 @@ public class InitCasinoFragment extends Fragment {
                     }
                 },2000);
 
-                return true;
+                return false;
             }
         });
 

@@ -40,7 +40,6 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
     //private motionLetter task;
     private FirebaseCloudFirestore db;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +91,22 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
 
     @Override
     public void logInOk(User u) {
-        Intent i = new Intent(this, CasinoActivity.class);
+        Intent i = null;
+
+        if (u.isSkip())
+            i = new Intent(this, CasinoActivity.class);
+        else
+            i = new Intent(this, AppInformationActivity.class);
+
+
         Bundle b = new Bundle();
         b.putSerializable("user", u);
         i.putExtra("bundle", b);
+        i.putExtra("setBack",false);
         startActivity(i);
         finish();
+
+
 
     }
 
@@ -132,6 +141,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
         usuario.put("TelefonoVerificado",u.isTelefonoVerified()+"");
         usuario.put("Saldo",u.getSaldo());
         usuario.put("SaldoGastado",u.getSaldo_gastado());
+        usuario.put("isSkip",u.isSkip());
 
         db.collection("users").document(u.getEmail()).set(usuario);
     }

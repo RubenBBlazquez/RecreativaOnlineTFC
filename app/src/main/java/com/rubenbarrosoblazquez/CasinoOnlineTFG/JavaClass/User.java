@@ -21,6 +21,7 @@ public class User implements Serializable {
     private boolean telefonoVerified;
     private String token;
     private Bitmap profilePic;
+    private boolean skip;
 
     public User(String name, String email, String apellidos, String provider) {
         this.name = name;
@@ -39,6 +40,7 @@ public class User implements Serializable {
         this.saldo_gastado=0.0f;
         this.token="";
         this.profilePic=null;
+        this.skip=false;
     }
 
     public Bitmap getProfilePic() {
@@ -167,6 +169,14 @@ public class User implements Serializable {
 
     public void setTipoUser(int tipoUser) {
         this.tipoUser = tipoUser;
+    }
+
+    public boolean isSkip() {
+        return skip;
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
     }
 
     @Override

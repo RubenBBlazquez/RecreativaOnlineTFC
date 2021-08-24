@@ -20,9 +20,14 @@
     <string name="launchRuletteReady">Aún no está la ruleta lista para lanzar de nuevo, espera a que se resetee el timer, gracias</string>
     <string name="hintRepeatPassword">Escribe de nuevo la Contraseña</string>
     <string name="hintDniPassword">dni/nif</string>
+    <string name="informationGeneral">Información General</string>
+    <string name="informationRullete">Información Ruleta</string>
+    <string name="InformationSlotMachine">Información TragaPerras</string>
     <string name="apostar">Apostar</string>
     <string name="cerrar">Cerrar</string>
     <string name="hintName">Nombre</string>
+    <string name="skip_information">Quitar Ayuda</string>
+    <string name="volver">Volver</string>
     <string name="hasPerdido">Has perdido, te pasaste de 21, vuelve a apostar y prueba de nuevo</string>
     <string name="hintDireccion">Direccion</string>
     <string name="cardNotTouched">Debes dar la vuelta a la carta que acabas de sacar antes de sacar otra</string>
@@ -122,8 +127,10 @@
     <string name="phoneAlreadyVerified">Teléfono ya verificado</string>
     <string name="noPhone">No hay un teléfono disponible, añádelo y actualiza tus datos</string>
     <string name="VerifiedPhoneNumberCodeHint">Codigo Verificación SMS</string>
+    <string name="funcionalidadNoImplementada">Actualmente no está implementada esta funcionalidad, disculpe las molestias</string>
     <string name="dniNoValido">Foto Dni no válida, recuerda que debe ser una foto realizada en vertical, no horizontal, gracias</string>
     <string name="dniNoValidated">Antes de poder jugar debes validar tu dni, ve a la pestaña de perfil, actualiza tus datos con tu dni, y valídalo con una foto del mismo</string>
     <string name="setSlotMachineBet">Antes de poder tirar, establece una apuesta</string>
+    <string name="wantSkip">¿Quieres que no te vuelva a salir esta información?</string>
 
 </resources>

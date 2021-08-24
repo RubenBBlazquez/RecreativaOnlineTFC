@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="100dp"
+        android:longClickable="false"
         android:layout_weight="3.5"
         android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24"
         app:cardBackgroundColor="#d0b36a"
@@ -24,6 +25,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/minorContainerInitHome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
@@ -214,9 +216,9 @@
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="2"
-                            android:src="@drawable/black_jack_icon" />
+                            android:src="@drawable/ic_blackjack_icon" />
 
                         <TextView
                             android:layout_width="match_parent"

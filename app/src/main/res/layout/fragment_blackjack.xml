@@ -25,12 +25,12 @@
         android:visibility="visible"/>
 
     <ScrollView
-        android:id="@+id/containerBlackjack"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:id="@+id/containerBlackjack"
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
@@ -90,6 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="35dp"
+                    android:longClickable="false"
                     android:layout_marginStart="35dp"
                     android:layout_marginEnd="35dp"
                     android:layout_weight="0.3" />
@@ -147,6 +148,11 @@
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#d0b36a"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -181,12 +187,14 @@
                         android:text="@string/plantarse"
                         android:fontFamily="@font/bungee"
                         android:textColor="@android:color/white"
+                        android:clickable="true"
                         android:textSize="10dp"/>
 
                     <Button
                         android:id="@+id/sacarOtraCarta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
                         android:layout_weight="1"
                         android:text="@string/SacarCarta"
                         android:background="@drawable/button_shape"
@@ -206,13 +214,70 @@
         android:id="@+id/dniNoValidatedLayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/grid_background"
-        android:layout_toStartOf="@+id/containerRuleta"
+        android:background="@drawable/background_black_and_gold"
+        android:layout_toStartOf="@+id/containerBlackjack"
         tools:ignore="NotSibling"
         android:orientation="vertical"
         android:gravity="center"
         android:visibility="gone"
         >
+
+        <RelativeLayout
+            android:id="@+id/containerApostarBlackjack"
+            android:layout_width="250dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="90dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:clickable="true"
+            android:visibility="gone"
+            >
+
+            <Button
+                android:id="@+id/apostarBlackjack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_black_and_gold"
+                android:fontFamily="@font/bungee"
+                android:text="@string/apostar"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="-1dp"
+                android:layout_marginBottom="-1dp"
+                android:src="@drawable/ic_blackjack_icon"
+                android:translationZ="3dp">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="-1dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="-1dp"
+                android:src="@drawable/ic_blackjack_icon"
+                android:translationZ="3dp">
+
+            </ImageView>
+
+        </RelativeLayout>
 
         <ImageView
             android:layout_width="wrap_content"

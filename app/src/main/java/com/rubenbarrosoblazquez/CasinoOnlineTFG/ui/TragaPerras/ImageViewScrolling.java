@@ -69,23 +69,25 @@ public class ImageViewScrolling extends FrameLayout {
      }
     private void setImage(ImageView imageView, int i) {
 
-
-            if(i >= BAR[0] && i <=BAR[1]){
+            if(i >= BAR[0] && i <= BAR[1]){
                 imageView.setImageResource(R.drawable.bar_done);
-            } else if(i >= SEVEN[0] && i <=SEVEN[1]){
+                imageView.setTag(i);
+            } else if(i >= SEVEN[0] && i <= SEVEN[1]){
                 imageView.setImageResource(R.drawable.sevent_done);
-            }else if(i >= LEMON[0] && i <=LEMON[1]){
+                imageView.setTag(i);
+            }else if(i >= LEMON[0] && i <= LEMON[1]){
                 imageView.setImageResource(R.drawable.lemon_done);
-            }else if(i >= ORANGE[0] && i <=ORANGE[1]){
+                imageView.setTag(i);
+            }else if(i >= ORANGE[0] && i <= ORANGE[1]){
                 imageView.setImageResource(R.drawable.orange_done);
+                imageView.setTag(i);
             }else if(i == TRIPLE[0]){
                 imageView.setImageResource(R.drawable.triple_done);
+                imageView.setTag(i);
             } else if(i >= WATERMELON[0] && i <=WATERMELON[1]){
                 imageView.setImageResource(R.drawable.waternelon_done);
+                imageView.setTag(i);
             }
-
-            imageView.setTag(i);
-
     }
 
     public class slotMachineMovement extends AsyncTask<Integer, Integer, String> {
@@ -100,6 +102,7 @@ public class ImageViewScrolling extends FrameLayout {
                         }else{
                             isMovement=false;
                             eventEnd.eventEnd(results,integers[0],tag);
+                            break;
                         }
                         Thread.sleep(30);
                     } catch (InterruptedException e) {

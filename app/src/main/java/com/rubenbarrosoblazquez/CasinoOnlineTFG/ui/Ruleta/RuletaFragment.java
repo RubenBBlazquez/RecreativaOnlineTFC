@@ -149,7 +149,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         ImageView apuestasExtendido = root.findViewById(R.id.apuestasExtendido);
         apuestasExtendido.setOnClickListener(this);
 
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
 
         this.launchRulette.setOnClickListener(this);
 
@@ -165,9 +165,9 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             }
         });
 
-        root.findViewById(R.id.containerRuleta).setOnTouchListener(new View.OnTouchListener() {
+        root.findViewById(R.id.containerRuleta).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public boolean onLongClick(View v) {
                 userListener.showActionBar();
 
                 Handler hideHandler = new Handler();
@@ -181,6 +181,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 return true;
             }
         });
+
+        root.findViewById(R.id.bidsRulette).setOnClickListener(this);
 
         return root;
     }
@@ -384,6 +386,16 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         switch (view.getId()) {
             case R.id.cerrarDialogoApuesta:
                 dialog.dismiss();
+                break;
+            case R.id.bidsRulette:
+
+                if (!chrono.getText().toString().equalsIgnoreCase("00:00")) {
+                    this.dialogoApostar();
+                    break;
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.no_se_puede_apostar), Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.apostarRuleta:
                 this.userListener.getFirestoreInstance().updateSaldo(this.userListener.getUserInformation().getEmail(), Float.valueOf(this.saldo.getText().toString()));
@@ -633,10 +645,12 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
         public void spinWheelWithResult() {
             degreeOld = degree % 360;
-            // we calculate random angle for rotation of our wheel
+
+            //calculamos un ángulo random para la rotación de la ruleta
             Random r = new Random();
             degree = r.nextInt(360) + 720;
-            // rotation effect on the center of the wheel
+
+            // efecto de rotación sobre el centro de la ruleta
             RotateAnimation rotateAnim = new RotateAnimation(degreeOld, degree,
                     RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
@@ -646,7 +660,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             rotateAnim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    // we empty the result text view when the animation start
+                    //cerramos el diálogo de las apuestas cuando empieza la animación
                     if (dialog != null) {
                         dialog.dismiss();
                     }
@@ -703,6 +717,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             return text;
         }
 
+        //cogemos el número que ha salido y le añadimos al grid de números recientes
         private void addRecentNumberToGrid(String number) {
             if (number != null) {
                 if (number.contains(" ")) {
@@ -746,6 +761,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         }
     }
 
+    //timer para que la ruleta se lanze
     public class Timer extends CountDownTimer {
 
         public Timer(long millisInFuture, long countDownInterval) {

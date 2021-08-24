@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_info_general">
+
+    <fragment
+        android:id="@+id/navigation_info_general"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.AppInformation.NotificationsFragment"
+        android:label="@string/informationGeneral"
+        tools:layout="@layout/fragment_information_general" />
+
+    <fragment
+        android:id="@+id/navigation_info_ruleta"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.AppInformation.InformationRuletteFragment"
+        android:label="@string/informationRullete"
+        tools:layout="@layout/fragment_information_rulette" />
+
+    <fragment
+        android:id="@+id/navigation_info_slot_machine"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.AppInformation.DashboardFragment"
+        android:label="@string/InformationSlotMachine"
+        tools:layout="@layout/fragment_dashboard" />
+</navigation>

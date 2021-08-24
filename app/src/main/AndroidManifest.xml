@@ -4,16 +4,19 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar">
+        <activity android:name=".Activities.AppInformationActivity"></activity>
 
         <service
             android:name=".Services.RecieveServiceMessaging"
@@ -26,9 +29,7 @@
         <activity
             android:name=".Activities.CasinoActivity"
             android:label="@string/title_activity_casino"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.LoginRegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,11 +47,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/com_facebook_button_background_color" />
-
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr" />
-
     </application>
 
 </manifest>

@@ -163,6 +163,21 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
             }
         };
 
+        menu.findItem(R.id.nav_settings).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Intent i = new Intent(getApplicationContext(), AppInformationActivity.class);
+                Bundle b = new Bundle();
+                b.putSerializable("user", user);
+                b.putBoolean("setBack", true);
+                i.putExtra("bundle", b);
+                startActivity(i);
+
+                return true;
+            }
+        });
+
     }
 
 
@@ -225,7 +240,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     public boolean onMenuItemClick(MenuItem menuItem) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Get the layout inflater
+        //0btenemos el inflater para obtener la vista
         LayoutInflater inflater = getLayoutInflater();
 
         View v = inflater.inflate(R.layout.dialog_menu_profile, null);
