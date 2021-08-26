@@ -420,6 +420,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                             Toast.makeText(getContext(), "Dni añadido Con éxito", Toast.LENGTH_SHORT).show();
                                             u.setDniVerified(true);
                                             u.setDni(dni_foto);
+                                            dni.setText(u.getDni());
                                             mListener.getFirestoreInstance().updateUser(u);
                                             mListener.setUserInformation(u);
                                         } else {

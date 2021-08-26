@@ -193,7 +193,7 @@
         tools:ignore="NotSibling"
         android:orientation="vertical"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <ImageView

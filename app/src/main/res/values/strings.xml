@@ -132,5 +132,25 @@
     <string name="dniNoValidated">Antes de poder jugar debes validar tu dni, ve a la pestaña de perfil, actualiza tus datos con tu dni, y valídalo con una foto del mismo</string>
     <string name="setSlotMachineBet">Antes de poder tirar, establece una apuesta</string>
     <string name="wantSkip">¿Quieres que no te vuelva a salir esta información?</string>
+    <string name="infoGeneral1">¿Cómo Desplegar el menú?</string>
+    <string name="infoGeneral2">Para desplegar el menú basta con deslizar el dedo desde el lado izquierdo hacia el otro lado</string>
+    <string name="infoGeneral3">también Puedes dejar pulsado el dedo, realizando un click largo, para que también aparezca la toolbar, con la opción de desplegar el menú de hamburguesa</string>
+    <string name="infoGeneral4">¿Cómo se consigue saldo en la aplicación?</string>
+    <string name="infoGeneral5">La Aplicación funciona mediante saldo, aún no está disponible la opción de ingresar dinero, pero actualmente, puedes ver anuncios y con ellos conseguir por cada anuncio que ves , 0,50€</string>
+    <string name="infoGeneral6">¿Dónde puedo ver esos Anuncios?</string>
+    <string name="infoGeneral7">Para ver anuncios, podrás de 2 maneras, una es clickando en el icono que sale al activarse el toolbar con el click largo , y una vez clickado, saldrá un diálogo donde podrás ver un anuncio, o la otra manera sería ir a la pestaña del perfil y desde allí también tendrás una opción de ver anuncio, donde también te saldrá el saldo actual que tienes en la cuenta</string>
+    <string name="infoGeneral8">¿Qué son los servicios? </string>
+    <string name="infoGeneral9">Los servicios son ayudas, o multiplicaciones de ganancias, con las cuales tu puedes conseguir un mayor premio en la siguiente tirada de uno de los juegos, estos valen dinero el cual puedes conseguir viendo vídeos. Estos servicios, son clickables, una vez los clickas te lleva a una pantalla donde te sale la información de el para poder comprarlo, además puedes dejar un comentario en dichos servicios, para que la gente sepa si funciona, o no hace lo que debe, comentando si así quieres tu experiencia con el</string>
+    <string name="infoGeneral10">¿Como Empezar A Jugar? </string>
+    <string name="infoGeneral11">Para Empezar A Jugar lo que deberás hacer será validar tu DNI, para ello, tendrás que ir al perfil y puedes o no rellenar tus datos personales, cuando valides tu dni, si es un dni correcto, este se añadirá a tus datos personales </string>
+    <string name="infoRuleta1">¿Cómo Empezar A Jugar?</string>
+    <string name="infoRuleta2">Lo Primero es que debes tener saldo, si no tienes el saldo suficiente no podrás apostar, para apostar deberás pulsar el icono de las monedas, donde se abrirá un diálogo con unas monedas las cuales pulsas, y una vez pulsada, podrás apostar a los números que hay en el díalogo, un vez acabes de apostar a los números deberás dar al botón de apostar, si no estás seguro, le das a cancelar</string>
+    <string name="infoRuleta3">Una Vez realizada la apuesta tendrás que esperar los segundos restantes para que gire la ruleta, o puedes dar al botón superior derecho el cual lanza la ruleta directamente sin esperar los segundos que queden</string>
+    <string name="infoRuleta4">¿Cómo Puedo Ver Mi Apuesta Realizada una vez apostada?</string>
+    <string name="infoRuleta5">En la parte inferior de la ruleta tendrás un texto que pone el total de la apuesta actual que tienes realizada, y al lado de este, tienes una flecha, al pulsar en la flecha tendrás desglosado todas las apuestas realizadas, y desde ahí podrás quitar apuestas de las que no te sientas agusto, una vez empieze a girar la ruleta todo quedará bloqueado</string>
+    <string name="infoRuleta6">¿Cuánto me dan por ganar?</string>
+    <string name="infoRuleta7">Si aciertas un te dará lo que has apostado x36, ya que hay 36 números , y luego si apuestas al 1/3 , 2/3 , 3/3, si aciertas ganarás un x2 de lo que has apostado</string>
+    <string name="infoRuleta8"></string>
+    <string name="infoRuleta9"></string>
 
 </resources>

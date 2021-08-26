@@ -20,7 +20,7 @@
             android:orientation="vertical"
             android:id="@+id/containerProfile">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_weight="0"
@@ -30,59 +30,68 @@
                     android:id="@+id/imageCardProfile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    app:cardElevation="5dp"
+                    android:layout_marginStart="50dp"
+                    app:cardBackgroundColor="#F44336"
                     app:cardCornerRadius="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    app:cardBackgroundColor="#F44336">
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/imageProfile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ruleta"
                         android:scaleType="fitXY"
-                        ></ImageView>
+                        android:src="@drawable/ruleta"></ImageView>
 
                 </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/emailPerfil"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toRightOf="@+id/imageCardProfile"
                     android:fontFamily="@font/bungee"
                     android:text="rubenbarroso12@gmail.com"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp">
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    android:textStyle="italic|bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.148"
+                    app:layout_constraintStart_toEndOf="@+id/imageCardProfile"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.446">
 
                 </TextView>
 
                 <TextView
                     android:id="@+id/nombreSuperiorPerfil"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/emailPerfil"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="9dp"
+                    android:layout_marginStart="25dp"
                     android:layout_toRightOf="@+id/imageCardProfile"
                     android:fontFamily="@font/bungee"
-                    android:padding="5dp"
+                    android:gravity="top"
                     android:text="Ruben Barroso Blázquez"
-                    android:textSize="10sp">
+                    android:textColor="@android:color/white"
+                    android:textSize="8sp"
+                    android:textStyle="italic"
+                    app:layout_constraintStart_toEndOf="@+id/imageCardProfile"
+                    app:layout_constraintTop_toBottomOf="@+id/emailPerfil">
 
                 </TextView>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-65dp"
+                android:layout_marginTop="-50dp"
                 android:padding="10dp">
 
                 <com.google.android.material.card.MaterialCardView
