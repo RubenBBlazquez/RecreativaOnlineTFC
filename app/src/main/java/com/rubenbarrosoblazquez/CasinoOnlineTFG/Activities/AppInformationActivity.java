@@ -76,7 +76,7 @@ public class AppInformationActivity extends AppCompatActivity implements View.On
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_info_general, R.id.navigation_info_ruleta, R.id.navigation_info_slot_machine)
+                R.id.navigation_info_general, R.id.navigation_info_ruleta, R.id.navigation_info_slot_machine,R.id.navigation_info_backjack)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

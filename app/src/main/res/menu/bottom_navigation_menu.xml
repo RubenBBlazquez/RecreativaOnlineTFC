@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_slot_machine_white"
         android:title="@string/menu_tragaperras" />
 
+    <item
+        android:id="@+id/navigation_info_backjack"
+        android:icon="@drawable/ic_black_jack_white"
+        android:title="@string/menu_blackjack" />
+
 </menu>

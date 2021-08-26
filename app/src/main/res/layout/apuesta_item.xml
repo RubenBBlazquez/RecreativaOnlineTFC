@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="260dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="5dp"
     android:layout_margin="5dp"
     android:elevation="10dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,16 +14,16 @@
 
         <TextView
             android:id="@+id/numeroApuesta"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="1.5"
             android:gravity="center_horizontal|center_vertical"
             android:text="Numero"
             android:textSize="24sp" />
 
         <TextView
             android:id="@+id/valorApuesta"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_horizontal|center_vertical"
@@ -31,9 +32,9 @@
 
         <Button
             android:id="@+id/cancelarApuesta"
-            android:layout_width="48dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
+            android:layout_weight="1.6"
             android:background="@drawable/remove"
             android:padding="5dp" />
     </LinearLayout>

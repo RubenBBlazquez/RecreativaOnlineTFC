@@ -157,14 +157,6 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             root.findViewById(R.id.dniNoValidatedLayer).setVisibility(View.GONE);
         }
 
-        ruleta.getApuestaActual().observe(getViewLifecycleOwner(), new Observer<List<Apuesta>>() {
-            @Override
-            public void onChanged(List<Apuesta> apuestas) {
-                apuestaActual = (ArrayList<Apuesta>) apuestas;
-                cantidadApostada.setText(String.valueOf(getTotalApuesta()));
-            }
-        });
-
         root.findViewById(R.id.containerRuleta).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -290,6 +282,15 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         builder.create();
         dialogApuestasExtendidas = builder.show();
 
+        ruleta.getApuestaActual().observe(getViewLifecycleOwner(), new Observer<List<Apuesta>>() {
+            @Override
+            public void onChanged(List<Apuesta> apuestas) {
+                apuestaActual = (ArrayList<Apuesta>) apuestas;
+                cantidadApostada.setText(String.valueOf(getTotalApuesta()));
+            }
+        });
+
+
     }
 
     private void pintarNumerosApuestas(androidx.gridlayout.widget.GridLayout numerosApuestas, View v) {
@@ -386,6 +387,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         switch (view.getId()) {
             case R.id.cerrarDialogoApuesta:
                 dialog.dismiss();
+                this.apuestaActual.clear();
                 break;
             case R.id.bidsRulette:
 
@@ -528,7 +530,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     private double getMonedaActualPulsada() {
         for (int i = 0; i < monedasApuesta.length; i++) {
             if (monedasApuesta[i].pulsado) {
-                return Double.valueOf(monedasApuesta[i].getValor().split("€")[0]);
+                return Double.parseDouble(monedasApuesta[i].getValor().split("€")[0]);
             }
         }
 
@@ -574,7 +576,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             userListener.getFirestoreInstance().updateSaldo(userListener.getUserInformation().getEmail(), userListener.getUserInformation().getSaldo());
             userListener.updateBalanceTexts();
         }catch (Exception e){
-
+            Log.e("error",e.getMessage());
         }
 
 
@@ -677,9 +679,9 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                         ((TextView) v.findViewById(R.id.DineroGanadoDialogoApuesta)).setText(getString(R.string.ganarDinero) + " " + getDineroGanado(numero_sacado));
                         addRecentNumberToGrid(numero_sacado);
                         apuestaActual.clear();
+                        apuestaSumaTotales.clear();
                         dialogNumber.setView(v);
                         dialogNumeroSacado = dialogNumber.show();
-                        apuestaActual.clear();
                         cantidadApostada.setText("0");
                         chronometer.onFinish();
                         animationEnd=true;

@@ -144,7 +144,7 @@
                         android:id="@+id/apuestasExtendido"
                         android:layout_width="wrap_content"
                         android:layout_height="22dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:src="@drawable/flecha_curva" />
 
                 </LinearLayout>

@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:background="@drawable/frame_vintash2"
+                    android:background="@drawable/frame_vintash3"
                     android:layout_weight="1">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -94,8 +94,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp" />
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="40dp" />
 
                 </LinearLayout>
 

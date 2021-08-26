@@ -23,10 +23,11 @@
     <string name="informationGeneral">Información General</string>
     <string name="informationRullete">Información Ruleta</string>
     <string name="InformationSlotMachine">Información TragaPerras</string>
+    <string name="InformationBlackjack">Información BlackJack</string>
     <string name="apostar">Apostar</string>
     <string name="cerrar">Cerrar</string>
     <string name="hintName">Nombre</string>
-    <string name="skip_information">Quitar Ayuda</string>
+    <string name="skip_information">Pasar Ayuda</string>
     <string name="volver">Volver</string>
     <string name="hasPerdido">Has perdido, te pasaste de 21, vuelve a apostar y prueba de nuevo</string>
     <string name="hintDireccion">Direccion</string>
@@ -150,7 +151,17 @@
     <string name="infoRuleta5">En la parte inferior de la ruleta tendrás un texto que pone el total de la apuesta actual que tienes realizada, y al lado de este, tienes una flecha, al pulsar en la flecha tendrás desglosado todas las apuestas realizadas, y desde ahí podrás quitar apuestas de las que no te sientas agusto, una vez empieze a girar la ruleta todo quedará bloqueado</string>
     <string name="infoRuleta6">¿Cuánto me dan por ganar?</string>
     <string name="infoRuleta7">Si aciertas un te dará lo que has apostado x36, ya que hay 36 números , y luego si apuestas al 1/3 , 2/3 , 3/3, si aciertas ganarás un x2 de lo que has apostado</string>
-    <string name="infoRuleta8"></string>
-    <string name="infoRuleta9"></string>
+    <string name="infoTragaperras1">¿Cómo Empezar A Jugar?</string>
+    <string name="infoTragaperras2">Lo Primero es que debes tener saldo, si no tienes saldo suficiente no podrás apostar, para apostar deberas seleccionar el saldo que quieres gastar en el recuadro de texto con el nombre de `Saldo a usar` </string>
+    <string name="infoTragaperras3">Una vez seleccionado el saldo a usar, debajo de este recuadro tendrás un seleccionable con los multiplicadore que puedes poner a la tirada, por defecto sólo estará activo el x1, los demás debes comprarlos en la tienda, </string>
+    <string name="infoTragaperras4">Y una hecho todo lo anterior, pulsamos tirar y empezará a girar la tragaperras </string>
+    <string name="infoBlackjack1">¿Cómo Empezar A Jugar?</string>
+    <string name="infoBlackjack2">Lo Primero es que debes tener saldo, si no tienes saldo suficiente no podrás apostar, para apostar lo que tendrás que hacer será pulsar el botón de apostar, una vez pulsado, te saldrá un diálogo donde deberás rellenar tu apuesta y una vez apostado comenzará el juego</string>
+    <string name="infoBlackjack3">¿Cómo Se Juega?</string>
+    <string name="infoBlackjack4">El juego consiste en acercarse a 21 , sin pasarse, pudiendo plantarte en el número que tu creas conveniente, siempre sin pasarte de 21, asique para jugar en la parte inferior tendrás 2 botones, uno para sacar cartas, y otro para plantarte, el botón sacará cartas aleatorias de una baraja de poker sin repetirse, cuando sale una carta, esta se saca de la baraja, y una vez creas que ya estás lo suficiente cerca de 21 o en 21, pulsas el botón de me planto</string>
+    <string name="infoBlackjack5">Una vez te plantes, comenzará el dealer a sacar su jugada, el dealer, sacará de la misma baraja que la tuya sus cartas, y se plantará cuando vea que o te ha empatado, o te ha ganado, o que se haya pasado lo que da lugar a que tu ganas</string>
+    <string name="infoBlackjack6">Cuando el dealer acabe su jugada por la razón que sea, saldrá un diálogo en el cual saldrán las cartas de la jugada del dealer, las cartas de tu jugada, y el resultado final del juego</string>
+    <string name="infoBlackjack7"></string>
+    <string name="infoBlackjack8"></string>
 
 </resources>

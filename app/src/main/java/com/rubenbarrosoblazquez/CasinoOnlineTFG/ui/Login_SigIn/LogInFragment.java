@@ -67,11 +67,9 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
     public static boolean registrado;
     private static final int GOOGLE_SIGN_IN = 100;
 
-
     public LogInFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

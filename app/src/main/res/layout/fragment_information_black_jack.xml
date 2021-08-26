@@ -9,13 +9,13 @@
 
 
     <TextView
-        android:id="@+id/text_information_rullete"
+        android:id="@+id/text_information_slot_machine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="2dp"
-        android:text="@string/informationRullete"
+        android:text="@string/InformationBlackjack"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:fontFamily="@font/bungee"
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"
-                android:text="@string/infoRuleta1"
+                android:text="@string/infoBlackjack1"
                 android:textColor="@android:color/black"
                 android:fontFamily="@font/bungee"
                 android:textSize="13sp"
@@ -51,11 +51,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="2dp"
-                android:text="@string/infoRuleta2"
-                android:textColor="@android:color/black"
                 android:fontFamily="@font/parmapetitoutline"
+                android:text="@string/infoBlackjack2"
+                android:textColor="@android:color/black"
                 android:textSize="15sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,78 +69,16 @@
                     android:scaleType="fitXY"
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/info_ruleta1" />
+                    android:src="@drawable/info_blackjack1" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:scaleType="fitXY"
-                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:src="@drawable/info_ruleta2" />
-
-
-            </LinearLayout>
-
-         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp">
-
-             <ImageView
-                 android:layout_width="match_parent"
-                 android:layout_height="250dp"
-                 android:layout_marginRight="10dp"
-                 android:layout_weight="1"
-                 android:scaleType="fitXY"
-                 android:src="@drawable/info_ruleta3" />
-
-             <ImageView
-                 android:layout_width="match_parent"
-                 android:layout_height="250dp"
-                 android:layout_marginLeft="10dp"
-                 android:layout_weight="1"
-                 android:scaleType="fitXY"
-               />
-
-
-         </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/infoRuleta3"
-                android:textColor="@android:color/black"
-                android:fontFamily="@font/parmapetitoutline"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/info_ruleta6" />
+                    android:src="@drawable/info_blackjack2" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:scaleType="fitXY"
-                    />
 
 
             </LinearLayout>
@@ -148,25 +86,24 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="3dp"
                 android:layout_marginEnd="2dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/infoRuleta4"
+                android:layout_marginTop="15dp"
+                android:text="@string/infoBlackjack3"
                 android:textColor="@android:color/black"
-                android:fontFamily="@font/bungee"
-                android:textSize="13sp"
-                android:textStyle="italic"/>
-
+                android:fontFamily="@font/parmapetitoutline"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="2dp"
-                android:text="@string/infoRuleta5"
-                android:textColor="@android:color/black"
                 android:fontFamily="@font/parmapetitoutline"
+                android:text="@string/infoBlackjack4"
+                android:textColor="@android:color/black"
                 android:textSize="15sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -180,42 +117,78 @@
                     android:scaleType="fitXY"
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/info_ruleta4" />
+                    android:src="@drawable/info_blackjack3" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:scaleType="fitXY"
-                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:src="@drawable/info_ruleta5" />
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/info_blackjack4" />
+
 
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/infoRuleta6"
-                android:textColor="@android:color/black"
-                android:fontFamily="@font/bungee"
-                android:textSize="13sp"
-                android:textStyle="italic"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="2dp"
-                android:text="@string/infoRuleta7"
+                android:layout_marginTop="15dp"
+                android:text="@string/infoBlackjack5"
                 android:textColor="@android:color/black"
                 android:fontFamily="@font/parmapetitoutline"
                 android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="50dp"/>
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="250dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/info_blackjack5" />
+
+
+            </LinearLayout>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/infoBlackjack6"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/parmapetitoutline"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="50dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="250dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/info_blackjack6" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

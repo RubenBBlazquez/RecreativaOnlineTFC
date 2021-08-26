@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_info_general"
-        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.AppInformation.NotificationsFragment"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.AppInformation.InformationGeneral"
         android:label="@string/informationGeneral"
         tools:layout="@layout/fragment_information_general" />
 
@@ -19,7 +19,12 @@
 
     <fragment
         android:id="@+id/navigation_info_slot_machine"
-        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.AppInformation.DashboardFragment"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.AppInformation.InfoTragaperrasFragment"
         android:label="@string/InformationSlotMachine"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_info_tragaperras" />
+    <fragment
+        android:id="@+id/navigation_info_backjack"
+        android:name="com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.AppInformation.InformationBlackJackFragment"
+        android:label="@string/InformationBlackjack"
+        tools:layout="@layout/fragment_information_black_jack" />
 </navigation>
