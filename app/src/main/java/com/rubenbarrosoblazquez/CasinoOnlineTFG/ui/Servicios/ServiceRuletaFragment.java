@@ -8,10 +8,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -77,8 +79,9 @@ public class ServiceRuletaFragment extends Fragment {
         final View view = v;
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(v.getContext(),2);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext(),LinearLayoutManager.VERTICAL,false);
         RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.recyclerServiciosRuleta);
-        recyclerViewProductsShoppingCart.setLayoutManager(gridLayoutManager);
+        recyclerViewProductsShoppingCart.setLayoutManager(linearLayoutManager);
         adapter = new MyProductsRecyclerViewAdapter(products,mListener);
         recyclerViewProductsShoppingCart.setAdapter(adapter);
 

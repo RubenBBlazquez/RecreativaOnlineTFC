@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#DE000000"
     >
 
     <ScrollView
@@ -43,7 +42,6 @@
                     android:layout_height="200dp"
                     android:layout_marginLeft="52dp"
                     android:layout_marginRight="52dp"
-                    android:background="@color/colorSecondary"
                     android:elevation="20dp"
                     android:layout_marginTop="50dp"
                     app:cardCornerRadius="10dp">
@@ -52,7 +50,7 @@
                         android:id="@+id/ProductImageInfo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#d0b36a"
+                        android:background="@drawable/marmol_gris"
                         android:src="@android:mipmap/sym_def_app_icon"
                         android:scaleType="fitXY"/>
                 </androidx.cardview.widget.CardView>
@@ -243,6 +241,12 @@
                 android:fontFamily="@font/bungee"
                 android:textStyle="bold|italic"
                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/white">
+            </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -12,64 +12,100 @@
         <LinearLayout
             android:id="@+id/containerTragaperras"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:layout_gravity="center"
-                android:background="@drawable/frame_vintash"
-                android:layout_weight="2">
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="350dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/parte_superior_frame"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY">
 
+                </ImageView>
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/lateral_izq_frame"
+                        android:scaleType="fitEnd">
 
-                    <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
-                        android:id="@+id/scrolling1"
+                    </ImageView>
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        >
 
-                    </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
+                        <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
+                            android:id="@+id/scrolling1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
 
-                    <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
-                        android:id="@+id/scrolling2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
 
-                    </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
+                        <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
+                            android:id="@+id/scrolling2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
 
-                    <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
-                        android:id="@+id/scrolling3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
 
-                    </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
+                        <com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling
+                            android:id="@+id/scrolling3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+
+                        </com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.ImageViewScrolling>
 
 
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/lateral_drch_frame"
+                        android:scaleType="fitEnd">
+
+                    </ImageView>
                 </LinearLayout>
 
-            </FrameLayout>
+                <ImageView
+                    android:layout_width="350dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/parte_inferio_frame"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY">
 
+                </ImageView>
+            </LinearLayout>
 
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
+                android:layout_height="wrap_content"
                 android:longClickable="false"
-                android:layout_weight="14">
+               >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:background="@drawable/frame_vintash3"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="25dp"
                     android:orientation="vertical"
@@ -81,7 +117,6 @@
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
                         android:layout_marginTop="40dp"
-                        android:layout_marginBottom="40dp"
                         android:orientation="vertical">
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -154,7 +189,7 @@
         tools:ignore="NotSibling"
         android:orientation="vertical"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         >
 
         <ImageView

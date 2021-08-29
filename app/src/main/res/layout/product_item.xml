@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="130dp"
+    android:layout_height="120dp"
     android:elevation="100dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="5dp"
     app:cardCornerRadius="10dp"
     android:scrollbarThumbHorizontal="@drawable/ic_baseline_shopping_cart_24"
     >
