@@ -106,8 +106,6 @@ public class BasketFragment extends Fragment {
         filterAdapter filteradapter = new filterAdapter(getContext(),R.layout.layout_pais,list);
         filter.setAdapter(filteradapter);
 
-        mListener.getFirestoreInstance().getAllBuysByUser(mListener.getUserInformation(),compras,adapter);
-
         v.findViewById(R.id.containerBasket).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -152,6 +150,7 @@ public class BasketFragment extends Fragment {
     }
 
     public void orderBuysBY(String order){
+        compras.clear();
         if(order.equalsIgnoreCase(getString(R.string.orderByPriceAsc))){
             mListener.getFirestoreInstance().getAllBuysOrderByPrice(mListener.getUserInformation(),compras,adapter, Query.Direction.ASCENDING,"price");
         }else if(order.equalsIgnoreCase(getString(R.string.orderByPriceDesc))){

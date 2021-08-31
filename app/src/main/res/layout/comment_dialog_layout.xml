@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="#1d1d1d">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F44336"
+        android:background="#d0b36a"
         android:fontFamily="@font/bungee"
         android:padding="10dp"
         android:text="@string/añadirComentarioBoton"
@@ -17,53 +19,78 @@
         android:textSize="18sp" />
 
 
-
-    <com.google.android.material.textfield.TextInputLayout
+   <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/hintEmail">
+        android:hint="@string/hintEmail"
+        android:outlineAmbientShadowColor="@android:color/white"
+        android:outlineSpotShadowColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        app:boxStrokeColor="@android:color/white"
+        app:boxStrokeErrorColor="@android:color/white"
+        app:counterOverflowTextColor="@android:color/white"
+        app:counterTextColor="@android:color/black"
+        app:helperTextTextColor="@android:color/white"
+        app:hintTextColor="@android:color/white"
+        app:placeholderTextColor="@android:color/white"
+        app:prefixTextColor="@android:color/white"
+        app:suffixTextColor="@android:color/white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialogEmailUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-
-            >
+            android:textColor="@android:color/white">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
-<com.google.android.material.textfield.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/hintContenidoComentarioDialogo">
+        android:hint="@string/hintContenidoComentarioDialogo"
+        android:outlineAmbientShadowColor="@android:color/white"
+        android:outlineSpotShadowColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        app:boxStrokeColor="@android:color/white"
+        app:boxStrokeErrorColor="@android:color/white"
+        app:counterOverflowTextColor="@android:color/white"
+        app:counterTextColor="@android:color/black"
+        app:helperTextTextColor="@android:color/white"
+        app:hintTextColor="@android:color/white"
+        app:placeholderTextColor="@android:color/white"
+        app:prefixTextColor="@android:color/white"
+        app:suffixTextColor="@android:color/white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/contenidoComentarioDialogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-
-            >
+            android:textColor="@android:color/white">
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
-    
+
     <Button
+        android:id="@+id/addComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/BotonComentarioDialogo"
         android:layout_margin="20dp"
-        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="#d0b36a"
+        android:fontFamily="@font/bungee"
         android:textColor="@android:color/white">
 
     </Button>

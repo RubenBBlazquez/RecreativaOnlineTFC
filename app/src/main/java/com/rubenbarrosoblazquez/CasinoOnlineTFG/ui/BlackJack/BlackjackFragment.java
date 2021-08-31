@@ -325,15 +325,18 @@ public class BlackjackFragment extends Fragment {
                             int [] cardsArrayToPick = adapter.getRandomCardTypeArray();
 
                             while(adapter.isCardAlreadyUsed(cardsArrayToPick[randomCards])){
+                                Log.d("cositas",Arrays.toString(ExtractedCards.toArray()));
                                 randomCards = new Random().nextInt(13);
                                 cardsArrayToPick = adapter.getRandomCardTypeArray();
                             }
-                            cardsDealer.set(cardsDealer.size() - 1, adapter.picas[randomCards]);
+                            cardsDealer.set(cardsDealer.size() - 1, cardsArrayToPick[randomCards]);
+                            ExtractedCards.add(cardsArrayToPick[randomCards]);
                             notifyAdapter();
                             totalPoints = dealerPoints + (randomCards + 1);
                             pointsDealer.setText(""+totalPoints);
+
                             try {
-                                Thread.sleep(2000);
+                                Thread.sleep(1500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }

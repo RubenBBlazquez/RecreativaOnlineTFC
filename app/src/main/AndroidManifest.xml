@@ -11,12 +11,20 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/init_logo_app_round"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar">
-        <activity android:name=".Activities.AppInformationActivity"></activity>
+        <activity android:name=".Activities.SplashScreen" android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Activities.AppInformationActivity" />
 
         <service
             android:name=".Services.RecieveServiceMessaging"
@@ -31,11 +39,7 @@
             android:label="@string/title_activity_casino"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.LoginRegisterActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

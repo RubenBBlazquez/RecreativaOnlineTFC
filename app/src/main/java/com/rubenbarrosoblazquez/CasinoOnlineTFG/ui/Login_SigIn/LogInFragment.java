@@ -43,12 +43,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.LoginRegisterActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnRegisterLogInUserListener;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Compras;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.Executor;
 
@@ -195,7 +199,6 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
     private void loginWays(String email) {
 
         db.collection("users").document(email).get().addOnSuccessListener(this);
-
     }
 
 
@@ -207,6 +210,7 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
                 User u;
 
                 u = new User(String.valueOf(d.get("Name")), String.valueOf(d.get("Email")), String.valueOf(d.get("Last name's")), String.valueOf(d.get("Provider")));
+
                 u.setVerified(String.valueOf(this.mAuth.getCurrentUser().isEmailVerified()));
                 u.setDirection((String) d.get("Direction"));
                 u.setPhone((String) d.get("Phone"));
@@ -217,14 +221,17 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
                 u.setTelefonoVerified(Boolean.valueOf(d.getString("TelefonoVerificado")));
                 u.setDniVerified(Boolean.valueOf(d.getString("DniVerificado")));
                 u.setSkip(d.getBoolean("isSkip"));
+                u.setToken(d.getString("token"));
 
                 Toast.makeText(this.getContext(), ""+u.isSkip(), Toast.LENGTH_SHORT).show();
 
                 addDataToSharedPreferences(u);
                 db.collection("users").document(u.getEmail()).update("Verified", "true");
-                mListener.logInOk(u);
+
+                hasSomeServiceActive(u);
 
             } else {
+
                 Toast.makeText(getContext(), getString(R.string.email_send), Toast.LENGTH_SHORT).show();
                 Thread checkVerification = new Thread(this);
                 checkVerification.start();
@@ -237,6 +244,30 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
             preferences.clear();
             preferences.apply();
         }
+    }
+
+    public void hasSomeServiceActive(User u){
+        db.collection("compras")
+                .whereEqualTo("isUsed",false)
+                .whereEqualTo("type","ruleta")
+                .whereEqualTo("email",u.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+
+                            for (DocumentSnapshot document:
+                                    task.getResult()) {
+                                Log.d("cositas",document.getString("name"));
+                                Compras c = new Compras(document.getDate("date").toString(), document.getString("name"),String.valueOf(document.getDouble("price")),String.valueOf(document.getDouble("unidades")),document.getString("type"));
+                                c.setId(document.getString("identificadorCompra"));
+                                u.getActiveServicesRuleta().add(c);
+                            }
+                        }
+                        mListener.logInOk(u);
+                    }
+                });
     }
 
     private void loginWithGoogle() {

@@ -81,7 +81,7 @@ public class ServiceRuletaFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(v.getContext(),2);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext(),LinearLayoutManager.VERTICAL,false);
         RecyclerView recyclerViewProductsShoppingCart = (RecyclerView) v.findViewById(R.id.recyclerServiciosRuleta);
-        recyclerViewProductsShoppingCart.setLayoutManager(linearLayoutManager);
+        recyclerViewProductsShoppingCart.setLayoutManager(gridLayoutManager);
         adapter = new MyProductsRecyclerViewAdapter(products,mListener);
         recyclerViewProductsShoppingCart.setAdapter(adapter);
 

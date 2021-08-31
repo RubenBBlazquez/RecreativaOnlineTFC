@@ -32,6 +32,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Login_SigIn.LogInFragment;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Login_SigIn.SignInFragment;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class LoginRegisterActivity extends AppCompatActivity implements OnRegisterLogInUserListener {
@@ -99,6 +100,8 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
             i = new Intent(this, AppInformationActivity.class);
 
 
+        Log.d("cositas", Arrays.toString(u.getActiveServicesRuleta().toArray()));
+
         Bundle b = new Bundle();
         b.putSerializable("user", u);
         i.putExtra("bundle", b);
@@ -109,6 +112,7 @@ public class LoginRegisterActivity extends AppCompatActivity implements OnRegist
 
 
     }
+
 
     @Override
     public void sendEmailVerification(FirebaseUser user) {

@@ -3,6 +3,7 @@ package com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     private String name;
@@ -22,6 +23,9 @@ public class User implements Serializable {
     private String token;
     private Bitmap profilePic;
     private boolean skip;
+    private boolean hasServiceActive;
+    private ArrayList<Compras> activeServicesRuleta;
+
 
     public User(String name, String email, String apellidos, String provider) {
         this.name = name;
@@ -41,6 +45,16 @@ public class User implements Serializable {
         this.token="";
         this.profilePic=null;
         this.skip=false;
+        this.hasServiceActive=false;
+        this.activeServicesRuleta = new ArrayList<>();
+    }
+
+    public boolean isHasServiceActive() {
+        return hasServiceActive;
+    }
+
+    public void setHasServiceActive(boolean hasServiceActive) {
+        this.hasServiceActive = hasServiceActive;
     }
 
     public Bitmap getProfilePic() {
@@ -192,4 +206,13 @@ public class User implements Serializable {
                 ", provider='" + provider + '\'' +
                 '}';
     }
+
+    public ArrayList<Compras> getActiveServicesRuleta() {
+        return activeServicesRuleta;
+    }
+
+    public void getActiveServicesRuleta(ArrayList<Compras> activeServices) {
+        this.activeServicesRuleta = activeServices;
+    }
+
 }

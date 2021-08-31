@@ -40,6 +40,7 @@ public class SendNotificationToUsers extends Fragment implements TextWatcher {
     private MyUsersAdminRecyclerViewAdapter adapter;
     private ArrayList<User> usuarios;
     private  FirebaseCloudFirestore bd;
+    public ArrayList<User> usersChecked;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,9 @@ public class SendNotificationToUsers extends Fragment implements TextWatcher {
         View v = inflater.inflate(R.layout.fragment_send_notification_to_users, container, false);
 
         Button b = v.findViewById(R.id.enviarNotificacion);
+
         usuarios=new ArrayList<>();
+        usersChecked = new ArrayList<>();
 
         tituloNoti = v.findViewById(R.id.tituloNotificacion);
         contenidoNoti = v.findViewById(R.id.contenidoNotificacion);
@@ -64,7 +67,7 @@ public class SendNotificationToUsers extends Fragment implements TextWatcher {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recyclerUsuarios.setLayoutManager(linearLayoutManager);
-        adapter=new MyUsersAdminRecyclerViewAdapter(usuarios);
+        adapter=new MyUsersAdminRecyclerViewAdapter(this,usuarios);
         recyclerUsuarios.setAdapter(adapter);
 
         bd = new FirebaseCloudFirestore(getContext());
@@ -74,8 +77,7 @@ public class SendNotificationToUsers extends Fragment implements TextWatcher {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), buildNotificationPayload().toString(),
-                        Toast.LENGTH_LONG).show();
+
                 FirebaseMessagingModel.getApiService().sendNotification(buildNotificationPayload()).enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -87,7 +89,7 @@ public class SendNotificationToUsers extends Fragment implements TextWatcher {
 
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
-                        Toast.makeText(getContext(), "Noasdsadadsasdl",
+                        Toast.makeText(getContext(), "Error al Enviar las notificaciones",
                                 Toast.LENGTH_LONG).show();
                     }
                 });
@@ -98,11 +100,39 @@ public class SendNotificationToUsers extends Fragment implements TextWatcher {
 
     public ArrayList<String> getTokensUsuariosSeleccionados(){
         ArrayList<String> tokens=new ArrayList<>();
-        for (User u: this.usuarios) {
-            tokens.add(u.getToken());
+
+        if (usersChecked.size() > 0){
+
+            for (User u: this.usersChecked) {
+                tokens.add(u.getToken());
+            }
+
+        }else{
+
+            for (User u: this.usuarios) {
+                tokens.add(u.getToken());
+            }
+
         }
-        Toast.makeText(getContext(), ""+tokens.size(), Toast.LENGTH_SHORT).show();
+
         return tokens;
+    }
+
+    public void deleteUserUnSelected(String email){
+        int position = -1;
+
+        for (int i =0 ; i<this.usersChecked.size();i++) {
+
+            User u = this.usersChecked.get(i);
+            if (u.getEmail().equalsIgnoreCase(email)) {
+                position = i;
+                break;
+            }
+
+        }
+
+        if (position != -1)
+            this.usersChecked.remove(position);
     }
 
     private JsonObject buildNotificationPayload() {
@@ -113,8 +143,8 @@ public class SendNotificationToUsers extends Fragment implements TextWatcher {
         payload.add("registration_ids", new Gson().toJsonTree(getTokensUsuariosSeleccionados()));
 
         JsonObject data = new JsonObject();
-        data.addProperty("title", tituloNoti.getText().toString());
-        data.addProperty("body", contenidoNoti.getText().toString());
+        data.addProperty("body", tituloNoti.getText().toString());
+        data.addProperty("title", contenidoNoti.getText().toString());
         // add data payload
         payload.add("notification", data);
 

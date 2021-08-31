@@ -51,7 +51,9 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+
         View root = inflater.inflate(R.layout.fragment_traga_perras, container, false);
+        u = mListener.getUserInformation();
         builder = new AlertDialog.Builder(getActivity());
         x=1;
 
@@ -60,12 +62,9 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
         Spinner spinner = root.findViewById(R.id.multiSpinner);
         ArrayList<String> multiplier = new ArrayList<>();
         multiplier.add("x1");
-        multiplier.add("x2");
-        multiplier.add("x3");
-        multiplier.add("x6");
-        multiplier.add("x10");
-
         multiplicatorAdapter adapter = new multiplicatorAdapter(getContext(),R.layout.layout_pais,multiplier);
+
+        mListener.getFirestoreInstance().setMultipliersInSlotMachineGame(adapter,multiplier,u.getEmail());
 
 
         spinner.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -85,8 +84,6 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
         this.imageViewScrollings= new ImageViewScrolling[]{image,image2,image3};
 
         saldoApostado = (EditText) root.findViewById(R.id.saldoSlotMachine);
-
-        u = mListener.getUserInformation();
 
         Button b = root.findViewById(R.id.throwRandom);
 
@@ -362,7 +359,6 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View v =  convertView;
-
             if(v == null){
                 v = getLayoutInflater().inflate(R.layout.layout_pais, parent, false);
             }
@@ -370,6 +366,7 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
             TextView multiplicator = v.findViewById(R.id.multiplier);
             multiplicator.setText(multiplicators.get(position));
             x= Integer.parseInt(multiplicators.get(position).replace("x",""));
+
 
             return v;
         }

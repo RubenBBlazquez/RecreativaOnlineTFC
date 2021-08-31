@@ -21,9 +21,11 @@ import java.util.Map;
 public class MyBidsRecyclerViewAdapter extends RecyclerView.Adapter<MyBidsRecyclerViewAdapter.ViewHolder>{
 
     private final List<Apuesta> mValues;
+    private final RuletaFragment mView;
 
-    public MyBidsRecyclerViewAdapter(List<Apuesta> items) {
+    public MyBidsRecyclerViewAdapter(RuletaFragment mView,List<Apuesta> items) {
         mValues = items;
+        this.mView=mView;
     }
 
     @Override
@@ -40,6 +42,7 @@ public class MyBidsRecyclerViewAdapter extends RecyclerView.Adapter<MyBidsRecycl
         holder.name.setText(holder.mItem.getNumero()+"");
         holder.name.setTextColor(Color.WHITE);
         holder.valorApuesta.setText(holder.mItem.getCantidadApostada()+"");
+
         if (Color.RED==holder.mItem.getColor()) {
             holder.name.setBackgroundColor(Color.RED);
         }else if(Color.BLACK==holder.mItem.getColor()){
@@ -51,7 +54,7 @@ public class MyBidsRecyclerViewAdapter extends RecyclerView.Adapter<MyBidsRecycl
         holder.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mValues.remove(position);
+                mView.deleteBid(position);
                 notifyDataSetChanged();
             }
         });

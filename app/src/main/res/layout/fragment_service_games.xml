@@ -19,7 +19,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#DE000000"
+                    android:background="@drawable/frame_services_background_small"
                     android:fontFamily="@font/bungee"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
@@ -43,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#DE000000"
+                    android:background="@drawable/frame_services_background_small"
                     >
 
 
@@ -85,17 +85,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:background="@drawable/frame_prueba"
+                    android:background="@drawable/frame_services"
                     android:layout_weight="1">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerServiciosRuleta"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="90dp"
-                        android:layout_marginRight="90dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginBottom="20dp" />
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginTop="60dp"
+                        android:layout_marginBottom="50dp" />
 
                 </LinearLayout>
 
@@ -106,12 +106,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="8">
+                android:layout_weight="12">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#DE000000"
+                    android:background="@drawable/frame_services_background_small"
                     android:fontFamily="@font/bungee" />
             </LinearLayout>
 

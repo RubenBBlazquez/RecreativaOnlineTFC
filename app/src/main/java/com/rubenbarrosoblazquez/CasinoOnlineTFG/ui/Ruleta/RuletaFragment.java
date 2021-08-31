@@ -11,9 +11,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
+import java.util.Arrays;
 import java.util.DoubleSummaryStatistics;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -35,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -49,12 +53,14 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Apuesta;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Compras;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Monedas;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -76,11 +82,11 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     };
     private static final String[] sectorsBids = {"1 red", "2 black",
             "3 red", "4 black", "5 red", "6 black", "7 red", "8 black", "9 red"
-            , "10 black", "11 red", "12 black", "13 red", "14 black", "15 red", "16 black",
-            "17 red", "18 black", "19 red", "20 black", "21 red", "22 black",
+            , "10 black", "11 black", "12 red", "13 black", "14 red", "15 black", "16 red",
+            "17 black", "18 red", "19 red", "20 black", "21 red", "22 black",
             "23 red", "24 black", "25 red", "26 black", "27 red", "28 black",
-            "29 red", "30 black", "31 red", "32 black", "33 red", "34 black",
-            "35 red", "36 black", "1/3", "2/3", "3/3"
+            "29 black", "30 red", "31 black", "32 red", "33 black", "34 red",
+            "35 black", "36 red", "1/3", "2/3", "3/3"
     };
 
     private static final int[][] tercios = {{1,4,7,10,13,16,19,22,25,28,31,34},{2,5,8,11,14,17,20,23,26,29,32,35},{3,6,9,12,15,18,21,24,27,30,33,36}};
@@ -88,6 +94,9 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     private static final Monedas[] monedasApuesta = {
             new Monedas("0.20€", false), new Monedas("0.50€", false), new Monedas("1€", false), new Monedas("2€", false), new Monedas("5€", false)
     };
+
+    public static final String SERVICIO_SALVA_APUESTA = "Escudo Salva Apuesta";
+    public static final String SERVICIO_X2 = "x2";
 
     private ImageView wheel;
     private ImageView arrow;
@@ -103,10 +112,11 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
     private androidx.gridlayout.widget.GridLayout numerosApuestas;
     private OnGetUserActions userListener;
     private ArrayList<Apuesta> apuestaActual;
+    private ArrayList<Apuesta> apuestaItermedia;
     private ArrayList<Apuesta> apuestaSumaTotales;
     private TextView saldo;
     private TextView cantidadApostada;
-
+    private List<Integer> recentNumbersGrid;
     private boolean launchReady=true;
     private boolean isTheFragmentStart = true;
 
@@ -128,9 +138,11 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
 
+
         this.apuestaSumaTotales = new ArrayList<>();
 
         this.motionWheel = new WheelMotionAsync();
+        this.recentNumbersGrid = new ArrayList<>();
 
         this.wheel = root.findViewById(R.id.Wheel);
 
@@ -143,6 +155,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         this.numero_sacado = "";
 
         this.apuestaActual = new ArrayList<>();
+        this.apuestaItermedia = new ArrayList<>();
 
         this.cantidadApostada = root.findViewById(R.id.apuestaactualRuleta);
 
@@ -173,6 +186,15 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 return true;
             }
         });
+
+        ruleta.getApuestaActual().observe(getViewLifecycleOwner(), new Observer<List<Apuesta>>() {
+            @Override
+            public void onChanged(List<Apuesta> apuestas) {
+                apuestaActual = (ArrayList<Apuesta>) apuestas;
+                cantidadApostada.setText(String.valueOf(getTotalApuesta()));
+            }
+        });
+
 
         root.findViewById(R.id.bidsRulette).setOnClickListener(this);
 
@@ -247,6 +269,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void dialogoApuestasExtendida() {
+        apuestaSumaTotales.clear();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View v = getLayoutInflater().inflate(R.layout.dialog_apuestas_extendido, null);
 
@@ -263,7 +287,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
         ruleta.setApuestas(apuestaSumaTotales);
 
-        adapterApuestas = new MyBidsRecyclerViewAdapter(apuestaSumaTotales);
+        adapterApuestas = new MyBidsRecyclerViewAdapter(this,apuestaSumaTotales);
         recyclerView.setAdapter(adapterApuestas);
 
 
@@ -273,6 +297,7 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             public void onClick(View view) {
                 cantidadApostada.setText(getTotalApuesta() + "");
                 dialogApuestasExtendidas.dismiss();
+                apuestaItermedia.clear();
             }
         });
 
@@ -281,15 +306,6 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         builder.setView(v);
         builder.create();
         dialogApuestasExtendidas = builder.show();
-
-        ruleta.getApuestaActual().observe(getViewLifecycleOwner(), new Observer<List<Apuesta>>() {
-            @Override
-            public void onChanged(List<Apuesta> apuestas) {
-                apuestaActual = (ArrayList<Apuesta>) apuestas;
-                cantidadApostada.setText(String.valueOf(getTotalApuesta()));
-            }
-        });
-
 
     }
 
@@ -381,13 +397,21 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         return true;
     }
 
+    public void addApuestaIntermediaToActual(){
+        for (Apuesta apuesta: this.apuestaItermedia
+             ) {
+            apuestaActual.add(apuesta);
+        }
+
+        apuestaItermedia.clear();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cerrarDialogoApuesta:
                 dialog.dismiss();
-                this.apuestaActual.clear();
                 break;
             case R.id.bidsRulette:
 
@@ -400,6 +424,9 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
                 break;
             case R.id.apostarRuleta:
+
+                this.addApuestaIntermediaToActual();
+
                 this.userListener.getFirestoreInstance().updateSaldo(this.userListener.getUserInformation().getEmail(), Float.valueOf(this.saldo.getText().toString()));
                 this.userListener.getUserInformation().setSaldo(Float.valueOf(this.saldo.getText().toString()));
 
@@ -411,6 +438,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 this.userListener.updateBalanceTexts();
 
                 dialog.dismiss();
+
+                this.ruleta.setApuestaActual(apuestaActual);
                 break;
             case R.id.apuestasExtendido:
                 this.dialogoApuestasExtendida();
@@ -470,17 +499,17 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                                             b.getBackground().getConstantState() == (ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_black_pulsado, null).getConstantState())) {
 
                                         this.numerosApuestas.getChildAt(i).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_black_pulsado, null));
-                                        this.apuestaActual.add(new Apuesta(b.getText().toString(), getMonedaActualPulsada(), Color.BLACK));
+                                        this.apuestaItermedia.add(new Apuesta(b.getText().toString(), getMonedaActualPulsada(), Color.BLACK));
                                         this.saldo.setText(Double.valueOf(this.saldo.getText().toString()) - getMonedaActualPulsada() + "");
 
                                     } else if (b.getBackground().getConstantState() == (ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red, null).getConstantState()) || b.getBackground().getConstantState() == (ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red_pulsado, null).getConstantState())) {
 
                                         this.numerosApuestas.getChildAt(i).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_red_pulsado, null));
-                                        this.apuestaActual.add(new Apuesta(b.getText().toString(), getMonedaActualPulsada(), Color.RED));
+                                        this.apuestaItermedia.add(new Apuesta(b.getText().toString(), getMonedaActualPulsada(), Color.RED));
                                         this.saldo.setText(Double.valueOf(this.saldo.getText().toString()) - getMonedaActualPulsada() + "");
                                     }else{
                                         this.numerosApuestas.getChildAt(i).setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.color_bid_number_green_pulsado, null));
-                                        this.apuestaActual.add(new Apuesta(b.getText().toString(), getMonedaActualPulsada(), Color.GREEN));
+                                        this.apuestaItermedia.add(new Apuesta(b.getText().toString(), getMonedaActualPulsada(), Color.GREEN));
                                         this.saldo.setText(Double.valueOf(this.saldo.getText().toString()) - getMonedaActualPulsada() + "");
                                     }
 
@@ -502,8 +531,6 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 boton.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.monedas_shape_pulsada, null));
                 despulsarMonedas(index);
             }
-
-            this.ruleta.setApuestaActual(apuestaActual);
 
         }
     }
@@ -572,7 +599,31 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
 
             }
 
-            userListener.getUserInformation().setSaldo((float) (userListener.getUserInformation().getSaldo() + dineroGanado));
+            boolean salvaServiceUsed = false;
+
+            for (Compras service:userListener.getUserInformation().getActiveServicesRuleta()
+            ) {
+                Log.d("cositas",service.getId());
+                if (service.getName().equalsIgnoreCase(SERVICIO_SALVA_APUESTA) && !service.isUsed()) {
+                    userListener.getUserInformation().setSaldo((float) (userListener.getUserInformation().getSaldo() + dineroGanado + getTotalApuesta()));
+                    salvaServiceUsed = true;
+                    dialogServiceUsed(SERVICIO_SALVA_APUESTA);
+                    userListener.getFirestoreInstance().updateUsedStateOfProduct(service.getId());
+                    service.setUsed(true);
+                }
+                if (service.getName().equalsIgnoreCase(SERVICIO_X2) && !service.isUsed()) {
+                    dineroGanado *= 2;
+                    dialogServiceUsed(SERVICIO_X2);
+                    userListener.getFirestoreInstance().updateUsedStateOfProduct(service.getId());
+                    service.setUsed(true);
+                }
+
+            }
+
+            if (!salvaServiceUsed){
+                userListener.getUserInformation().setSaldo((float) (userListener.getUserInformation().getSaldo() + dineroGanado));
+            }
+
             userListener.getFirestoreInstance().updateSaldo(userListener.getUserInformation().getEmail(), userListener.getUserInformation().getSaldo());
             userListener.updateBalanceTexts();
         }catch (Exception e){
@@ -595,6 +646,33 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         return false;
     }
 
+    public void deleteBid(int position) {
+        Apuesta apuesta= this.apuestaSumaTotales.get(position);
+        this.deleteAllBidsByNumber(apuesta.getNumero());
+        this.apuestaSumaTotales.remove(position);
+        adapterApuestas.notifyDataSetChanged();
+    }
+
+    public void deleteAllBidsByNumber(String number){
+
+        for (Iterator<Apuesta> it = this.apuestaActual.iterator(); it.hasNext(); ) {
+            if (it.next().getNumero().equalsIgnoreCase(number)){
+                it.remove();
+            }
+        }
+    }
+
+    public void dialogServiceUsed(String serviceUsed){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this.getContext());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_numero_sacado_ruleta, null);
+
+        ((TextView) v.findViewById(R.id.textView9)).setText("Acabas de usar el Servicio :");
+        ((TextView) v.findViewById(R.id.DineroGanadoDialogoApuesta)).setText(serviceUsed);
+        dialog.setView(v);
+        dialog.show();
+    }
+
 
     public class WheelMotionAsync extends AsyncTask<String, String, String> {
         public boolean salir = false;
@@ -607,8 +685,6 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
         protected String doInBackground(String... strings) {
 
             while (!salir) {
-
-                Log.d("cositas","animationEnd : "+animationEnd);
 
                 if(chrono.getText().equals("00:00") && launch && !isTheFragmentStart) {
                     spinWheelWithResult();
@@ -672,12 +748,12 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     try{
+
                         LayoutInflater inflater = requireActivity().getLayoutInflater();
                         View v = inflater.inflate(R.layout.dialog_numero_sacado_ruleta, null);
                         numero_sacado = getSector(360 - (degree % 360));
                         ((TextView) v.findViewById(R.id.textView9)).setText(getString(R.string.numero_sacado) + numero_sacado);
                         ((TextView) v.findViewById(R.id.DineroGanadoDialogoApuesta)).setText(getString(R.string.ganarDinero) + " " + getDineroGanado(numero_sacado));
-                        addRecentNumberToGrid(numero_sacado);
                         apuestaActual.clear();
                         apuestaSumaTotales.clear();
                         dialogNumber.setView(v);
@@ -685,6 +761,8 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
                         cantidadApostada.setText("0");
                         chronometer.onFinish();
                         animationEnd=true;
+                        addRecentNumberToGrid(numero_sacado);
+
                     }catch (Exception e){
                         Log.e("errorRuleta",e.getMessage());
                     }
@@ -719,48 +797,79 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             return text;
         }
 
-        //cogemos el número que ha salido y le añadimos al grid de números recientes
-        private void addRecentNumberToGrid(String number) {
-            if (number != null) {
-                if (number.contains(" ")) {
 
-                    String n_with_color[] = number.split(" ");
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(210, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    Button boton = new Button(getActivity());
-                    boton.setLayoutParams(layoutParams);
-                    boton.setText(n_with_color[0]);
-                    boton.setWidth(80);
-                    Drawable back = null;
-                    int color = 0;
-                    int colorLetter = 0;
+    }
 
-                    if (n_with_color[1].equalsIgnoreCase("red")) {
-                        color = Color.RED;
-                        colorLetter = Color.BLACK;
-                        back = getActivity().getDrawable(R.drawable.borders_numbers_red_recents_out_rulette);
-                    } else if (n_with_color[1].equalsIgnoreCase("black")) {
-                        color = Color.BLACK;
-                        colorLetter = Color.WHITE;
-                        back = getActivity().getDrawable(R.drawable.borders_numbers_recents_out_rulette);
-                    } else {
-                        color = Color.GREEN;
-                        colorLetter = Color.BLACK;
-                        back = getActivity().getDrawable(R.drawable.borders_numbers_green_recents_out_rulette);
-                    }
+    //cogemos el número que ha salido y le añadimos al grid de números recientes
+    private void addRecentNumberToGrid(String number) {
+        if (number != null) {
 
-                    boton.setBackgroundColor(color);
-                    boton.setTextColor(colorLetter);
-                    boton.setBackground(back);
+            if (number.contains(" ")) {
 
-                    if (recentNumbers.getChildCount() < 5) {
-                        recentNumbers.addView(boton);
-                    } else {
-                        recentNumbers.removeView(recentNumbers.getChildAt(0));
-                        recentNumbers.addView(boton);
-                    }
+                String n_with_color[] = number.split(" ");
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(210, ViewGroup.LayoutParams.WRAP_CONTENT);
+                Button boton = new Button(getActivity());
+                boton.setLayoutParams(layoutParams);
+                boton.setText(n_with_color[0]);
+                boton.setWidth(80);
+                Drawable back = null;
+                int color = 0;
+                int colorLetter = 0;
+
+                if (n_with_color[1].equalsIgnoreCase("red")) {
+                    color = Color.RED;
+                    colorLetter = Color.BLACK;
+                    back = getActivity().getDrawable(R.drawable.borders_numbers_red_recents_out_rulette);
+                } else if (n_with_color[1].equalsIgnoreCase("black")) {
+                    color = Color.BLACK;
+                    colorLetter = Color.WHITE;
+                    back = getActivity().getDrawable(R.drawable.borders_numbers_recents_out_rulette);
+                } else {
+                    color = Color.GREEN;
+                    colorLetter = Color.BLACK;
+                    back = getActivity().getDrawable(R.drawable.borders_numbers_green_recents_out_rulette);
                 }
+
+                boton.setBackgroundColor(color);
+                boton.setTextColor(colorLetter);
+                boton.setBackground(back);
+
+
+                if (recentNumbers.getChildCount() < 5) {
+                    recentNumbers.addView(boton);
+                } else {
+                    recentNumbers.removeView(recentNumbers.getChildAt(0));
+                    recentNumbersGrid.remove(0);
+                    recentNumbers.addView(boton);
+                }
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ruleta.setRecentNumbersGrid(recentNumbersGrid);
+                    }
+                });
+
             }
         }
+    }
+
+    public ArrayList<View> getElementsFromGrid(androidx.gridlayout.widget.GridLayout grid){
+        ArrayList<View> childElements = new ArrayList<>();
+
+        for (int i = 0; i < grid.getChildCount() ; i++) {
+            childElements.add(grid.getChildAt(i));
+        }
+
+        return childElements;
+    }
+
+    public void setElementsToGrid(androidx.gridlayout.widget.GridLayout grid, List<Integer> numbers){
+
+        for(Integer view:numbers){
+            addRecentNumberToGrid(String.valueOf(view));
+        }
+
     }
 
     //timer para que la ruleta se lanze
@@ -809,4 +918,5 @@ public class RuletaFragment extends Fragment implements MenuItem.OnMenuItemClick
             this.userListener = (OnGetUserActions) activity;
         }
     }
+
 }

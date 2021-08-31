@@ -36,6 +36,7 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Administrator.MyUsersAdminRecyclerViewAdapter;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.MyBuysRecyclerViewAdapter;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.MyProductsRecyclerViewAdapter;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras.TragaPerrasFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -43,6 +44,7 @@ import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -466,10 +468,17 @@ public class FirebaseCloudFirestore {
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     Date date = new Date();
                     data.put("date", date);
+                    data.put("isUsed",false);
+                    data.put("identificadorCompra","compra" + (count + 1));
 
                     mFirebaseFirestore.collection("compras")
                             .document("compra" + (count + 1))
                             .set(data);
+
+                    Compras c = new Compras(new Date().toString(), p.getNombre(),String.valueOf(p.getPrecio()),String.valueOf(0), p.getTipo());
+                    c.setUsed(false);
+                    c.setId("compra" + (count + 1));
+                    u.getActiveServicesRuleta().add(c);
 
                 }else{
                     Log.d("cositas","error");
@@ -494,10 +503,9 @@ public class FirebaseCloudFirestore {
                 }
             }
         });
-
-
     }
-public void getAllBuysOrderByPrice(User u, ArrayList<Compras> comprasAL, MyBuysRecyclerViewAdapter adapter, Query.Direction direction,String field){
+
+    public void getAllBuysOrderByPrice(User u, ArrayList<Compras> comprasAL, MyBuysRecyclerViewAdapter adapter, Query.Direction direction,String field){
         comprasAL.clear();
         mFirebaseFirestore.collection("compras").whereEqualTo("email",u.getEmail()).orderBy(field, direction)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -515,4 +523,38 @@ public void getAllBuysOrderByPrice(User u, ArrayList<Compras> comprasAL, MyBuysR
 
 
     }
+
+    public void setMultipliersInSlotMachineGame(TragaPerrasFragment.multiplicatorAdapter adapter, ArrayList<String> multiplicators,String email){
+
+            mFirebaseFirestore.collection("compras")
+                    .whereEqualTo("type", "slot_machine")
+                    .whereEqualTo("email",email)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document:task.getResult().getDocuments()) {
+                            multiplicators.add(document.getString("name"));
+                        }
+                    }
+                    multiplicators.sort(new Comparator<String>() {
+                        @Override
+                        public int compare(String o1, String o2) {
+                            return o1.replace("x","").compareTo(o2.replace("x",""));
+                        }
+                    });
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+
+    }
+
+    public void updateUsedStateOfProduct(String id){
+        this.mFirebaseFirestore.collection("compras").document(id).update("isUsed",true);
+    }
+
+
 }

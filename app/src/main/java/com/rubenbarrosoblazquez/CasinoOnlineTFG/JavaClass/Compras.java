@@ -2,13 +2,26 @@ package com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass;
 
 import android.graphics.Bitmap;
 
-public class Compras {
+import java.io.Serializable;
+
+public class Compras implements Serializable {
+
     private String date;
     private String name;
     private String price;
     private String unidades;
     private String type;
     private Bitmap imagen;
+    private String id;
+    private boolean isUsed;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Bitmap getImagen() {
         return imagen;
@@ -18,6 +31,14 @@ public class Compras {
         this.imagen = imagen;
     }
 
+    public boolean isUsed() {
+        return isUsed;
+    }
+
+    public void setUsed(boolean used) {
+        isUsed = used;
+    }
+
     public Compras(String date, String name, String price, String unidades, String type) {
         this.date = date;
         this.name = name;
@@ -25,6 +46,7 @@ public class Compras {
         this.unidades = unidades;
         this.type = type;
         this.imagen=null;
+        this.isUsed = false;
     }
 
     public String getDate() {

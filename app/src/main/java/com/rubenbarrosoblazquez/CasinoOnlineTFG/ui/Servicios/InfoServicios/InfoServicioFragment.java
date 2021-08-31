@@ -27,9 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Comments;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.CommentsRealTime;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Compras;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
@@ -47,7 +49,7 @@ public class InfoServicioFragment extends Fragment {
     private TextView ProductPriceInfo;
     private TextView ProductDecriptionInfo;
     private ImageView ProductImageInfo;
-    private NumberPicker numberPicker;
+    //private NumberPicker numberPicker;
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerViewComments;
     private ProgressDialog progreso;
@@ -60,6 +62,7 @@ public class InfoServicioFragment extends Fragment {
     private Activity activity;
     private User u;
     private TextView textNoComments;
+    private AlertDialog dialog;
 
     @BindView(R.id.cartAnimation)
     LottieAnimationView cartAnimation;
@@ -92,38 +95,44 @@ public class InfoServicioFragment extends Fragment {
         this.ProductImageInfo=(ImageView)v.findViewById(R.id.ProductImageInfo);
         this.ProductNameInfo=(TextView)v.findViewById(R.id.InfoNameProduct);
         this.ProductPriceInfo=(TextView)v.findViewById(R.id.infoPriceProduct);
-        this.numberPicker=(NumberPicker)v.findViewById(R.id.infoUnitsProduct);
+        //this.numberPicker=(NumberPicker)v.findViewById(R.id.infoUnitsProduct);
         this.Buy=(Button)v.findViewById(R.id.InfoBuyProduct);
 
         this.Buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(u.getSaldo() >= (product.getPrecio()*product.getCantidad())){
-                    u.setSaldo((float) (u.getSaldo() - (product.getPrecio()*product.getCantidad())));
-                    u.setSaldo_gastado(u.getSaldo_gastado ()+ (float) (product.getPrecio()*product.getCantidad()));
-                    mListener.getFirestoreInstance().updateSaldo(u.getEmail(),u.getSaldo());
-                    mListener.getFirestoreInstance().updateSaldoGastado(u.getEmail(),u.getSaldo_gastado());
-                    mListener.getFirestoreInstance().insertBuy(product,u);
-                    mListener.updateBalanceTexts();
-                    mListener.setUserInformation(u);
-                    Toast.makeText(getContext(), getString(R.string.compraRealizada), Toast.LENGTH_SHORT).show();
+                try{
+                    if(u.getSaldo() >= (product.getPrecio()*product.getCantidad())){
 
-                    cartAnimation.setAnimation(R.raw.cart_animation);
-                    cartAnimation.playAnimation();
-                    cartAnimation2.setAnimation(R.raw.cart_animation);
-                    cartAnimation2.playAnimation();
+                        u.setSaldo((float) (u.getSaldo() - (product.getPrecio()*product.getCantidad())));
+                        u.setSaldo_gastado(u.getSaldo_gastado ()+ (float) (product.getPrecio()*product.getCantidad()));
 
-                    final Runnable r = new Runnable() {
-                        public void run() {
-                           cartAnimation.setImageResource(R.drawable.ic_round_shopping_cart_24);
-                           cartAnimation2.setImageResource(R.drawable.ic_round_shopping_cart_24);
-                        }
-                    };
+                        mListener.getFirestoreInstance().updateSaldo(u.getEmail(),u.getSaldo());
+                        mListener.getFirestoreInstance().updateSaldoGastado(u.getEmail(),u.getSaldo_gastado());
+                        mListener.getFirestoreInstance().insertBuy(product,u);
+                        mListener.updateBalanceTexts();
+                        mListener.setUserInformation(u);
+                        Toast.makeText(getContext(), getString(R.string.compraRealizada), Toast.LENGTH_SHORT).show();
 
-                    new Handler(Looper.getMainLooper()).postDelayed(r,2000);
+                        cartAnimation.setAnimation(R.raw.cart_animation);
+                        cartAnimation.playAnimation();
+                        cartAnimation2.setAnimation(R.raw.cart_animation);
+                        cartAnimation2.playAnimation();
 
-                }else{
-                    Toast.makeText(getContext(), getString(R.string.noSaldoParaComprar), Toast.LENGTH_SHORT).show();
+                        final Runnable r = new Runnable() {
+                            public void run() {
+                                cartAnimation.setImageResource(R.drawable.ic_round_shopping_cart_24);
+                                cartAnimation2.setImageResource(R.drawable.ic_round_shopping_cart_24);
+                            }
+                        };
+
+                        new Handler(Looper.getMainLooper()).postDelayed(r,2000);
+
+                    }else{
+                        Toast.makeText(getContext(), getString(R.string.noSaldoParaComprar), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception err){
+                    Log.d("error",err.getMessage());
                 }
 
             }
@@ -136,20 +145,20 @@ public class InfoServicioFragment extends Fragment {
         this.ProductNameInfo.setText(String.valueOf(this.product.getNombre()));
         this.ProductDecriptionInfo.setText(String.valueOf(this.product.getDescripcion()));
         this.ProductImageInfo.setImageBitmap(this.product.getImg());
-        this.numberPicker.setMaxValue(10);
-        this.numberPicker.setMinValue(1);
+        //this.numberPicker.setMaxValue(10);
+        //this.numberPicker.setMinValue(1);
 
         this.initRecyclerViewComentarios(v);
 
         this.mListener.getFirestoreRealTimeInstance().getComments(product,comments,commentAdapter);
 
-        this.numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        /*this.numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 product.setCantidad(newVal);
                 ProductPriceInfo.setText(String.valueOf(product.getPrecio()*newVal+"$"));
             }
-        });
+        });*/
 
         this.newComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,23 +221,21 @@ public class InfoServicioFragment extends Fragment {
         TextView CommentEmail=(TextView)v.findViewById(R.id.dialogEmailUser);
         CommentEmail.setText(u.getEmail());
 
-        builder.setView(v)
-                // Add action buttons
-                .setPositiveButton("Comment", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                        EditText comment = (EditText) v.findViewById(R.id.contenidoComentarioDialogo);
-                        mListener.getFirestoreRealTimeInstance().insertComment(new CommentsRealTime(comment.getText().toString(),u.getEmail(),p.getImgName()));
-                    }
+        Button comment = v.findViewById(R.id.addComment);
+        comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextInputEditText commentInput = (TextInputEditText) v.findViewById(R.id.contenidoComentarioDialogo);
+                if (!commentInput.getText().toString().isEmpty()) {
+                    mListener.getFirestoreRealTimeInstance().insertComment(new CommentsRealTime(commentInput.getText().toString(), u.getEmail(), p.getImgName()));
+                    dialog.dismiss();
+                }else
+                    Toast.makeText(activity, "Rellena el campo de comentario, no puede estar vacío", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-        AlertDialog dialog = builder.create();
+        builder.setView(v);
+        dialog = builder.create();
         dialog.show();
     }
 

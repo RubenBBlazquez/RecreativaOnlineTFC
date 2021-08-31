@@ -50,6 +50,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import kotlin.text.Regex;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
@@ -72,6 +76,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
 
         }
@@ -88,10 +93,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             this.getActivity().requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
                     3);
         }
-
-
-
-
 
     }
 
@@ -398,12 +399,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                                 Log.d("textRecognizionLine", lineText.trim().matches("^\\d{8}[A-Z]{1}$")+"");
 
                                                 if (lineText.trim().matches("^\\d{8}[A-Z]{1}$") || lineText.trim().matches("^.+?\\d{8}[A-Z]{1}+$")) {
+
+                                                    Matcher m = Pattern.compile("^.+?\\d{8}[A-Z]{1}+$").matcher(lineText.trim());
+
                                                     if(lineText.contains(" ")){
                                                         dni_foto = lineText.trim().substring(lineText.indexOf(" "), lineText.length());
+                                                    }else if(m.find()){
+                                                        Toast.makeText(getContext(), ""+m.start(), Toast.LENGTH_SHORT).show();
                                                     }else{
                                                         dni_foto = lineText.trim();
                                                     }
-                                                    Log.d("textRecognizionLine","ENCONTRADOO"+dni_foto);
+                                                    Log.d("textRecognizionLine","ENCONTRADOO "+dni_foto);
 
                                                     encontrado = true;
                                                     break;

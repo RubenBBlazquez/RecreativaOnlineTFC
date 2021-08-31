@@ -20,9 +20,11 @@ import java.util.List;
 public class MyUsersAdminRecyclerViewAdapter extends RecyclerView.Adapter<MyUsersAdminRecyclerViewAdapter.ViewHolder>{
 
     private final List<User> mValues;
+    private final SendNotificationToUsers mView;
 
-    public MyUsersAdminRecyclerViewAdapter(List<User> items) {
+    public MyUsersAdminRecyclerViewAdapter(SendNotificationToUsers mView, List<User> items) {
         mValues = items;
+        this.mView=mView;
     }
 
     @Override
@@ -47,9 +49,15 @@ public class MyUsersAdminRecyclerViewAdapter extends RecyclerView.Adapter<MyUser
             @Override
             public void onClick(View view) {
                 holder.check=!holder.check;
+
+                User user = new User(holder.mItem.getName(),holder.mItem.getEmail(),holder.mItem.getApellidos(),"");
+                user.setToken(holder.mItem.getToken());
+
                 if(holder.check){
+                    mView.usersChecked.add(user);
                     holder.container.setBackgroundColor(Color.parseColor("#F44336"));
                 }else{
+                    mView.deleteUserUnSelected(user.getEmail());
                     holder.container.setBackgroundColor(Color.WHITE);
                 }
             }

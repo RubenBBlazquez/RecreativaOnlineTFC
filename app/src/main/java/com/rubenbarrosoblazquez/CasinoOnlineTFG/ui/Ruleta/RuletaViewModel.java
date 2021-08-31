@@ -1,7 +1,12 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Ruleta;
 
+import android.view.View;
+
+import androidx.gridlayout.widget.GridLayout;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Apuesta;
@@ -13,11 +18,13 @@ public class RuletaViewModel extends ViewModel {
     private MutableLiveData<List<Apuesta>> apuestas;
     private MutableLiveData<List<Apuesta>> apuestaActual;
     private MutableLiveData<Long> timerActual;
+    private MutableLiveData<List<Integer>> recentNumbersGrid;
 
     public RuletaViewModel() {
         apuestas = new MutableLiveData<>();
         apuestaActual = new MutableLiveData<>();
         timerActual=new MutableLiveData<>();
+        recentNumbersGrid = new MutableLiveData<>();
     }
 
     public MutableLiveData<List<Apuesta>> getApuestas() {
@@ -43,4 +50,14 @@ public class RuletaViewModel extends ViewModel {
     public void addToTimer(Long timer){
         this.timerActual.setValue(timer);
     }
+
+    public void setRecentNumbersGrid(List<Integer> recentNumbersGrid){
+        this.recentNumbersGrid.setValue(recentNumbersGrid);
+    }
+
+    public MutableLiveData<List<Integer>> getRecentNumbersGrid() {
+        return recentNumbersGrid;
+    }
+
+
 }
