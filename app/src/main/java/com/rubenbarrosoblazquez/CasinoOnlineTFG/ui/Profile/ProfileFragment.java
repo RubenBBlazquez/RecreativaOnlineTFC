@@ -197,17 +197,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
                 case R.id.actualizarDatosPersonales:
                     try{
-                        User u=mListener.getUserInformation();
-                        u.setDni(this.dni.getText().toString());
-                        u.setPhone(this.telefono.getText().toString());
-                        u.setName(this.nombre.getText().toString());
-                        u.setApellidos(this.apellidos.getText().toString());
-                        u.setDirection(this.direccion.getText().toString());
+                        boolean dniValidator = isValidDni(this.dni.getText().toString());
 
-                        if(this.mListener.UpdateUserInformation(u)){
-                            mListener.setUserInformation(u);
-                            mListener.reloadHeaderDraweInfo();
-                            Toast.makeText(getContext(), "datos personales actualizados correctamente", Toast.LENGTH_SHORT).show();
+                        if(dniValidator || this.dni.getText().toString().isEmpty()){
+
+                            User u=mListener.getUserInformation();
+                            u.setDni(this.dni.getText().toString());
+                            u.setPhone(this.telefono.getText().toString());
+                            u.setName(this.nombre.getText().toString());
+                            u.setApellidos(this.apellidos.getText().toString());
+                            u.setDirection(this.direccion.getText().toString());
+
+
+                            if(this.mListener.UpdateUserInformation(u)){
+                                mListener.setUserInformation(u);
+                                mListener.reloadHeaderDraweInfo();
+                                Toast.makeText(getContext(), "datos personales actualizados correctamente", Toast.LENGTH_SHORT).show();
+                            }
+                        }else if (!dniValidator && !this.dni.getText().toString().isEmpty()){
+                            Toast.makeText(getContext(), "El dni que quieres añadido no es válido, el número del dni no da la letra necesaria, (calculo proporcionado por el interior.gob)", Toast.LENGTH_SHORT).show();
                         }
 
                     }catch (Exception e){
@@ -423,12 +431,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                         }
 
                                         if (u.getDni().equalsIgnoreCase("")) {
-                                            Toast.makeText(getContext(), "Dni añadido Con éxito", Toast.LENGTH_SHORT).show();
-                                            u.setDniVerified(true);
-                                            u.setDni(dni_foto);
-                                            dni.setText(u.getDni());
-                                            mListener.getFirestoreInstance().updateUser(u);
-                                            mListener.setUserInformation(u);
+
+                                            if(isValidDni(dni_foto)){
+                                                Toast.makeText(getContext(), "Dni añadido Con éxito", Toast.LENGTH_SHORT).show();
+                                                u.setDniVerified(true);
+                                                u.setDni(dni_foto);
+                                                dni.setText(u.getDni());
+                                                mListener.getFirestoreInstance().updateUser(u);
+                                                mListener.setUserInformation(u);
+                                            }else{
+                                                Toast.makeText(getContext(), "La foto del dni que has añadido no es válido, el número del dni no da la letra necesaria, (calculo proporcionado por el interior.gob)", Toast.LENGTH_SHORT).show();
+                                            }
+
                                         } else {
                                             if (dni_foto.trim().equalsIgnoreCase(u.getDni())) {
                                                 Toast.makeText(getContext(), "Dni Validado Con éxito", Toast.LENGTH_SHORT).show();
@@ -452,6 +466,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public boolean isValidDni(String dni){
+
+        String[] letras = {"T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"};
+
+        int num_dni = -1;
+        String letraDni = "";
+
+        try{
+            num_dni = Integer.parseInt(dni.substring(0,dni.length()-1));
+            letraDni = dni.substring(dni.length()-1);
+        }catch (Exception ex){
+            return false;
+        }
+
+        if (letras[num_dni%23].equalsIgnoreCase(letraDni)){
+            return true;
+        }
+
+        return false;
+
     }
 
 }

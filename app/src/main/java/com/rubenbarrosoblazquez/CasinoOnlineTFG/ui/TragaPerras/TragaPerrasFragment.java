@@ -96,7 +96,7 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd{
 
                     if(!isSlotMachineWorking){
 
-                        if(u.getSaldo() >= Integer.parseInt(saldoApostado.getText().toString())){
+                        if(u.getSaldo() >= Double.parseDouble(saldoApostado.getText().toString())){
                             image.setValueRandom(100);
                             image2.setValueRandom(100);
                             image3.setValueRandom(100);

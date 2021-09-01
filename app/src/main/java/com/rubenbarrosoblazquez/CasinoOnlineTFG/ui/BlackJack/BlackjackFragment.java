@@ -232,9 +232,9 @@ public class BlackjackFragment extends Fragment {
                     public void onClick(View v) {
                         String apuesta = apuestaET.getText().toString();
                         if(!apuesta.isEmpty()){
-                            if(Integer.parseInt(apuesta) > u.getSaldo() ){
+                            if(Double.parseDouble(apuesta) > u.getSaldo() ){
                                 Toast.makeText(getContext(), ""+getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
-                            }else if (Integer.parseInt(apuesta) <= 0){
+                            }else if (Double.parseDouble(apuesta) <= 0){
                                 Toast.makeText(getContext(), ""+getString(R.string.apuestaCero), Toast.LENGTH_SHORT).show();
                             }else{
                                 backgroundError.setVisibility(View.GONE);
@@ -247,7 +247,7 @@ public class BlackjackFragment extends Fragment {
                                 pointsDealer.setText("0");
                                 isYouGiveUp=false;
                                 dialog.dismiss();
-                                saldoApostado=Integer.parseInt(apuesta);
+                                saldoApostado=Double.parseDouble(apuesta);
                                 u.setSaldo((float) (u.getSaldo()-saldoApostado));
                                 u.setSaldo_gastado((float) ((float)u.getSaldo_gastado()+ saldoApostado));
                                 mListener.updateBalanceTexts();

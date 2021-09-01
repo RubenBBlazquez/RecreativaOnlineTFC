@@ -47,7 +47,7 @@
             android:id="@+id/apuestaBlackjack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="numberDecimal"
             android:textColor="@android:color/white"
 
             >

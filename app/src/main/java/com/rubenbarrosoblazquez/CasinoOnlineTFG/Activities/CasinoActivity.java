@@ -431,7 +431,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
 
     public void crearNotification(Context context, Bundle b){
         NotificationCompat.Builder constructorNotif=new NotificationCompat.Builder(context,"micanal");
-        constructorNotif.setSmallIcon(android.R.drawable.btn_star_big_on);
+        constructorNotif.setSmallIcon(R.drawable.logo_app);
 
         //obtener una referencia del notificador
         NotificationManager notificationManager=(NotificationManager)context.getSystemService(context.getApplicationContext().NOTIFICATION_SERVICE);

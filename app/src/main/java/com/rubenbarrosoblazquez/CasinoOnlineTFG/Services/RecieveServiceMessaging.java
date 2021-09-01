@@ -36,9 +36,6 @@ public class RecieveServiceMessaging extends FirebaseMessagingService {
             public void run() {
 
                 if(remoteMessage!=null){
-                    Toast.makeText(getApplicationContext(), "notificación creada "+remoteMessage.getNotification().getBody(),
-                            Toast.LENGTH_LONG).show();
-
                     Intent intent = new Intent("informacion");
                     intent.putExtra("contenido", remoteMessage.getNotification().getBody());
                     intent.putExtra("titulo", remoteMessage.getNotification().getTitle());

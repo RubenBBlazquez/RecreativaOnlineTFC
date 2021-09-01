@@ -321,15 +321,23 @@ public class FirebaseCloudFirestore {
                                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                                     product.setImg(resource);
                                     products.add(product);
-                                    adapter.notifyDataSetChanged();
-                                }
+                                    try{
+                                        adapter.notifyDataSetChanged();
+                                    }catch (Exception er){
+                                        Log.d("error",er.getMessage());
+                                    }                                }
 
                                 @Override
                                 public void onLoadCleared(@Nullable Drawable placeholder) {
                                     Bitmap bf = BitmapFactory.decodeResource(context.getResources(),R.drawable.ruleta);
                                     product.setImg(bf);
                                     products.add(product);
-                                    adapter.notifyDataSetChanged();
+
+                                    try{
+                                        adapter.notifyDataSetChanged();
+                                    }catch (Exception er){
+                                        Log.d("error",er.getMessage());
+                                    }
                                 }
                             });
                 }
@@ -340,8 +348,11 @@ public class FirebaseCloudFirestore {
                             Bitmap bf = BitmapFactory.decodeResource(context.getResources(),R.drawable.ruleta);
                             product.setImg(bf);
                             products.add(product);
-                            adapter.notifyDataSetChanged();
-                        }
+                            try{
+                                adapter.notifyDataSetChanged();
+                            }catch (Exception er){
+                                Log.d("error",er.getMessage());
+                            }                        }
                     });
 
         }catch (Exception e){
@@ -536,7 +547,8 @@ public class FirebaseCloudFirestore {
                 public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         for (DocumentSnapshot document:task.getResult().getDocuments()) {
-                            multiplicators.add(document.getString("name"));
+                            if (!isMultiplicatorAlreadyAdded(multiplicators,document.getString("name")))
+                                multiplicators.add(document.getString("name"));
                         }
                     }
                     multiplicators.sort(new Comparator<String>() {
@@ -550,6 +562,16 @@ public class FirebaseCloudFirestore {
             });
 
 
+    }
+
+    public boolean isMultiplicatorAlreadyAdded(ArrayList<String> multiplicators,String multiplicator){
+        for (String multiplier:multiplicators) {
+            if (multiplier.equalsIgnoreCase(multiplicator))
+                return true;
+
+        }
+
+        return false;
     }
 
     public void updateUsedStateOfProduct(String id){
