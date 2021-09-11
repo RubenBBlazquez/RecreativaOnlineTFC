@@ -86,7 +86,7 @@
                 android:layout_marginLeft="15dp"
                 android:text="Log Out"
                 android:textSize="10dp"
-                android:backgroundTint="#d0b36a"
+                android:backgroundTint="#A18D5C"
                 android:background="@drawable/button_shape"
                 android:gravity="center"
                 android:fontFamily="@font/bungee">

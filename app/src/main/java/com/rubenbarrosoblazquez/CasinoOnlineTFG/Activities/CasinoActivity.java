@@ -102,7 +102,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         realtime = new FirebaseRealTimeModel(getApplicationContext());
         profile=new ProfileFragment();
         adReward = new AdReward();
-        model.getAdReward(adReward);
+        realtime.getAdReward(adReward);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

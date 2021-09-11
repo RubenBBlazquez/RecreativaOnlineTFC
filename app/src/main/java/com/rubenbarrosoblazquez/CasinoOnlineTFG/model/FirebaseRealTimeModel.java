@@ -15,15 +15,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.AdReward;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Comments;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.CommentsRealTime;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
@@ -34,6 +38,9 @@ import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.MyProductsRecyclerV
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class FirebaseRealTimeModel {
 
@@ -138,6 +145,30 @@ public class FirebaseRealTimeModel {
 
             }
         });
+    }
+
+    public void getAdReward(AdReward reward ){
+        db.child("adsReward").child("rewardedAds").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    AdReward rewardDb = snapshot.getValue(AdReward.class);
+                    assert rewardDb != null;
+                    reward.setReward(rewardDb.getReward());
+                    reward.setAdType(rewardDb.getAdType());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void setAdReward(AdReward adReward){
+
+        db.child("adsReward").child("rewardedAds").setValue(adReward);
     }
 
 

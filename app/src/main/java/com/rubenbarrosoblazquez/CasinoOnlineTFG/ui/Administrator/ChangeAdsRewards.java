@@ -68,7 +68,7 @@ public class ChangeAdsRewards extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.changeAdReward)
     public void changeAdReward(View v){
-        this.mListener.getFirestoreInstance().setAdReward(Double.parseDouble(Objects.requireNonNull(this.rewardEditText.getText()).toString()));
+        this.mListener.getFirestoreRealTimeInstance().setAdReward(new AdReward("RewardedAd",Double.parseDouble(Objects.requireNonNull(this.rewardEditText.getText()).toString())));
         Toast.makeText(getContext(), "Recompensa de anuncios actualizada correctamente", Toast.LENGTH_SHORT).show();
     }
 

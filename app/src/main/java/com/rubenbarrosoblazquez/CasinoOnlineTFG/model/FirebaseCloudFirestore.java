@@ -581,27 +581,5 @@ public class FirebaseCloudFirestore {
         this.mFirebaseFirestore.collection("compras").document(id).update("isUsed",true);
     }
 
-    public void getAdReward(AdReward reward ){
-        this.mFirebaseFirestore.collection("adsReward").document("rewardedAds").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    if(task.getResult().getDouble("reward")!=null){
-                        reward.setReward(task.getResult().getDouble("reward"));
-                    }
-                }
-            }
-        });
-    }
-
-    public void setAdReward(double adReward){
-        Map<String, Object> data = new HashMap<>();
-        data.put("reward", adReward);
-
-        mFirebaseFirestore.collection("adsReward")
-                .document("rewardedAds")
-                .set(data);
-    }
-
 
 }
