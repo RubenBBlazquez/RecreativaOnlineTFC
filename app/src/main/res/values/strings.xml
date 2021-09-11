@@ -2,6 +2,7 @@
     <string name="rewarder_ad_id">ca-app-pub-3940256099942544/5224354917</string>
     <string name="app_name">CASINO ONLINE</string>
     <string name="login">Inicio Sesion</string>
+    <string name="changeAdRewardButton">Cambiar Recompensa Anuncios</string>
     <string name="comprarServicio">Comprar</string>
     <string name="addServiceComment">Añadir Comentario</string>
     <string name="comments">Comentarios</string>
@@ -9,6 +10,7 @@
     <string name="loginWithFacebook">Inicio Sesion Facebook</string>
     <string name="registro">Registrarse</string>
     <string name="hintEmail">Escribe tu email</string>
+    <string name="hintChangeAdsRwards">Ads Reward</string>
     <string name="hintnameAddProduct">Nombre del Producto</string>
     <string name="hintdescriptionAddProduct">Descripción del producto</string>
     <string name="hintunidadesAddProduct">Unidades del Producto</string>
@@ -72,6 +74,7 @@
     <string name="menu_profile">Perfil</string>
     <string name="menu_admin_send_noti">Enviar Notificaciones</string>
     <string name="menu_admin_add_product">Añadir Producto</string>
+    <string name="menu_admin_change_ad_reward">Cambiar Recompensa Anuncios</string>
     <string name="saldo_actual">Saldo Actual De La Cuenta :</string>
     <string name="saldo_actual_perfil">Saldo</string>
     <string name="numero_sacado">Ha Salido El Número ....</string>
@@ -100,6 +103,7 @@
     <string name="textoDatosPersonales">Datos Personales</string>
     <string name="tituloFragmentEnviarNoti">Enviar Notificación a Usuarios</string>
     <string name="tituloFragmentAddProduct">Añadir Productos</string>
+    <string name="tituloChangeAdsRewards">Cambiar Recompensa Anuncios</string>
     <string name="tituloNotificacion">Titulo de la notificación</string>
     <string name="contenidoNotificacion">Contenido de la notificación</string>
     <string name="enviarNotificacion">Enviar Notificación a Usuarios</string>

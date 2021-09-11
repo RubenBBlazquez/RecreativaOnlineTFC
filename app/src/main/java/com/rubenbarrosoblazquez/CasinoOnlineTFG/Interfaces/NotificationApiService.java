@@ -1,4 +1,4 @@
-package com.rubenbarrosoblazquez.CasinoOnlineTFG.Services;
+package com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces;
 
 import com.google.gson.JsonObject;
 

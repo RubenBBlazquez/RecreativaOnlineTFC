@@ -29,7 +29,6 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Games;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Profile.MyBuysRecyclerViewAdapter;
 

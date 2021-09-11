@@ -19,4 +19,5 @@ public interface OnGetUserActions {
     public CasinoActivity getActivity();
     public void hideActionBar();
     public void showActionBar();
+    public double getAdReward();
 }

@@ -1,21 +1,17 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.TragaPerras;
 
-import android.animation.Animator;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.IEventEnd;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 
 import java.util.Random;

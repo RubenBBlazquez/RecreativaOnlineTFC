@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.AdReward;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.Compras;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.products;
@@ -65,6 +67,7 @@ public class FirebaseCloudFirestore {
     public void updateSaldo(String user,Float saldo) {
         this.mFirebaseFirestore.collection("users").document(user).update("Saldo",saldo);
     }
+
     public void updateSaldoGastado(String user,Float saldoGastado) {
         this.mFirebaseFirestore.collection("users").document(user).update("SaldoGastado",saldoGastado);
     }
@@ -576,6 +579,28 @@ public class FirebaseCloudFirestore {
 
     public void updateUsedStateOfProduct(String id){
         this.mFirebaseFirestore.collection("compras").document(id).update("isUsed",true);
+    }
+
+    public void getAdReward(AdReward reward ){
+        this.mFirebaseFirestore.collection("adsReward").document("rewardedAds").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    if(task.getResult().getDouble("reward")!=null){
+                        reward.setReward(task.getResult().getDouble("reward"));
+                    }
+                }
+            }
+        });
+    }
+
+    public void setAdReward(double adReward){
+        Map<String, Object> data = new HashMap<>();
+        data.put("reward", adReward);
+
+        mFirebaseFirestore.collection("adsReward")
+                .document("rewardedAds")
+                .set(data);
     }
 
 

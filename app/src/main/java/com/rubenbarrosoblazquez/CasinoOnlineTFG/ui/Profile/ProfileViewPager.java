@@ -19,7 +19,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ProductsFragment;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.ui.Servicios.ServiceRuletaFragment;
 
 import java.util.ArrayList;
@@ -36,9 +35,6 @@ public class ProfileViewPager  extends Fragment implements TabLayout.OnTabSelect
         View root = inflater.inflate(R.layout.fragment_view_pager_profile, container, false);
 
         ViewPager2 viewPager = root.findViewById(R.id.pagerProfile);
-
-        arrayList.add(new ServiceRuletaFragment());
-        arrayList.add(new ProductsFragment());
 
         viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
 

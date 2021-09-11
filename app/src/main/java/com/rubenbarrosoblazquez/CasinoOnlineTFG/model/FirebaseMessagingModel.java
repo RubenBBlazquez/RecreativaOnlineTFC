@@ -2,7 +2,6 @@ package com.rubenbarrosoblazquez.CasinoOnlineTFG.model;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -10,11 +9,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.*;
-import com.google.firebase.messaging.RemoteMessage;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
-import com.rubenbarrosoblazquez.CasinoOnlineTFG.Services.NotificationApiService;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.NotificationApiService;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

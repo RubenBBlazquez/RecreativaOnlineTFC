@@ -46,6 +46,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnProductsListener;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.AdReward;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
@@ -71,6 +72,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private ProfileFragment profile;
     private NavController navController;
     private AlertDialog profileDialog;
+    private AdReward adReward;
 
     @Override
     protected void onStart() {
@@ -99,6 +101,9 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         model = new FirebaseCloudFirestore(getApplicationContext());
         realtime = new FirebaseRealTimeModel(getApplicationContext());
         profile=new ProfileFragment();
+        adReward = new AdReward();
+        model.getAdReward(adReward);
+
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -132,6 +137,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         this.initElementsHeaderView(navigationView, this.user);
 
         new RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("A5AC149BF65213880D4D353CECDCB424"));
+
         rewardedAd();
         loadRewardedVideoAd();
 
@@ -308,8 +314,8 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
             @Override
             public void onRewarded(RewardItem rewardItem) {
                 //cuando el anuncio acaba, guardo en cloud firestore el saldo que tiene actualmente el usaurio, sacado al iniciar la aplicacion, y le actualizo con lo que tiene actualmente al ver el video
-                Toast.makeText(CasinoActivity.this, "Has conseguido al ver el video " + (Float.valueOf(rewardItem.getAmount()) / 20), Toast.LENGTH_SHORT).show();
-                user.setSaldo(user.getSaldo() + Float.valueOf(rewardItem.getAmount()) / 20);
+                Toast.makeText(CasinoActivity.this, "Has conseguido al ver el video " + getAdReward(), Toast.LENGTH_SHORT).show();
+                user.setSaldo((float) (user.getSaldo() + getAdReward()));
                 model.updateSaldo(user.getEmail(), user.getSaldo());
                 //actualizo los textos de la aplicación donde aparece el saldo del usuario
                 updateBalanceTexts();
@@ -410,6 +416,11 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         if (getSupportActionBar() != null)
             if (!getSupportActionBar().isShowing())
                 getSupportActionBar().show();
+    }
+
+    @Override
+    public double getAdReward() {
+        return adReward.getReward();
     }
 
     public void setProfileFragment(ProfileFragment profile){

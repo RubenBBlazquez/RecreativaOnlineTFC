@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class ServiciosFragment extends Fragment {
 
     private  viewPager2Adapter adapter;
-    private ArrayList<Fragment> arrayList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,9 +31,6 @@ public class ServiciosFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_servicios, container, false);
 
         ViewPager2 viewPager=root.findViewById(R.id.pager);
-
-        arrayList.add(new ServiceRuletaFragment());
-        arrayList.add(new ProductsFragment());
 
         adapter=new viewPager2Adapter(getActivity().getSupportFragmentManager(),getLifecycle(),root);
 

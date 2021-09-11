@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -24,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
+import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.IEventEnd;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.R;
@@ -33,7 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class TragaPerrasFragment extends Fragment implements IEventEnd{
+public class TragaPerrasFragment extends Fragment implements IEventEnd {
 
     private int resultsMatrix[][]=new int[3][3];
     private ImageViewScrolling imageViewScrollings[];
