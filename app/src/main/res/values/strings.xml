@@ -165,7 +165,9 @@
     <string name="infoBlackjack4">El juego consiste en acercarse a 21 , sin pasarse, pudiendo plantarte en el número que tu creas conveniente, siempre sin pasarte de 21, asique para jugar en la parte inferior tendrás 2 botones, uno para sacar cartas, y otro para plantarte, el botón sacará cartas aleatorias de una baraja de poker sin repetirse, cuando sale una carta, esta se saca de la baraja, y una vez creas que ya estás lo suficiente cerca de 21 o en 21, pulsas el botón de me planto</string>
     <string name="infoBlackjack5">Una vez te plantes, comenzará el dealer a sacar su jugada, el dealer, sacará de la misma baraja que la tuya sus cartas, y se plantará cuando vea que o te ha empatado, o te ha ganado, o que se haya pasado lo que da lugar a que tu ganas</string>
     <string name="infoBlackjack6">Cuando el dealer acabe su jugada por la razón que sea, saldrá un diálogo en el cual saldrán las cartas de la jugada del dealer, las cartas de tu jugada, y el resultado final del juego</string>
-    <string name="infoBlackjack7"></string>
-    <string name="infoBlackjack8"></string>
+    <string name="phoneVerifief">Teléfono verificado correctamente</string>
+    <string name="phoneNoVerifief">El Código introducido no es el enviado por sms, prueba de nuevo</string>
+    <string name="smsCodeEmpty">Rellena el campo del código del sms para poder intentar verificar el teléfono</string>
+    <string name="dniAlreadyVerified">Dni Ya Verificado</string>
 
 </resources>

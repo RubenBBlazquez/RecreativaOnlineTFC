@@ -43,6 +43,7 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnGetUserActions;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnAdsListener;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces.OnProductsListener;
@@ -73,6 +74,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     private NavController navController;
     private AlertDialog profileDialog;
     private AdReward adReward;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onStart() {
@@ -103,6 +105,7 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
         profile=new ProfileFragment();
         adReward = new AdReward();
         realtime.getAdReward(adReward);
+        this.firebaseAuth = FirebaseAuth.getInstance();
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -392,6 +395,11 @@ public class CasinoActivity extends AppCompatActivity implements MenuItem.OnMenu
     @Override
     public FirebaseCloudFirestore getFirestoreInstance() {
         return model;
+    }
+
+    @Override
+    public FirebaseAuth getFirebaseAuthInstance() {
+        return this.firebaseAuth;
     }
 
     @Override

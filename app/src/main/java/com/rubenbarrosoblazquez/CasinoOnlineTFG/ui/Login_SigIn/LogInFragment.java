@@ -223,8 +223,6 @@ public class LogInFragment extends Fragment implements View.OnClickListener, OnC
                 u.setSkip(d.getBoolean("isSkip"));
                 u.setToken(d.getString("token"));
 
-                Toast.makeText(this.getContext(), ""+u.isSkip(), Toast.LENGTH_SHORT).show();
-
                 addDataToSharedPreferences(u);
                 db.collection("users").document(u.getEmail()).update("Verified", "true");
 

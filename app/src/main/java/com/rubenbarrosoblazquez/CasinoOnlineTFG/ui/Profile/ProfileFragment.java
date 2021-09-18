@@ -27,11 +27,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -242,39 +245,45 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.sacarFotoDni:
+                if (!u.isDniVerified()){
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                    View view = getLayoutInflater().inflate(R.layout.dialog_take_or_get_photo, null);
 
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
-                View view = getLayoutInflater().inflate(R.layout.dialog_take_or_get_photo, null);
+                    TextView camera1 =(TextView) view.findViewById(R.id.takePhoto);
+                    TextView gallery1 = (TextView) view.findViewById(R.id.photoGallery);
 
-                TextView camera1 =(TextView) view.findViewById(R.id.takePhoto);
-                TextView gallery1 = (TextView) view.findViewById(R.id.photoGallery);
 
-                camera1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                            startActivityForResult(takePictureIntent, 3);
-                        }
-                    }
-                });
+                        camera1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                    startActivityForResult(takePictureIntent, 3);
+                                }
+                            }
+                        });
 
-                gallery1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                        gallery1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
 
-                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                        if (pickPhoto.resolveActivity(getActivity().getPackageManager()) != null) {
-                            startActivityForResult(pickPhoto, 2);
-                        }
-                    }
-                });
-                builder1.setView(view);
-                builder1.create();
-                builder1.show();
+                                if (pickPhoto.resolveActivity(getActivity().getPackageManager()) != null) {
+                                    startActivityForResult(pickPhoto, 2);
+                                }
+                            }
+                        });
 
+
+
+                    builder1.setView(view);
+                    builder1.create();
+                    builder1.show();
+                }else{
+                    Toast.makeText(getContext(), getString(R.string.dniAlreadyVerified), Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -300,7 +309,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                        @NonNull PhoneAuthProvider.ForceResendingToken token) {
                     verificationPhoneId=verificationId;
                     Toast.makeText(getContext(), getString(R.string.codePhoneSent), Toast.LENGTH_SHORT).show();
-                    dialogVerifyphone();
+                    dialogVerifyphone(verificationPhoneId);
                 }
             };
 
@@ -322,14 +331,41 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void dialogVerifyphone() {
+    private void dialogVerifyphone(String verificationId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View v = getLayoutInflater().inflate(R.layout.dialog_verified_phone_number, null);
 
         verifiedSmsCode=v.findViewById(R.id.verifiedSmsCodeEditText);
 
-        Button cerrarDialogo = v.findViewById(R.id.verificarTelefonoDialog);
-        cerrarDialogo.setOnClickListener(this);
+        Button verificarTelefono = v.findViewById(R.id.verificarTelefonoDialog);
+        verificarTelefono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!verifiedSmsCode.getText().toString().isEmpty()){
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, verifiedSmsCode.getText().toString());
+                    mListener.getFirebaseAuthInstance().signInWithCredential(credential)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getContext(), getString(R.string.phoneVerifief), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                        mListener.getUserInformation().setTelefonoVerified(true);
+                                        mListener.getFirestoreInstance().updateUser(mListener.getUserInformation());
+                                    } else {
+                                        // Sign in failed, display a message and update the UI
+                                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                            Toast.makeText(getContext(), getString(R.string.phoneNoVerifief), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                            });
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(), getString(R.string.smsCodeEmpty), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         builder.setView(v);
         builder.create();

@@ -1,6 +1,7 @@
 package com.rubenbarrosoblazquez.CasinoOnlineTFG.Interfaces;
 
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.Activities.CasinoActivity;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.JavaClass.User;
 import com.rubenbarrosoblazquez.CasinoOnlineTFG.model.FirebaseCloudFirestore;
@@ -15,6 +16,7 @@ public interface OnGetUserActions {
     public void reloadHeaderDraweInfo();
     public void updateBalanceTexts();
     public FirebaseCloudFirestore getFirestoreInstance();
+    public FirebaseAuth getFirebaseAuthInstance();
     public FirebaseRealTimeModel getFirestoreRealTimeInstance();
     public CasinoActivity getActivity();
     public void hideActionBar();

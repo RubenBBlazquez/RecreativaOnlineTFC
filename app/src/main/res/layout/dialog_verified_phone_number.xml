@@ -29,14 +29,25 @@
             android:padding="5dp"
             android:layout_marginEnd="20dp"
             android:hint="@string/VerifiedPhoneNumberCodeHint"
+            android:outlineAmbientShadowColor="@android:color/white"
+            android:outlineSpotShadowColor="@android:color/white"
             android:textColorHint="@android:color/white"
+            app:boxStrokeColor="@android:color/white"
+            app:boxStrokeErrorColor="@android:color/white"
+            app:counterOverflowTextColor="@android:color/white"
+            app:helperTextTextColor="@android:color/white"
+            app:hintTextColor="@android:color/white"
+            app:placeholderTextColor="@android:color/white"
+            app:prefixTextColor="@android:color/white"
+            app:suffixTextColor="@android:color/white"
             app:counterTextColor="@android:color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/verifiedSmsCodeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:textColor="@android:color/white"
+                android:inputType="number"
                 >
 
             </com.google.android.material.textfield.TextInputEditText>
