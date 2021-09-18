@@ -197,7 +197,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
                 case R.id.actualizarDatosPersonales:
                     try{
-                        boolean dniValidator = isValidDni(this.dni.getText().toString());
+                        boolean dniValidator = isValidDni(this.dni.getText().toString().trim());
 
                         if(dniValidator || this.dni.getText().toString().isEmpty()){
 
@@ -433,7 +433,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                                         if (u.getDni().equalsIgnoreCase("")) {
 
-                                            if (isValidDni(dni_foto)) {
+                                            if (isValidDni(dni_foto.trim())) {
                                                 Toast.makeText(getContext(), "Dni añadido Con éxito", Toast.LENGTH_SHORT).show();
                                                 u.setDniVerified(true);
                                                 u.setDni(dni_foto);
@@ -484,6 +484,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             num_dni = Integer.parseInt(dni.substring(0,dni.length()-1));
             letraDni = dni.substring(dni.length()-1);
         }catch (Exception ex){
+            Log.d("textRecognizion",ex.getMessage());
             return false;
         }
 

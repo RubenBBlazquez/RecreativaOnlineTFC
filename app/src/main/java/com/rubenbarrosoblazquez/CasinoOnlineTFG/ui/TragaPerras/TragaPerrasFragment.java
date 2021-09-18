@@ -102,8 +102,8 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd {
                                 image.setValueRandom(100);
                                 image2.setValueRandom(100);
                                 image3.setValueRandom(100);
-                                u.setSaldo_gastado(u.getSaldo_gastado()+Float.valueOf(saldoApostado.getText().toString()));
-                                u.setSaldo(u.getSaldo()-Float.valueOf(saldoApostado.getText().toString()));
+                                u.setSaldo_gastado(u.getSaldo_gastado()+Float.parseFloat(saldoApostado.getText().toString()));
+                                u.setSaldo(u.getSaldo()-Float.parseFloat(saldoApostado.getText().toString()));
                                 mListener.updateBalanceTexts();
                                 saldoApostado.setEnabled(false);
                                 contador=0;
@@ -158,7 +158,7 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd {
 
     @Override
     public void eventEnd(int results[], int count,int tag) {
-        Log.d("cositas","tag"+tag);
+
         boolean booleanWins[]=new boolean[3];
         if (tag == 1){
             resultsMatrix[0][0] = results[0];
