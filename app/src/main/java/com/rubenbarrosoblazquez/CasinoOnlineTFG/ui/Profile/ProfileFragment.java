@@ -393,8 +393,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 @Override
                                 public void onSuccess(Text visionText) {
                                     String resultText = visionText.getText();
-                                    Log.d("textRecognizionBlock",resultText.matches("^\\d{8}[A-Z]{1}$")+""+ resultText );
-
+                                    Log.d("textRecognizionBlock", resultText.matches("^\\d{8}[A-Z]{1}$") + "" + resultText);
+                                    Log.d("textRecognizionBlock", resultText);
+                                    try {
                                         boolean encontrado = false;
                                         String dni_foto = "";
                                         for (Text.TextBlock block : visionText.getTextBlocks()) {
@@ -404,20 +405,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                             for (Text.Line line : block.getLines()) {
                                                 String lineText = line.getText();
                                                 Log.d("textRecognizionLine", lineText);
-                                                Log.d("textRecognizionLine", lineText.trim().matches("^\\d{8}[A-Z]{1}$")+"");
+                                                Log.d("textRecognizionLine", lineText.trim().matches("^\\d{8}[A-Z]{1}$") + "");
 
                                                 if (lineText.trim().matches("^\\d{8}[A-Z]{1}$") || lineText.trim().matches("^.+?\\d{8}[A-Z]{1}+$")) {
 
                                                     Matcher m = Pattern.compile("^.+?\\d{8}[A-Z]{1}+$").matcher(lineText.trim());
 
-                                                    if(lineText.contains(" ")){
+                                                    if (lineText.contains(" ")) {
                                                         dni_foto = lineText.trim().substring(lineText.indexOf(" "), lineText.length());
-                                                    }else if(m.find()){
-                                                        Toast.makeText(getContext(), ""+m.start(), Toast.LENGTH_SHORT).show();
-                                                    }else{
+                                                    } else if (m.find()) {
+                                                        Toast.makeText(getContext(), "" + m.start(), Toast.LENGTH_SHORT).show();
+                                                    } else {
                                                         dni_foto = lineText.trim();
                                                     }
-                                                    Log.d("textRecognizionLine","ENCONTRADOO "+dni_foto);
+                                                    Log.d("textRecognizionLine", "ENCONTRADOO " + dni_foto);
 
                                                     encontrado = true;
                                                     break;
@@ -432,14 +433,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                                         if (u.getDni().equalsIgnoreCase("")) {
 
-                                            if(isValidDni(dni_foto)){
+                                            if (isValidDni(dni_foto)) {
                                                 Toast.makeText(getContext(), "Dni añadido Con éxito", Toast.LENGTH_SHORT).show();
                                                 u.setDniVerified(true);
                                                 u.setDni(dni_foto);
                                                 dni.setText(u.getDni());
                                                 mListener.getFirestoreInstance().updateUser(u);
                                                 mListener.setUserInformation(u);
-                                            }else{
+                                            } else {
                                                 Toast.makeText(getContext(), "La foto del dni que has añadido no es válido, el número del dni no da la letra necesaria, (calculo proporcionado por el interior.gob)", Toast.LENGTH_SHORT).show();
                                             }
 
@@ -453,6 +454,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                             }
                                         }
 
+                                    }catch (Exception e){
+                                        Log.d("cositas",e.getMessage());
+                                    }
                                 }
                             })
                             .addOnFailureListener(
@@ -483,11 +487,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             return false;
         }
 
-        if (letras[num_dni%23].equalsIgnoreCase(letraDni)){
-            return true;
-        }
-
-        return false;
+        return letras[num_dni % 23].equalsIgnoreCase(letraDni);
 
     }
 

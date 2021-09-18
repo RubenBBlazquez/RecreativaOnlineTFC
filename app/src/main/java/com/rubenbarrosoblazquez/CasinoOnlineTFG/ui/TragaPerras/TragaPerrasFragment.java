@@ -90,43 +90,48 @@ public class TragaPerrasFragment extends Fragment implements IEventEnd {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(saldoApostado.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), getContext().getString(R.string.setSlotMachineBet), Toast.LENGTH_SHORT).show();
-                }else{
 
-                    if(!isSlotMachineWorking){
+                if(u.isDniVerified()){
+                    if(saldoApostado.getText().toString().isEmpty()){
+                        Toast.makeText(getContext(), getContext().getString(R.string.setSlotMachineBet), Toast.LENGTH_SHORT).show();
+                    }else{
 
-                        if(u.getSaldo() >= Double.parseDouble(saldoApostado.getText().toString())){
-                            image.setValueRandom(100);
-                            image2.setValueRandom(100);
-                            image3.setValueRandom(100);
-                            u.setSaldo_gastado(u.getSaldo_gastado()+Float.valueOf(saldoApostado.getText().toString()));
-                            u.setSaldo(u.getSaldo()-Float.valueOf(saldoApostado.getText().toString()));
-                            mListener.updateBalanceTexts();
-                            saldoApostado.setEnabled(false);
-                            contador=0;
-                            saldo_ganado=0;
-                            isSlotMachineWorking=true;
-                            isDialogOpen=true;
-                            isAnyPrice=true;
+                        if(!isSlotMachineWorking){
+
+                            if(u.getSaldo() >= Double.parseDouble(saldoApostado.getText().toString())){
+                                image.setValueRandom(100);
+                                image2.setValueRandom(100);
+                                image3.setValueRandom(100);
+                                u.setSaldo_gastado(u.getSaldo_gastado()+Float.valueOf(saldoApostado.getText().toString()));
+                                u.setSaldo(u.getSaldo()-Float.valueOf(saldoApostado.getText().toString()));
+                                mListener.updateBalanceTexts();
+                                saldoApostado.setEnabled(false);
+                                contador=0;
+                                saldo_ganado=0;
+                                isSlotMachineWorking=true;
+                                isDialogOpen=true;
+                                isAnyPrice=true;
+
+                            }else{
+                                Toast.makeText(getContext(), getContext().getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
+                            }
 
                         }else{
-                            Toast.makeText(getContext(), getContext().getString(R.string.noSaldoParaApostar), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getContext().getString(R.string.tiradasSeguidas), Toast.LENGTH_SHORT).show();
                         }
 
-                    }else{
-                        Toast.makeText(getContext(), getContext().getString(R.string.tiradasSeguidas), Toast.LENGTH_SHORT).show();
+
                     }
 
-
                 }
-
-            }
+                }
         });
 
 
         if(u.isDniVerified()){
             root.findViewById(R.id.dniNoValidatedLayer).setVisibility(View.GONE);
+        }else{
+            root.findViewById(R.id.dniNoValidatedLayer).setVisibility(View.VISIBLE);
         }
 
         root.findViewById(R.id.containerTragaperras).setOnLongClickListener(new View.OnLongClickListener() {
