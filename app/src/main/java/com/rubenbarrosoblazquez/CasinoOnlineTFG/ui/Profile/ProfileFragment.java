@@ -440,8 +440,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                                 dni.setText(u.getDni());
                                                 mListener.getFirestoreInstance().updateUser(u);
                                                 mListener.setUserInformation(u);
-                                            } else {
-                                                Toast.makeText(getContext(), "La foto del dni que has añadido no es válido, el número del dni no da la letra necesaria, (calculo proporcionado por el interior.gob)", Toast.LENGTH_SHORT).show();
+                                            }
+                                            else{
+                                                Toast.makeText(getContext(), "La foto del dni que has añadido no es válido, la imagen no tiene la suficiente calidad o el número del dni no da la letra necesaria, (calculo proporcionado por el interior.gob)", Toast.LENGTH_SHORT).show();
                                             }
 
                                         } else {
