@@ -48,9 +48,9 @@
                             android:paddingBottom="10dp"
                             android:fontFamily="@font/parma_heavy"
                             android:gravity="center_vertical|center"
-                            android:text="RECREATIVA ONLINE"
+                            android:text="CASINO ONLINE"
                             android:textColor="#FDF8CE"
-                            android:textSize="25sp"
+                            android:textSize="28sp"
                             android:textStyle="italic"
                             android:background="@drawable/fondo_formas"
                             />
