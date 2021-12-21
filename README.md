@@ -14,4 +14,17 @@ After the registration, the first time you enter in the app you will have a comp
 
 ![image](https://user-images.githubusercontent.com/73406218/145862811-952dab07-d87a-40e8-b17c-720b9b772216.png)
 
-Once you enter in the app, you will must to validate your dni, to validate your dni you will go to profile page.If you dont validate your dni you won't can play anything
+Once you enter in the app, you will must to validate your dni, to validate your dni you will go to profile page and touch 'validar dni' to validate it .If you dont validate your dni you won't can play anything.
+
+When you have validated your dni, you will can to play games such as...
+
+![image](https://user-images.githubusercontent.com/73406218/146984129-232d27e0-2220-4172-9b07-9b12c9b276bf.png)
+
+Finally, you can buy services for the rullete,slot machine and blackjack games, which can help you to win more money or no..
+
+![image](https://user-images.githubusercontent.com/73406218/146984497-b7c27c08-bcaa-4861-b549-925af3d1e081.png)
+
+If you want more information about the project you can download the documentation here, it is in spanish, but you can translate with some application if you want it.
+https://drive.google.com/file/d/1-PcmO7rgvFq__HTM1pKNHClO_4MvYNoG/view?usp=sharing
+
+
