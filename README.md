@@ -12,13 +12,13 @@ In this part of the app we can do login with a registered user or with another l
 
 After the registration, the first time you enter in the app you will have a complete guide about the app, after see it you can click 'pasar ahora' and set to not see more times the guide after a successfully login.
 
-![image](https://user-images.githubusercontent.com/73406218/145862811-952dab07-d87a-40e8-b17c-720b9b772216.png)
-
 Once you passed the guide page you will be in the main page , here you will can open the app menu to navigate for the whole app.
 
 ![image](https://user-images.githubusercontent.com/73406218/146985935-44d3f686-c8fd-49d5-bda1-bf81997d1fed.png)
 
-If You want to play games you will must to validate your dni, to validate your dni you will go to profile page and touch 'validar dni' to validate it .If you dont validate your dni you won't can play anything.
+If You want to play games you will must to validate your dni, to validate your dni you will go to 'perfil' page and touch 'validar dni' to validate it .If you dont validate your dni you won't can play anything.
+
+![image](https://user-images.githubusercontent.com/73406218/145862811-952dab07-d87a-40e8-b17c-720b9b772216.png)
 
 When you have validated your dni, you will can to play games such as...
 
