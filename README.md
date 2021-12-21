@@ -14,7 +14,11 @@ After the registration, the first time you enter in the app you will have a comp
 
 ![image](https://user-images.githubusercontent.com/73406218/145862811-952dab07-d87a-40e8-b17c-720b9b772216.png)
 
-Once you enter in the app, you will must to validate your dni, to validate your dni you will go to profile page and touch 'validar dni' to validate it .If you dont validate your dni you won't can play anything.
+Once you passed the guide page you will be in the main page , here you will can open the app menu to navigate for the whole app.
+
+![image](https://user-images.githubusercontent.com/73406218/146985460-5e4ff317-91bc-4bdb-8db8-e9369f8dc50a.png)
+
+If You want to play games you will must to validate your dni, to validate your dni you will go to profile page and touch 'validar dni' to validate it .If you dont validate your dni you won't can play anything.
 
 When you have validated your dni, you will can to play games such as...
 
