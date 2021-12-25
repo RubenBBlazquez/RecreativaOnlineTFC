@@ -31,4 +31,5 @@ Finally, you can buy services for the rullete,slot machine and blackjack games, 
 If you want more information about the project you can download the documentation here, it is in spanish, but you can translate with some application if you want it.
 https://drive.google.com/file/d/1-PcmO7rgvFq__HTM1pKNHClO_4MvYNoG/view?usp=sharing
 
+This Project has been performed by Rubén Barroso Blázquez
 
